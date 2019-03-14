@@ -1,0 +1,15 @@
+package com.course.api.service;
+
+import com.course.api.entity.Lecturers;
+import com.course.api.entity.Majors;
+
+import java.util.List;
+
+public interface LecturersService {
+    List<Lecturers> getAll() throws Exception;
+    Lecturers getLecturersById(Integer idLec) throws Exception;
+    List<Lecturers> getByMajors(Integer idMajors) throws Exception;
+    Lecturers addLecturers(Lecturers lecturers) throws Exception;
+    Lecturers updateLecturers(Lecturers lecturers) throws Exception;
+    void removeLecturers(Lecturers lecturers) throws Exception;
+}
