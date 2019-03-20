@@ -25,8 +25,9 @@ public class Course implements Serializable {
     private String duration;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "day_start", nullable = true)
-    private String dayStart;
+    private Date dayStart;
 
     @Basic
     @Column(name = "fee", nullable = true)
@@ -57,7 +58,7 @@ public class Course implements Serializable {
     private String image;
 
     @Basic
-    @Column(name = "CREATED_BY", nullable = true, length = 8)
+    @Column(name = "CREATED_BY", nullable = true)
     private Integer createdBy;
 
     @Basic
@@ -65,10 +66,12 @@ public class Course implements Serializable {
     private Integer modifyBy;
 
     @Basic
-    @Column(name = "CREATED_DATE", nullable = true, length = 8)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "CREATED_DATE", nullable = true)
     private Date createdDate;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
@@ -83,7 +86,7 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    public Course(String course, String duration, String dayStart, int fee, String sale, String space, String conditions, String describes, int status, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Level level, List<Lesson> lessons) {
+    public Course(String course, String duration, Date dayStart, int fee, String sale, String space, String conditions, String describes, int status, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Level level, List<Lesson> lessons) {
         this.course = course;
         this.duration = duration;
         this.dayStart = dayStart;
@@ -126,11 +129,11 @@ public class Course implements Serializable {
         this.duration = duration;
     }
 
-    public String getDayStart() {
+    public Date getDayStart() {
         return dayStart;
     }
 
-    public void setDayStart(String dayStart) {
+    public void setDayStart(Date dayStart) {
         this.dayStart = dayStart;
     }
 

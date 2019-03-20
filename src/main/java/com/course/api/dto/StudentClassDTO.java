@@ -1,11 +1,13 @@
 package com.course.api.dto;
 
+import java.util.Date;
+
 public class StudentClassDTO {
 
     private Integer idClass;
     private String name;
     private String cmnd;
-    private String date;
+    private Date date;
     private Integer sex;
     private String address;
     private String email;
@@ -15,7 +17,7 @@ public class StudentClassDTO {
     public StudentClassDTO() {
     }
 
-    public StudentClassDTO(Integer idClass, String name, String cmnd, String date, Integer sex, String address, String email, String phone, String job) {
+    public StudentClassDTO(Integer idClass, String name, String cmnd, Date date, Integer sex, String address, String email, String phone, String job) {
         this.idClass = idClass;
         this.name = name;
         this.cmnd = cmnd;
@@ -51,11 +53,11 @@ public class StudentClassDTO {
         this.cmnd = cmnd;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

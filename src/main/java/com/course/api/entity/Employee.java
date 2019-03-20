@@ -19,15 +19,16 @@ public class Employee implements Serializable {
 
     @Basic
     @Column(name = "CMND", nullable = true, length = 15)
-    private String CMND;
+    private String cmnd;
 
     @Basic
     @Column(name = "employee_name", nullable = true, length = 30)
     private String employeeName;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "employee_date", nullable = true)
-    private String employeeDate;
+    private Date employeeDate;
 
     @Basic
     @Column(name = "sex", nullable = true, length = 1)
@@ -54,7 +55,7 @@ public class Employee implements Serializable {
     private String image;
 
     @Basic
-    @Column(name = "CREATED_BY", nullable = true, length = 8)
+    @Column(name = "CREATED_BY", nullable = true)
     private Integer createdBy;
 
     @Basic
@@ -62,10 +63,12 @@ public class Employee implements Serializable {
     private Integer modifyBy;
 
     @Basic
-    @Column(name = "CREATED_DATE", nullable = true, length = 8)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "CREATED_DATE", nullable = true)
     private Date createdDate;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
@@ -76,9 +79,9 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(String roles, String CMND, String employeeName, String employeeDate, int sex, String address, String email, String phone, int salary, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Account accountEmp) {
+    public Employee(String roles, String cmnd, String employeeName, Date employeeDate, int sex, String address, String email, String phone, int salary, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Account accountEmp) {
         this.roles = roles;
-        this.CMND = CMND;
+        this.cmnd = cmnd;
         this.employeeName = employeeName;
         this.employeeDate = employeeDate;
         this.sex = sex;
@@ -111,11 +114,11 @@ public class Employee implements Serializable {
     }
 
     public String getCMND() {
-        return CMND;
+        return cmnd;
     }
 
-    public void setCMND(String CMND) {
-        this.CMND = CMND;
+    public void setCMND(String cmnd) {
+        this.cmnd = cmnd;
     }
 
     public String getEmployeeName() {
@@ -126,11 +129,11 @@ public class Employee implements Serializable {
         this.employeeName = employeeName;
     }
 
-    public String getEmployeeDate() {
+    public Date getEmployeeDate() {
         return employeeDate;
     }
 
-    public void setEmployeeDate(String employeeDate) {
+    public void setEmployeeDate(Date employeeDate) {
         this.employeeDate = employeeDate;
     }
 

@@ -14,15 +14,16 @@ public class Invoice implements Serializable {
     private Integer idInvoice;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_invoice", nullable = true)
-    private String dateInvoice;
+    private Date dateInvoice;
 
     @Basic
     @Column(name = "cost", nullable = true)
     private int cost;
 
     @Basic
-    @Column(name = "CREATED_BY", nullable = true, length = 8)
+    @Column(name = "CREATED_BY", nullable = true)
     private Integer createdBy;
 
     @Basic
@@ -30,10 +31,12 @@ public class Invoice implements Serializable {
     private Integer modifyBy;
 
     @Basic
-    @Column(name = "CREATED_DATE", nullable = true, length = 8)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "CREATED_DATE", nullable = true)
     private Date createdDate;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
@@ -52,7 +55,7 @@ public class Invoice implements Serializable {
     public Invoice() {
     }
 
-    public Invoice(String dateInvoice, int cost, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Student student, Course course, Employee employee) {
+    public Invoice(Date dateInvoice, int cost, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Student student, Course course, Employee employee) {
         this.dateInvoice = dateInvoice;
         this.cost = cost;
         this.createdBy = createdBy;
@@ -72,11 +75,11 @@ public class Invoice implements Serializable {
         this.idInvoice = idInvoice;
     }
 
-    public String getDateInvoice() {
+    public Date getDateInvoice() {
         return dateInvoice;
     }
 
-    public void setDateInvoice(String dateInvoice) {
+    public void setDateInvoice(Date dateInvoice) {
         this.dateInvoice = dateInvoice;
     }
 

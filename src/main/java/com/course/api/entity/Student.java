@@ -1,5 +1,7 @@
 package com.course.api.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -27,8 +29,9 @@ public class Student implements Serializable {
     private String cmnd;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "student_date", nullable = true)
-    private String studentDate;
+    private Date studentDate;
 
     @Basic
     @Column(name = "sex", nullable = true)
@@ -55,7 +58,7 @@ public class Student implements Serializable {
     private int numOfRegister;
 
     @Basic
-    @Column(name = "CREATED_BY", nullable = true, length = 8)
+    @Column(name = "CREATED_BY", nullable = true)
     private Integer createdBy;
 
     @Basic
@@ -63,10 +66,12 @@ public class Student implements Serializable {
     private Integer modifyBy;
 
     @Basic
-    @Column(name = "CREATED_DATE", nullable = true, length = 8)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "CREATED_DATE", nullable = true)
     private Date createdDate;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
@@ -81,7 +86,7 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Student(String studentName, String job, String cmnd, String studentDate, int sex, String address, String email, String phone, String image, int numOfRegister, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Account accountStu, List<StudentClass> studentClasses) {
+    public Student(String studentName, String job, String cmnd, Date studentDate, int sex, String address, String email, String phone, String image, int numOfRegister, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Account accountStu, List<StudentClass> studentClasses) {
         this.studentName = studentName;
         this.job = job;
         this.cmnd = cmnd;
@@ -132,11 +137,11 @@ public class Student implements Serializable {
         this.cmnd = cmnd;
     }
 
-    public String getStudentDate() {
+    public Date getStudentDate() {
         return studentDate;
     }
 
-    public void setStudentDate(String studentDate) {
+    public void setStudentDate(Date studentDate) {
         this.studentDate = studentDate;
     }
 

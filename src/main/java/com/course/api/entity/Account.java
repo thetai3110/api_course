@@ -24,10 +24,12 @@ public class Account implements Serializable {
     private String pass;
 
     @Basic
-    @Column(name = "CREATED_DATE", nullable = true, length = 8)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "CREATED_DATE", nullable = true)
     private Date createdDate;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 

@@ -7,7 +7,7 @@ public class UserDTO {
     private String pass;
     private String name;
     private String cmnd;
-    private String date;
+    private Date date;
     private String sex;
     private String address;
     private String email;
@@ -17,7 +17,7 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String username, String pass, String name, String cmnd, String date, String sex, String address, String email, String phone, String job) {
+    public UserDTO(String username, String pass, String name, String cmnd, Date date, String sex, String address, String email, String phone, String job) {
         this.username = username;
         this.pass = pass;
         this.name = name;
@@ -62,11 +62,11 @@ public class UserDTO {
         this.cmnd = cmnd;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

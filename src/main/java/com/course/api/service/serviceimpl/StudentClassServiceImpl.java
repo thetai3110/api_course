@@ -26,6 +26,11 @@ public class StudentClassServiceImpl implements StudentClassService {
     }
 
     @Override
+    public StudentClass getStudentClassByStudentAndClass(Integer idStudent, Integer idClass) {
+        return studentClassRepository.findStudentClassByIdStudentAndIdClass(idStudent,idClass);
+    }
+
+    @Override
     public StudentClass addStudentClass(StudentClass studentClass) {
         studentClass.setCreatedDate(new Date());
         studentClass.setModifyDate(new Date());

@@ -18,8 +18,9 @@ public class Lecturers implements Serializable {
     private String lecturersName;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "lecturers_date", nullable = true)
-    private String lecturersDate;
+    private Date lecturersDate;
 
     @Basic
     @Column(name = "sex", nullable = true, length = 1)
@@ -46,7 +47,7 @@ public class Lecturers implements Serializable {
     private String image;
 
     @Basic
-    @Column(name = "CREATED_BY", nullable = true, length = 8)
+    @Column(name = "CREATED_BY", nullable = true)
     private Integer createdBy;
 
     @Basic
@@ -54,10 +55,12 @@ public class Lecturers implements Serializable {
     private Integer modifyBy;
 
     @Basic
-    @Column(name = "CREATED_DATE", nullable = true, length = 8)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "CREATED_DATE", nullable = true)
     private Date createdDate;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
@@ -72,7 +75,7 @@ public class Lecturers implements Serializable {
     public Lecturers() {
     }
 
-    public Lecturers(String lecturersName, String lecturersDate, int sex, String address, String email, String phone, int salary, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Majors majors, Account accountLec) {
+    public Lecturers(String lecturersName, Date lecturersDate, int sex, String address, String email, String phone, int salary, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Majors majors, Account accountLec) {
         this.lecturersName = lecturersName;
         this.lecturersDate = lecturersDate;
         this.sex = sex;
@@ -105,11 +108,11 @@ public class Lecturers implements Serializable {
         this.lecturersName = lecturersName;
     }
 
-    public String getLecturersDate() {
+    public Date getLecturersDate() {
         return lecturersDate;
     }
 
-    public void setLecturersDate(String lecturersDate) {
+    public void setLecturersDate(Date lecturersDate) {
         this.lecturersDate = lecturersDate;
     }
 

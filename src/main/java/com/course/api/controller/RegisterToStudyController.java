@@ -8,12 +8,12 @@ import com.course.api.service.ClassService;
 import com.course.api.service.StudentClassService;
 import com.course.api.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.SimpleDateFormat;
 
 @RestController
 @RequestMapping(value = "/register-to-study")
@@ -37,6 +37,8 @@ public class RegisterToStudyController {
             Student student = new Student();
             if(studentService.getStudentByCMND(studentClassDTO.getCmnd())!= null){
                 student = studentService.getStudentByCMND(studentClassDTO.getCmnd());
+                if(studentClassService.getStudentClassByStudentAndClass(student.getIdStudent(), studentClassDTO.getIdClass())!= null)
+                    return 2;
             }
             else{
                 student.setCmnd(studentClassDTO.getCmnd());
@@ -47,8 +49,8 @@ public class RegisterToStudyController {
                 student.setEmail(studentClassDTO.getEmail());
                 student.setPhone(studentClassDTO.getPhone());
                 student.setStudentName(studentClassDTO.getName());
+                studentService.addStudent(student);
             }
-            studentService.addStudent(student);
             //Thêm vào lớp
             StudentClass studentClass = new StudentClass();
             studentClass.setIdClass(studentClassDTO.getIdClass());

@@ -14,8 +14,9 @@ public class Certificate implements Serializable {
     private Integer idCertificate;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_certificate", nullable = true)
-    private String dateCertificate;
+    private Date dateCertificate;
 
     @Basic
     @Column(name = "marks", nullable = true)
@@ -26,7 +27,7 @@ public class Certificate implements Serializable {
     private String classification;
 
     @Basic
-    @Column(name = "CREATED_BY", nullable = true, length = 8)
+    @Column(name = "CREATED_BY", nullable = true)
     private Integer createdBy;
 
     @Basic
@@ -34,10 +35,12 @@ public class Certificate implements Serializable {
     private Integer modifyBy;
 
     @Basic
-    @Column(name = "CREATED_DATE", nullable = true, length = 8)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "CREATED_DATE", nullable = true)
     private Date createdDate;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
@@ -52,7 +55,7 @@ public class Certificate implements Serializable {
     public Certificate() {
     }
 
-    public Certificate(String dateCertificate, Float marks, String classification, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Student student, Exam exam) {
+    public Certificate(Date dateCertificate, Float marks, String classification, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Student student, Exam exam) {
         this.dateCertificate = dateCertificate;
         this.marks = marks;
         this.classification = classification;
@@ -72,11 +75,11 @@ public class Certificate implements Serializable {
         this.idCertificate = idCertificate;
     }
 
-    public String getDateCertificate() {
+    public Date getDateCertificate() {
         return dateCertificate;
     }
 
-    public void setDateCertificate(String dateCertificate) {
+    public void setDateCertificate(Date dateCertificate) {
         this.dateCertificate = dateCertificate;
     }
 

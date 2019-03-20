@@ -14,8 +14,9 @@ public class Exam implements Serializable {
     private Integer idExam;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "day_exam", nullable = true)
-    private String dayExam;
+    private Date dayExam;
 
     @Basic
     @Column(name = "time_exam", nullable = true, length = 15)
@@ -30,7 +31,7 @@ public class Exam implements Serializable {
     private int status;
 
     @Basic
-    @Column(name = "CREATED_BY", nullable = true, length = 8)
+    @Column(name = "CREATED_BY", nullable = true)
     private Integer createdBy;
 
     @Basic
@@ -38,10 +39,12 @@ public class Exam implements Serializable {
     private Integer modifyBy;
 
     @Basic
-    @Column(name = "CREATED_DATE", nullable = true, length = 8)
+    @Temporal(TemporalType.DATE)
+    @Column(name = "CREATED_DATE", nullable = true)
     private Date createdDate;
 
     @Basic
+    @Temporal(TemporalType.DATE)
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
@@ -52,7 +55,7 @@ public class Exam implements Serializable {
     public Exam() {
     }
 
-    public Exam(String dayExam, String timeExam, String duration, int status, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Clazz clazz) {
+    public Exam(Date dayExam, String timeExam, String duration, int status, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Clazz clazz) {
         this.dayExam = dayExam;
         this.timeExam = timeExam;
         this.duration = duration;
@@ -72,11 +75,11 @@ public class Exam implements Serializable {
         this.idExam = idExam;
     }
 
-    public String getDayExam() {
+    public Date getDayExam() {
         return dayExam;
     }
 
-    public void setDayExam(String dayExam) {
+    public void setDayExam(Date dayExam) {
         this.dayExam = dayExam;
     }
 

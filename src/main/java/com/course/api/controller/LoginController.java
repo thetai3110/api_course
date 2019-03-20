@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -51,7 +53,7 @@ public class LoginController {
 
     //Đăng ký người dùng
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<UserDTO> doRegister(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> doRegister(@RequestBody UserDTO userDTO) throws ParseException {
         //Tài khoản mới
         if(userDTO == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

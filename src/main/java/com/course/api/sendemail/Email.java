@@ -32,6 +32,5 @@ public class Email {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
     }
 }
