@@ -1,5 +1,6 @@
 package com.course.api.controller;
 
+import com.course.api.dto.StudentDTO;
 import com.course.api.entity.Student;
 import com.course.api.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,10 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Student> addStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> addStudent(@RequestBody StudentDTO studentDTO) {
         try {
-            if (student == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<Student>(studentService.addStudent(student), HttpStatus.OK);
+            if (studentDTO == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Student>(studentService.addStudent(studentDTO), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

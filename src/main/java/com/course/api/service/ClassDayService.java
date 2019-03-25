@@ -1,5 +1,6 @@
 package com.course.api.service;
 
+import com.course.api.dto.ClassDayDTO;
 import com.course.api.entity.Ca;
 import com.course.api.entity.ClassDay;
 import com.course.api.entity.SchoolDay;
@@ -12,7 +13,7 @@ public interface ClassDayService {
     List<ClassDay> getClassDayBySchoolDay(Integer idSd) throws Exception;
     List<ClassDay> getClassDayByCa(Integer idCa) throws Exception;
     List<ClassDay> getClassDayByClass(Integer idClass) throws Exception;
-    ClassDay addClassDay(ClassDay classDay) throws Exception;
+    ClassDay addClassDay(ClassDayDTO classDayDTO) throws Exception;
     ClassDay updateClassDay(ClassDay classDay) throws Exception;
     void removeClassDay(ClassDay classDay) throws Exception;
 }

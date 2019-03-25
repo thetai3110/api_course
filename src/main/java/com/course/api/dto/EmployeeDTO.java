@@ -2,33 +2,35 @@ package com.course.api.dto;
 
 import java.util.Date;
 
-public class LecturersDTO {
+public class EmployeeDTO {
 
     private Integer idAccount;
-    private String lecturersName;
-    private Date lecturersDate;
+    private String roles;
+    private String cmnd;
+    private String employeeName;
+    private Date employeeDate;
     private int sex;
     private String address;
     private String email;
     private String phone;
     private int salary;
     private String image;
-    private Integer idMajors;
 
-    public LecturersDTO() {
+    public EmployeeDTO() {
     }
 
-    public LecturersDTO(Integer idAccount, String lecturersName, Date lecturersDate, int sex, String address, String email, String phone, int salary, String image, Integer idMajors) {
+    public EmployeeDTO(Integer idAccount, String roles, String cmnd, String employeeName, Date employeeDate, int sex, String address, String email, String phone, int salary, String image) {
         this.idAccount = idAccount;
-        this.lecturersName = lecturersName;
-        this.lecturersDate = lecturersDate;
+        this.roles = roles;
+        this.cmnd = cmnd;
+        this.employeeName = employeeName;
+        this.employeeDate = employeeDate;
         this.sex = sex;
         this.address = address;
         this.email = email;
         this.phone = phone;
         this.salary = salary;
         this.image = image;
-        this.idMajors = idMajors;
     }
 
     public Integer getIdAccount() {
@@ -39,20 +41,36 @@ public class LecturersDTO {
         this.idAccount = idAccount;
     }
 
-    public String getLecturersName() {
-        return lecturersName;
+    public String getRoles() {
+        return roles;
     }
 
-    public void setLecturersName(String lecturersName) {
-        this.lecturersName = lecturersName;
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
-    public Date getLecturersDate() {
-        return lecturersDate;
+    public String getCmnd() {
+        return cmnd;
     }
 
-    public void setLecturersDate(Date lecturersDate) {
-        this.lecturersDate = lecturersDate;
+    public void setCmnd(String cmnd) {
+        this.cmnd = cmnd;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public Date getEmployeeDate() {
+        return employeeDate;
+    }
+
+    public void setEmployeeDate(Date employeeDate) {
+        this.employeeDate = employeeDate;
     }
 
     public int getSex() {
@@ -101,13 +119,5 @@ public class LecturersDTO {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public Integer getIdMajors() {
-        return idMajors;
-    }
-
-    public void setIdMajors(Integer idMajors) {
-        this.idMajors = idMajors;
     }
 }

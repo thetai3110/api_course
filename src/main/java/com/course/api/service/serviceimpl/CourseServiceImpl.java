@@ -1,9 +1,13 @@
 package com.course.api.service.serviceimpl;
 
+import com.course.api.dto.CourseDTO;
 import com.course.api.entity.Course;
 import com.course.api.entity.Level;
 import com.course.api.repository.CourseRepository;
+import com.course.api.repository.LevelRepositoty;
 import com.course.api.service.CourseService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private LevelRepositoty levelRepositoty;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -38,7 +45,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course addCourse(Course course)  {
+    public Course addCourse(CourseDTO courseDTO)  {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<CourseDTO, Course>() {
+            @Override
+            protected void configure() {
+                skip().setIdCourse(null);
+            }
+        });
+        Course course = modelMapper.map(courseDTO, Course.class);
+        course.setLevel(levelRepositoty.findAllByIdLevel(courseDTO.getIdLevel()));
         course.setCreatedDate(new Date());
         course.setModifyDate(new Date());
         courseRepository.save(course);

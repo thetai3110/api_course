@@ -39,26 +39,7 @@ public class LecturersController {
     public ResponseEntity<Lecturers> addLecturers(@RequestBody LecturersDTO lecturersDTO) {
         try {
             if (lecturersDTO == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-//            Lecturers lecturers = new Lecturers();
-//            lecturers.setLecturersName(lecturersDTO.getLecturersName());
-//            lecturers.setLecturersDate(lecturersDTO.getLecturersDate());
-//            lecturers.setAddress(lecturersDTO.getAddress());
-//            lecturers.setEmail(lecturersDTO.getEmail());
-//            lecturers.setPhone(lecturersDTO.getPhone());
-//            lecturers.setSalary(lecturersDTO.getSalary());
-//            lecturers.setSex(lecturersDTO.getSex());
-//            lecturers.setImage(lecturersDTO.getImage());
-//            lecturers.setLecturersName(lecturersDTO.getLecturersName());
-            ModelMapper modelMapper = new ModelMapper();
-            modelMapper.addMappings(new PropertyMap<LecturersDTO, Lecturers>() {
-                @Override
-                protected void configure() {
-                    skip().setIdLecturers(null);
-                }
-            });
-            Lecturers lecturers = modelMapper.map(lecturersDTO, Lecturers.class);
-            lecturers.setMajors(majorsService.getMajorsById(lecturersDTO.getIdMajors()));
-            return new ResponseEntity<Lecturers>(lecturersService.addLecturers(lecturers), HttpStatus.OK);
+            return new ResponseEntity<Lecturers>(lecturersService.addLecturers(lecturersDTO), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

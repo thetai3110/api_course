@@ -1,7 +1,11 @@
 package com.course.api.controller;
 
+import com.course.api.dto.CourseDTO;
 import com.course.api.entity.Course;
 import com.course.api.service.CourseService;
+import com.course.api.service.LevelService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,9 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private LevelService levelService;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Course>> getAllCourse(){
         try {
@@ -29,11 +36,11 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<Course>> getCourseByLevel(@PathVariable(name = "id") Integer idLevel){
+    public ResponseEntity<Course> getCourseById(@PathVariable(name = "id") Integer id){
         try {
-            List<Course> courses = courseService.getCourseByLevel(idLevel);
-            if(courses.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);
+            Course courses = courseService.getCourseById(id);
+            if(courses==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Course>(courses,HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,10 +48,10 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Course> addCourse(@RequestBody Course course){
+    public ResponseEntity<Course> addCourse(@RequestBody CourseDTO courseDTO){
         try {
-            if(course==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<Course>(courseService.addCourse(course),HttpStatus.OK);
+            if(courseDTO==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Course>(courseService.addCourse(courseDTO),HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

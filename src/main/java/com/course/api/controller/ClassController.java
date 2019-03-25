@@ -1,5 +1,6 @@
 package com.course.api.controller;
 
+import com.course.api.dto.ClassesDTO;
 import com.course.api.entity.Clazz;
 import com.course.api.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,10 +56,10 @@ public class ClassController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Clazz> addClass(@RequestBody Clazz clazz) {
+    public ResponseEntity<Clazz> addClass(@RequestBody ClassesDTO classesDTO) {
         try {
-            if (clazz == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<Clazz>(classService.addClass(clazz), HttpStatus.OK);
+            if (classesDTO == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Clazz>(classService.addClass(classesDTO), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

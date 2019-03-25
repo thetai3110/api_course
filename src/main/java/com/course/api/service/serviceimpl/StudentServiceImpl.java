@@ -1,8 +1,12 @@
 package com.course.api.service.serviceimpl;
 
+import com.course.api.dto.StudentDTO;
 import com.course.api.entity.Student;
+import com.course.api.repository.AccountRepositoty;
 import com.course.api.repository.StudentRepositoty;
 import com.course.api.service.StudentService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentRepositoty studentRepositoty;
+
+    @Autowired
+    private AccountRepositoty accountRepositoty;
 
     @Override
     public List<Student> getAll() {
@@ -41,7 +48,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student addStudent(Student student) {
+    public Student addStudent(StudentDTO studentDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<StudentDTO, Student>() {
+            @Override
+            protected void configure() {
+                skip().setIdStudent(null);
+            }
+        });
+        Student student = modelMapper.map(studentDTO, Student.class);
+        student.setAccountStu(accountRepositoty.findAccountByIdAccount(studentDTO.getIdAccount()));
         student.setCreatedDate(new Date());
         student.setModifyDate(new Date());
         studentRepositoty.save(student);

@@ -1,10 +1,15 @@
 package com.course.api.service.serviceimpl;
 
+import com.course.api.dto.ClassDayDTO;
 import com.course.api.entity.Ca;
 import com.course.api.entity.ClassDay;
 import com.course.api.entity.SchoolDay;
+import com.course.api.repository.CaRepositoty;
 import com.course.api.repository.ClassDayRepository;
+import com.course.api.repository.SchoolDayRepository;
 import com.course.api.service.ClassDayService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +26,12 @@ public class ClassDayServiceImpl implements ClassDayService {
 
     @Autowired
     private ClassDayRepository classDayRepository;
+
+    @Autowired
+    private SchoolDayRepository schoolDayRepository;
+
+    @Autowired
+    private CaRepositoty caRepositoty;
 
     @Override
     public List<ClassDay> getAll(){
@@ -51,7 +62,17 @@ public class ClassDayServiceImpl implements ClassDayService {
     }
 
     @Override
-    public ClassDay addClassDay(ClassDay classDay) {
+    public ClassDay addClassDay(ClassDayDTO classDayDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<ClassDayDTO, ClassDay>() {
+            @Override
+            protected void configure() {
+                skip().setIdClassDay(null);
+            }
+        });
+        ClassDay classDay = modelMapper.map(classDayDTO, ClassDay.class);
+        classDay.setSchoolDay(schoolDayRepository.findSchoolDayByIdSchoolDay(classDayDTO.getIdSchoolDay()));
+        classDay.setCa(caRepositoty.findCaByIdCa(classDayDTO.getIdCa()));
         classDay.setCreatedDate(new Date());
         classDay.setModifyDate(new Date());
         classDayRepository.save(classDay);

@@ -4,7 +4,9 @@ import com.course.api.dto.AccountDTO;
 import com.course.api.dto.UserDTO;
 import com.course.api.entity.Account;
 import com.course.api.entity.Student;
+import com.course.api.model.ResponseModel;
 import com.course.api.service.AccountService;
+import com.course.api.service.RegisterAccountService;
 import com.course.api.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,9 @@ public class LoginController {
 
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private RegisterAccountService registerAccountService;
 
     //Kiểm tra tài khoản khi đăng nhập
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -53,30 +58,15 @@ public class LoginController {
 
     //Đăng ký người dùng
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<UserDTO> doRegister(@RequestBody UserDTO userDTO) throws ParseException {
+    public ResponseEntity<ResponseModel> doRegister(@RequestBody UserDTO userDTO) throws ParseException {
         //Tài khoản mới
-        if(userDTO == null)
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        Account newAcc = new Account();
-        newAcc.setUsername(userDTO.getUsername());
-        newAcc.setPass(userDTO.getPass());
-        //Người dùng mới
-        Student newStu = new Student();
-        newStu.setAccountStu(newAcc);
-        newStu.setStudentName(userDTO.getName());
-        newStu.setCmnd(userDTO.getCmnd());
-        newStu.setStudentDate(userDTO.getDate());
-        newStu.setSex(Integer.parseInt(userDTO.getSex()));
-        newStu.setAddress(userDTO.getAddress());
-        newStu.setEmail(userDTO.getEmail());
-        newStu.setPhone(userDTO.getPhone());
-        newStu.setJob(userDTO.getJob());
         try {
-            accountService.addAccount(newAcc);
-            studentService.addStudent(newStu);
+            if(userDTO == null)
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<ResponseModel>(registerAccountService.register(userDTO), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
+        return null;
     }
 }

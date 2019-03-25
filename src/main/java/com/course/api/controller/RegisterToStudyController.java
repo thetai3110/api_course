@@ -4,7 +4,9 @@ import com.course.api.dto.StudentClassDTO;
 import com.course.api.entity.Clazz;
 import com.course.api.entity.Student;
 import com.course.api.entity.StudentClass;
+import com.course.api.model.ResponseModel;
 import com.course.api.service.ClassService;
+import com.course.api.service.RegisterToStudyService;
 import com.course.api.service.StudentClassService;
 import com.course.api.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,48 +22,17 @@ import java.text.SimpleDateFormat;
 public class RegisterToStudyController {
 
     @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private StudentClassService studentClassService;
-
-    @Autowired
-    private ClassService classService;
+    private RegisterToStudyService registerToStudyService;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public int registerToStudy(@RequestBody StudentClassDTO studentClassDTO){
         if(studentClassDTO == null)
             return 0;
         try {
-            //Thêm học viên mới
-            Student student = new Student();
-            if(studentService.getStudentByCMND(studentClassDTO.getCmnd())!= null){
-                student = studentService.getStudentByCMND(studentClassDTO.getCmnd());
-                if(studentClassService.getStudentClassByStudentAndClass(student.getIdStudent(), studentClassDTO.getIdClass())!= null)
-                    return 2;
-            }
-            else{
-                student.setCmnd(studentClassDTO.getCmnd());
-                student.setJob(studentClassDTO.getJob());
-                student.setStudentDate(studentClassDTO.getDate());
-                student.setSex(studentClassDTO.getSex());
-                student.setAddress(studentClassDTO.getAddress());
-                student.setEmail(studentClassDTO.getEmail());
-                student.setPhone(studentClassDTO.getPhone());
-                student.setStudentName(studentClassDTO.getName());
-                studentService.addStudent(student);
-            }
-            //Thêm vào lớp
-            StudentClass studentClass = new StudentClass();
-            studentClass.setIdClass(studentClassDTO.getIdClass());
-            studentClass.setIdStudent(student.getIdStudent());
-            studentClass.setIsFee(0);
-            studentClassService.addStudentClass(studentClass);
-            //Cập nhật sĩ số
-            Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
-            clazz.setSize(clazz.getSize() + 1);
-            classService.updateClass(clazz);
-            return 1;
+            ResponseModel model = registerToStudyService.register(studentClassDTO);
+            if(model.getMessage().equals("success"))
+                return 1;
+            return 2;
         } catch (Exception e) {
             e.printStackTrace();
         }
