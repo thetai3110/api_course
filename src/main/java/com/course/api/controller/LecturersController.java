@@ -35,6 +35,18 @@ public class LecturersController {
         return null;
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Lecturers> getLecturersById(@PathVariable(name = "id") Integer id) {
+        try {
+            Lecturers lecturers = lecturersService.getLecturersById(id);
+            if (lecturers == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Lecturers>(lecturers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Lecturers> addLecturers(@RequestBody LecturersDTO lecturersDTO) {
         try {

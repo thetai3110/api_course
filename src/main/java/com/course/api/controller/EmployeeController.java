@@ -29,6 +29,18 @@ public class EmployeeController {
         return null;
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable(name = "id") Integer id) {
+        try {
+            Employee employee = employeeService.getEmployeeById(id);
+            if (employee==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Employee> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
         try {
