@@ -67,7 +67,18 @@ public class LecturersServiceImpl implements LecturersService {
     }
 
     @Override
-    public Lecturers updateLecturers(Lecturers lecturers)  {
+    public Lecturers updateLecturers(LecturersDTO lecturersDTO, Integer idLec)  {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<LecturersDTO, Lecturers>() {
+            @Override
+            protected void configure() {
+                skip().setIdLecturers(null);
+            }
+        });
+        Lecturers lecturers = modelMapper.map(lecturersDTO, Lecturers.class);
+        lecturers.setIdLecturers(idLec);
+        lecturers.setMajors(majorsRepositoty.findMajorsByIdMajors(lecturersDTO.getIdMajors()));
+        lecturers.setAccountLec(accountRepositoty.findAccountByIdAccount(lecturersDTO.getIdAccount()));
         lecturers.setModifyDate(new Date());
         lecturersRepository.save(lecturers);
         return lecturers;

@@ -52,16 +52,29 @@ public class StudentController {
         return null;
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Student> updateStudent(@PathVariable(name = "idStudent") Integer idStudent, @RequestBody Student student) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Student> updateStudent(@PathVariable(name = "id") Integer idStudent, @RequestBody StudentDTO studentDTO) {
         try {
             Student curStudent = studentService.getStudentById(idStudent);
             if (curStudent == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            student.setIdStudent(idStudent);
-            return new ResponseEntity<Student>(studentService.updateStudent(student), HttpStatus.OK);
+            //student.setIdStudent(idStudent);
+            return new ResponseEntity<Student>(studentService.updateStudent(studentDTO, idStudent), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public boolean deleteStudent(@PathVariable(name = "id") Integer id) {
+        try {
+            Student curStudent = studentService.getStudentById(id);
+            if (curStudent == null) return false;
+            studentService.removeStudent(curStudent);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

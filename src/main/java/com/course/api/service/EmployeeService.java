@@ -9,6 +9,6 @@ public interface EmployeeService {
     List<Employee> getAll() throws Exception;
     Employee getEmployeeById(Integer idEmp) throws Exception;
     Employee addEmployee(EmployeeDTO employeeDTO) throws Exception;
-    Employee updateEmployee(Employee employee) throws Exception;
+    Employee updateEmployee(EmployeeDTO employeeDTO, Integer idEmployee) throws Exception;
     void removeEmployee(Employee employee) throws Exception;
 }

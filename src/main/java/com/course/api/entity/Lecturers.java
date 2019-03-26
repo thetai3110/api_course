@@ -64,7 +64,7 @@ public class Lecturers implements Serializable {
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_majors")
     private Majors majors;
 

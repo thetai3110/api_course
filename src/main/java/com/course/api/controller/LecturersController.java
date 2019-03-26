@@ -58,17 +58,30 @@ public class LecturersController {
         return null;
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Lecturers> updateLecturers(@PathVariable(name = "idLec") Integer idLec, @RequestBody Lecturers lecturers) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Lecturers> updateLecturers(@PathVariable(name = "id") Integer idLec, @RequestBody LecturersDTO lecturersDTO) {
         try {
             Lecturers curLec = lecturersService.getLecturersById(idLec);
             if (curLec == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            lecturers.setIdLecturers(idLec);
-            return new ResponseEntity<Lecturers>(lecturersService.updateLecturers(lecturers), HttpStatus.OK);
+            //lecturers.setIdLecturers(idLec);
+            return new ResponseEntity<Lecturers>(lecturersService.updateLecturers(lecturersDTO, idLec), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public boolean deleteStudent(@PathVariable(name = "id") Integer id) {
+        try {
+            Lecturers lecturers = lecturersService.getLecturersById(id);
+            if (lecturers == null) return false;
+            lecturersService.removeLecturers(lecturers);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

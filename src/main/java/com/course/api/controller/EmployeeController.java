@@ -52,16 +52,29 @@ public class EmployeeController {
         return null;
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Employee> updateEmployee(@PathVariable(name = "idEmp") Integer idEmp, @RequestBody Employee employee) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Employee> updateEmployee(@PathVariable(name = "id") Integer idEmp, @RequestBody EmployeeDTO employeeDTO) {
         try {
             Employee curEmp = employeeService.getEmployeeById(idEmp);
             if (curEmp == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            employee.setIdEmployee(idEmp);
-            return new ResponseEntity<Employee>(employeeService.updateEmployee(employee), HttpStatus.OK);
+            //employee.setIdEmployee(idEmp);
+            return new ResponseEntity<Employee>(employeeService.updateEmployee(employeeDTO, idEmp), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public boolean deleteStudent(@PathVariable(name = "id") Integer id) {
+        try {
+            Employee employee = employeeService.getEmployeeById(id);
+            if (employee == null) return false;
+            employeeService.removeEmployee(employee);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

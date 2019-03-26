@@ -50,7 +50,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(Employee employee){
+    public Employee updateEmployee(EmployeeDTO employeeDTO, Integer idEmployee){
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<EmployeeDTO, Employee>() {
+            @Override
+            protected void configure() {
+                skip().setIdEmployee(null);
+            }
+        });
+        Employee employee = modelMapper.map(employeeDTO, Employee.class);
+        employee.setIdEmployee(idEmployee);
+        employee.setAccountEmp(accountRepositoty.findAccountByIdAccount(employeeDTO.getIdAccount()));
         employee.setModifyDate(new Date());
         employeeRepository.save(employee);
         return employee;
