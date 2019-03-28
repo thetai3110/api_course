@@ -67,12 +67,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student updateStudent(StudentDTO studentDTO, Integer idStudent) {
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addMappings(new PropertyMap<StudentDTO, Student>() {
-            @Override
-            protected void configure() {
-                skip().setIdStudent(null);
-            }
-        });
         Student student = modelMapper.map(studentDTO, Student.class);
         student.setIdStudent(idStudent);
         student.setAccountStu(accountRepositoty.findAccountByIdAccount(studentDTO.getIdAccount()));

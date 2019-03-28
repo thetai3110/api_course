@@ -79,14 +79,10 @@ public class Student implements Serializable {
     @JoinColumn(name = "id_account")
     private Account accountStu;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_student")
-    private List<StudentClass> studentClasses;
-
     public Student() {
     }
 
-    public Student(String studentName, String job, String cmnd, Date studentDate, int sex, String address, String email, String phone, String image, int numOfRegister, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Account accountStu, List<StudentClass> studentClasses) {
+    public Student(String studentName, String job, String cmnd, Date studentDate, int sex, String address, String email, String phone, String image, int numOfRegister, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Account accountStu) {
         this.studentName = studentName;
         this.job = job;
         this.cmnd = cmnd;
@@ -102,7 +98,6 @@ public class Student implements Serializable {
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
         this.accountStu = accountStu;
-        this.studentClasses = studentClasses;
     }
 
     public Integer getIdStudent() {
@@ -233,11 +228,4 @@ public class Student implements Serializable {
         this.accountStu = accountStu;
     }
 
-    public List<StudentClass> getStudentClasses() {
-        return studentClasses;
-    }
-
-    public void setStudentClasses(List<StudentClass> studentClasses) {
-        this.studentClasses = studentClasses;
-    }
 }
