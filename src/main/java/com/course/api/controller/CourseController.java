@@ -51,6 +51,8 @@ public class CourseController {
     public ResponseEntity<Course> addCourse(@RequestBody CourseDTO courseDTO){
         try {
             if(courseDTO==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            String[] img = courseDTO.getImage().split("fakepath");
+            courseDTO.setImage(img[1]);
             return new ResponseEntity<Course>(courseService.addCourse(courseDTO),HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,16 +60,37 @@ public class CourseController {
         return null;
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Course> updateCourse(@PathVariable(name = "idCourse") Integer idCourse, @RequestBody Course course){
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Course> updateCourse(@PathVariable(name = "id") Integer idCourse, @RequestBody CourseDTO courseDTO){
         try {
             Course curCourse = courseService.getCourseById(idCourse);
             if(curCourse==null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            course.setIdCourse(idCourse);
-            return new ResponseEntity<Course>(courseService.updateCourse(course),HttpStatus.OK);
+            if(!courseDTO.getImage().equals("")){
+                String[] img = courseDTO.getImage().split("fakepath");
+                courseDTO.setImage(img[1]);
+            }else{
+                if(!curCourse.getImage().equals(""))
+                    courseDTO.setImage(curCourse.getImage());
+                else
+                    courseDTO.setImage("");
+            }
+            return new ResponseEntity<Course>(courseService.updateCourse(courseDTO, idCourse),HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public boolean deleteCourse(@PathVariable(name = "id") Integer id) {
+        try {
+            Course course = courseService.getCourseById(id);
+            if (course == null) return false;
+            courseService.removeCourse(course);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

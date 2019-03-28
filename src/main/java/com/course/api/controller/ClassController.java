@@ -66,16 +66,29 @@ public class ClassController {
         return null;
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Clazz> updateClass(@PathVariable(name = "idClazz") Integer idClazz, @RequestBody Clazz clazz) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Clazz> updateClass(@PathVariable(name = "id") Integer idClazz, @RequestBody ClassesDTO classesDTO) {
         try {
             Clazz curClazz = classService.getClassById(idClazz);
             if (curClazz == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            clazz.setIdClass(idClazz);
-            return new ResponseEntity<Clazz>(classService.updateClass(clazz), HttpStatus.OK);
+            //clazz.setIdClass(idClazz);
+            return new ResponseEntity<Clazz>(classService.updateClass(classesDTO, idClazz), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public boolean deleteClass(@PathVariable(name = "id") Integer id) {
+        try {
+            Clazz clazz = classService.getClassById(id);
+            if (clazz == null) return false;
+            classService.removeClass(clazz);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

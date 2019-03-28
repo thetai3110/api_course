@@ -62,7 +62,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course updateCourse(Course course ){
+    public Course updateCourse(CourseDTO courseDTO, Integer idCourse){
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<CourseDTO, Course>() {
+            @Override
+            protected void configure() {
+                skip().setIdCourse(null);
+            }
+        });
+        Course course = modelMapper.map(courseDTO, Course.class);
+        course.setIdCourse(idCourse);
+        course.setLevel(levelRepositoty.findAllByIdLevel(courseDTO.getIdLevel()));
         course.setModifyDate(new Date());
         courseRepository.save(course);
         return course;
@@ -70,6 +80,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void removeCourse(Course course) {
-        courseRepository.save(course);
+        courseRepository.delete(course);
     }
 }

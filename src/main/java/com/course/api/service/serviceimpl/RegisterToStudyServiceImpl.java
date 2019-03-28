@@ -68,7 +68,7 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
             //Cập nhật sĩ số
             Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
             clazz.setSize(clazz.getSize() + 1);
-            classService.updateClass(clazz);
+            //classService.updateClass(clazz);
             model.setMessage("success");
             model.setData(studentClassDTO);
             return model;

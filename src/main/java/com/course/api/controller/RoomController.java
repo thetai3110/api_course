@@ -28,6 +28,18 @@ public class RoomController {
         return null;
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Room> getAllRoom(@PathVariable(name = "id") Integer id) {
+        try {
+            Room room = roomService.getRoomById(id);
+            if (room == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Room>(room, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Room> addRoom(@RequestBody Room room) {
         try {
@@ -39,7 +51,7 @@ public class RoomController {
         return null;
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     public ResponseEntity<Room> updateRoom(@PathVariable(name = "idRoom") Integer idRoom, @RequestBody Room room) {
         try {
             Room curRoom = roomService.getRoomById(idRoom);

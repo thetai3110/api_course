@@ -10,21 +10,21 @@ public class ClassesDTO {
     private Integer idCourse;
     private String className;
     private int size;
-    private int minsize;
-    private int maxsize;
+    private int minSize;
+    private int maxSize;
     private int status;
 
     public ClassesDTO() {
     }
 
-    public ClassesDTO(Integer idRoom, Integer idLecturers, Integer idCourse, String className, int size, int minsize, int maxsize, int status) {
+    public ClassesDTO(Integer idRoom, Integer idLecturers, Integer idCourse, String className, int size, int minSize, int maxSize, int status) {
         this.idRoom = idRoom;
         this.idLecturers = idLecturers;
         this.idCourse = idCourse;
         this.className = className;
         this.size = size;
-        this.minsize = minsize;
-        this.maxsize = maxsize;
+        this.minSize = minSize;
+        this.maxSize = maxSize;
         this.status = status;
     }
 
@@ -68,20 +68,20 @@ public class ClassesDTO {
         this.size = size;
     }
 
-    public int getMinsize() {
-        return minsize;
+    public int getMinSize() {
+        return minSize;
     }
 
-    public void setMinsize(int minsize) {
-        this.minsize = minsize;
+    public void setMinSize(int minSize) {
+        this.minSize = minSize;
     }
 
-    public int getMaxsize() {
-        return maxsize;
+    public int getMaxSize() {
+        return maxSize;
     }
 
-    public void setMaxsize(int maxsize) {
-        this.maxsize = maxsize;
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
     }
 
     public int getStatus() {

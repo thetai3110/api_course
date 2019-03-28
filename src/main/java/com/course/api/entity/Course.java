@@ -75,11 +75,11 @@ public class Course implements Serializable {
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_level")
     private Level level;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "id_course")
     private List<Lesson> lessons;
 

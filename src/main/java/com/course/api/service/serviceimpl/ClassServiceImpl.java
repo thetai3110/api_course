@@ -80,7 +80,19 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public Clazz updateClass(Clazz clazz) {
+    public Clazz updateClass(ClassesDTO classesDTO, Integer idClass) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<ClassesDTO, Clazz>() {
+            @Override
+            protected void configure() {
+                skip().setIdClass(null);
+            }
+        });
+        Clazz clazz = modelMapper.map(classesDTO, Clazz.class);
+        clazz.setIdClass(idClass);
+        clazz.setCourse(courseRepository.findCourseByIdCourse(classesDTO.getIdCourse()));
+        clazz.setRoom(roomRepository.findRoomByIdRoom(classesDTO.getIdRoom()));
+        clazz.setLecturers(lecturersRepository.findLecturersByIdLecturers(classesDTO.getIdLecturers()));
         clazz.setModifyDate(new Date());
         clazzRepository.save(clazz);
         return clazz;

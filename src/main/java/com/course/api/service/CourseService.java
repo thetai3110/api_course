@@ -11,6 +11,6 @@ public interface CourseService {
     List<Course> getCourseByLevel(Integer idLevel) throws Exception;
     Course getCourseById(Integer idCouese) throws Exception;
     Course addCourse(CourseDTO courseDTO) throws Exception;
-    Course updateCourse(Course course) throws Exception;
+    Course updateCourse(CourseDTO courseDTO, Integer idCourse) throws Exception;
     void removeCourse(Course course) throws Exception;
 }
