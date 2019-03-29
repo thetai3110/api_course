@@ -12,8 +12,8 @@ public interface ClassDayService {
     ClassDay getClassDayById(Integer idClassDay) throws Exception;
     List<ClassDay> getClassDayBySchoolDay(Integer idSd) throws Exception;
     List<ClassDay> getClassDayByCa(Integer idCa) throws Exception;
-    List<ClassDay> getClassDayByClass(Integer idClass) throws Exception;
+    List<ClassDayDTO> getClassDayByClass(Integer idClass) throws Exception;
     ClassDay addClassDay(ClassDayDTO classDayDTO) throws Exception;
-    ClassDay updateClassDay(ClassDay classDay) throws Exception;
+    ClassDay updateClassDay(ClassDayDTO classDayDTO, Integer idClassDay) throws Exception;
     void removeClassDay(ClassDay classDay) throws Exception;
 }

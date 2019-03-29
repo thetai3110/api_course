@@ -1,6 +1,7 @@
 package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.ClassDayDTO;
+import com.course.api.dto.ClassesDTO;
 import com.course.api.entity.Ca;
 import com.course.api.entity.ClassDay;
 import com.course.api.entity.SchoolDay;
@@ -57,8 +58,9 @@ public class ClassDayServiceImpl implements ClassDayService {
 
 
     @Override
-    public List<ClassDay> getClassDayByClass(Integer idClass) {
-        return classDayRepository.findClassDayByIdClass(idClass);
+    public List<ClassDayDTO> getClassDayByClass(Integer idClass) {
+        String query = "SELECT * FROM CLASS_DAY cd join CLASS cl on cd.id_class = cl.id_class WHERE cd.id_class =:idClass";
+        return entityManager.createNativeQuery(query, ClassDayDTO.class).setParameter("idClass",idClass).getResultList();
     }
 
     @Override
@@ -71,7 +73,7 @@ public class ClassDayServiceImpl implements ClassDayService {
             }
         });
         ClassDay classDay = modelMapper.map(classDayDTO, ClassDay.class);
-        classDay.setSchoolDay(schoolDayRepository.findSchoolDayByIdSchoolDay(classDayDTO.getIdSchoolDay()));
+        classDay.setSchoolDay(schoolDayRepository.findSchoolDayByIdSchoolDay(classDayDTO.getIdSchoolday()));
         classDay.setCa(caRepositoty.findCaByIdCa(classDayDTO.getIdCa()));
         classDay.setCreatedDate(new Date());
         classDay.setModifyDate(new Date());
@@ -80,7 +82,18 @@ public class ClassDayServiceImpl implements ClassDayService {
     }
 
     @Override
-    public ClassDay updateClassDay(ClassDay classDay) {
+    public ClassDay updateClassDay(ClassDayDTO classDayDTO, Integer idClassDay) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<ClassDayDTO, ClassDay>() {
+            @Override
+            protected void configure() {
+                skip().setIdClassDay(null);
+            }
+        });
+        ClassDay classDay = modelMapper.map(classDayDTO, ClassDay.class);
+        classDay.setIdClassDay(idClassDay);
+        classDay.setSchoolDay(schoolDayRepository.findSchoolDayByIdSchoolDay(classDayDTO.getIdSchoolday()));
+        classDay.setCa(caRepositoty.findCaByIdCa(classDayDTO.getIdCa()));
         classDay.setModifyDate(new Date());
         classDayRepository.save(classDay);
         return classDay;

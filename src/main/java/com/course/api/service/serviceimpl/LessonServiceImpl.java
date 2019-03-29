@@ -16,7 +16,7 @@ public class LessonServiceImpl implements LessonService {
     private LessonRepository lessonRepository;
 
     @Override
-    public List<Lesson> findAll() {
+    public List<Lesson> getAll() {
         return lessonRepository.findAll();
     }
 

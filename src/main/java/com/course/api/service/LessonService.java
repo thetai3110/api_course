@@ -5,7 +5,7 @@ import com.course.api.entity.Lesson;
 import java.util.List;
 
 public interface LessonService {
-    List<Lesson> findAll() throws Exception;
+    List<Lesson> getAll() throws Exception;
     List<Lesson> getByCourse(Integer idCourse) throws Exception;
     Lesson getByCourseAndDay(Integer idCourse, String days) throws Exception;
     Lesson getLessonById(Integer idLesson) throws Exception;

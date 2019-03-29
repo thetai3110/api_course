@@ -68,17 +68,11 @@ public class Clazz implements Serializable {
     @JoinColumn(name = "id_class")
     private List<ClassDay> classDays;
 
-    @OneToMany
-    @JoinColumn(name = "id_class")
-    private List<StudentClass> studentClasses;
-
-    @OneToOne(mappedBy = "clazz")
-    private Exam exam;
 
     public Clazz() {
     }
 
-    public Clazz(String className, int size, int minSize, int maxSize, int status, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course, Room room, Lecturers lecturers, List<ClassDay> classDays, List<StudentClass> studentClasses, Exam exam) {
+    public Clazz(String className, int size, int minSize, int maxSize, int status, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course, Room room, Lecturers lecturers, List<ClassDay> classDays) {
         this.className = className;
         this.size = size;
         this.minSize = minSize;
@@ -92,8 +86,6 @@ public class Clazz implements Serializable {
         this.room = room;
         this.lecturers = lecturers;
         this.classDays = classDays;
-        this.studentClasses = studentClasses;
-        this.exam = exam;
     }
 
     public Integer getIdClass() {
@@ -208,19 +200,4 @@ public class Clazz implements Serializable {
         this.classDays = classDays;
     }
 
-    public List<StudentClass> getStudentClasses() {
-        return studentClasses;
-    }
-
-    public void setStudentClasses(List<StudentClass> studentClasses) {
-        this.studentClasses = studentClasses;
-    }
-
-    public Exam getExam() {
-        return exam;
-    }
-
-    public void setExam(Exam exam) {
-        this.exam = exam;
-    }
 }

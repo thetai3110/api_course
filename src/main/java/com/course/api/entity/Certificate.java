@@ -44,11 +44,11 @@ public class Certificate implements Serializable {
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_student")
     private Student student;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_exam")
     private Exam exam;
 

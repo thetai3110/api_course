@@ -66,7 +66,7 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public boolean deleteStudent(@PathVariable(name = "id") Integer id) {
+    public boolean deleteEmployee(@PathVariable(name = "id") Integer id) {
         try {
             Employee employee = employeeService.getEmployeeById(id);
             if (employee == null) return false;

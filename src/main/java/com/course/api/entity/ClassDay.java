@@ -35,11 +35,11 @@ public class ClassDay implements Serializable {
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_schoolday")
     private SchoolDay schoolDay;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_ca")
     private Ca ca;
 

@@ -39,8 +39,8 @@ public class AccountController {
         return null;
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Account> updateAccount(@PathVariable(name = "idAccount") Integer idAccount, @RequestBody Account account) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Account> updateAccount(@PathVariable(name = "id") Integer idAccount, @RequestBody Account account) {
         try {
             Account curAccount = accountService.getAccountById(idAccount);
             if (curAccount == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
