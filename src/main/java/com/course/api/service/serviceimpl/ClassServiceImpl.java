@@ -99,6 +99,13 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
+    public Clazz updateClass(Clazz clazz) throws Exception {
+        clazz.setModifyDate(new Date());
+        clazzRepository.save(clazz);
+        return clazz;
+    }
+
+    @Override
     public void removeClass(Clazz clazz) {
         clazzRepository.delete(clazz);
     }

@@ -13,5 +13,6 @@ public interface ClassService {
     List<Clazz> getClassByRoom(Integer idRoom) throws Exception;
     Clazz addClass(ClassesDTO classesDTO) throws Exception;
     Clazz updateClass(ClassesDTO classesDTO, Integer idClass) throws Exception;
+    Clazz updateClass(Clazz clazz) throws Exception;
     void removeClass(Clazz clazz) throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.course.api.service.serviceimpl;
 
+import com.course.api.dto.ClassesDTO;
 import com.course.api.dto.StudentClassDTO;
 import com.course.api.dto.StudentDTO;
 import com.course.api.entity.Clazz;
@@ -40,24 +41,15 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
                     model.setMessage("duplicate");
                     return model;
                 }
-            }
-            else{
+            }else{
                 modelMapper.addMappings(new PropertyMap<StudentClassDTO, StudentDTO>() {
                     @Override
                     protected void configure() {
                         skip().setIdAccount(null);
                     }
                 });
-//                student.setCmnd(studentClassDTO.getCmnd());
-//                student.setJob(studentClassDTO.getJob());
-//                student.setStudentDate(studentClassDTO.getDate());
-//                student.setSex(studentClassDTO.getSex());
-//                student.setAddress(studentClassDTO.getAddress());
-//                student.setEmail(studentClassDTO.getEmail());
-//                student.setPhone(studentClassDTO.getPhone());
-//                student.setStudentName(studentClassDTO.getName());
                 StudentDTO studentDTO = modelMapper.map(studentClassDTO, StudentDTO.class);
-                studentService.addStudent(studentDTO);
+                student = studentService.addStudent(studentDTO);
             }
             //Thêm vào lớp
             StudentClass studentClass = new StudentClass();
@@ -65,10 +57,10 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
             studentClass.setIdStudent(student.getIdStudent());
             studentClass.setIsFee(0);
             studentClassService.addStudentClass(studentClass);
-            //Cập nhật sĩ số
+            //Update sĩ số
             Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
-            clazz.setSize(clazz.getSize() + 1);
-            //classService.updateClass(clazz);
+            clazz.setSize((clazz.getSize() + 1));
+            classService.updateClass(clazz);
             model.setMessage("success");
             model.setData(studentClassDTO);
             return model;

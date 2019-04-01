@@ -10,6 +10,7 @@ import java.util.List;
 public interface ClassDayService {
     List<ClassDay> getAll() throws Exception;
     ClassDay getClassDayById(Integer idClassDay) throws Exception;
+    List<ClassDayDTO> getClassDayByRoom(Integer idRoom) throws Exception;
     List<ClassDay> getClassDayBySchoolDay(Integer idSd) throws Exception;
     List<ClassDay> getClassDayByCa(Integer idCa) throws Exception;
     List<ClassDayDTO> getClassDayByClass(Integer idClass) throws Exception;

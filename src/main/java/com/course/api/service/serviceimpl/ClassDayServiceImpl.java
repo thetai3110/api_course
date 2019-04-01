@@ -45,6 +45,12 @@ public class ClassDayServiceImpl implements ClassDayService {
     }
 
     @Override
+    public List<ClassDayDTO> getClassDayByRoom(Integer idRoom) {
+        String query = "SELECT * FROM CLASS_DAY cd join CLASS cl on cd.id_class = cl.id_class WHERE cl.id_room =:idRoom";
+        return entityManager.createNativeQuery(query, ClassDayDTO.class).setParameter("idRoom",idRoom).getResultList();
+    }
+
+    @Override
     public List<ClassDay> getClassDayBySchoolDay(Integer idSd) {
         String query = "SELECT * FROM CLASS_DAY WHERE id_schoolday =:idSd";
         return entityManager.createNativeQuery(query,ClassDay.class).setParameter("idSd",idSd).getResultList();

@@ -5,9 +5,9 @@ import java.util.Date;
 public class UserDTO {
     private String username;
     private String pass;
-    private String name;
+    private String studentName;
     private String cmnd;
-    private Date date;
+    private Date studentDate;
     private String sex;
     private String address;
     private String email;
@@ -17,12 +17,12 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String username, String pass, String name, String cmnd, Date date, String sex, String address, String email, String phone, String job) {
+    public UserDTO(String username, String pass, String studentName, String cmnd, Date studentDate, String sex, String address, String email, String phone, String job) {
         this.username = username;
         this.pass = pass;
-        this.name = name;
+        this.studentName = studentName;
         this.cmnd = cmnd;
-        this.date = date;
+        this.studentDate = studentDate;
         this.sex = sex;
         this.address = address;
         this.email = email;
@@ -46,12 +46,12 @@ public class UserDTO {
         this.pass = pass;
     }
 
-    public String getName() {
-        return name;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public String getCmnd() {
@@ -62,12 +62,12 @@ public class UserDTO {
         this.cmnd = cmnd;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getStudentDate() {
+        return studentDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStudentDate(Date studentDate) {
+        this.studentDate = studentDate;
     }
 
     public String getSex() {

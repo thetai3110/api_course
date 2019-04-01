@@ -29,6 +29,18 @@ public class ClassDayController {
         return null;
     }
 
+    @RequestMapping(value = "/room/{idRoom}", method = RequestMethod.GET)
+    public ResponseEntity<List<ClassDayDTO>> getClassDayByRoom(@PathVariable(name = "idRoom") Integer idRoom){
+        try {
+            List<ClassDayDTO> classDayDTOS = classDayService.getClassDayByRoom(idRoom);
+            if(classDayDTOS.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<ClassDayDTO>>(classDayDTOS,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<ClassDay> addClassDay(@RequestBody ClassDayDTO classDayDTO){
         try {

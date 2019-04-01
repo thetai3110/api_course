@@ -44,8 +44,8 @@ public class LoginController {
     }
 
     //Kiểm tra tài khoản đăng kí đã tồn tại chưa
-    @RequestMapping(value = "/check-register", method = RequestMethod.POST)
-    public boolean checkRegister(@RequestParam(name = "username") String username){
+    @RequestMapping(value = "/check-register/{username}", method = RequestMethod.GET)
+    public boolean checkRegister(@PathVariable(name = "username") String username){
         try {
             Account account = accountService.getAccountByUsername(username);
             if(account != null) return true;

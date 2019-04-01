@@ -28,17 +28,6 @@ public class RegisterAccountServiceImpl implements RegisterAccountService {
         Account newAcc = new Account();
         newAcc.setUsername(userDTO.getUsername());
         newAcc.setPass(userDTO.getPass());
-        //Người dùng mới
-//        Student newStu = new Student();
-//        newStu.setAccountStu(newAcc);
-//        newStu.setStudentName(userDTO.getName());
-//        newStu.setCmnd(userDTO.getCmnd());
-//        newStu.setStudentDate(userDTO.getDate());
-//        newStu.setSex(Integer.parseInt(userDTO.getSex()));
-//        newStu.setAddress(userDTO.getAddress());
-//        newStu.setEmail(userDTO.getEmail());
-//        newStu.setPhone(userDTO.getPhone());
-//        newStu.setJob(userDTO.getJob());
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.addMappings(new PropertyMap<UserDTO, StudentDTO>() {
             @Override
