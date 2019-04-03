@@ -1,30 +1,22 @@
 package com.course.api.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "PERMISSION")
-public class Permission implements Serializable {
+@Table(name = "ACCOUNT_PER")
+public class AccountPer {
 
     @Id
+    @Column(name = "id_accountper")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_per", nullable = false)
+    private Integer idAccountPer;
+
+    @Column(name = "id_account")
+    private Integer idAccount;
+
+    @Column(name = "id_per")
     private Integer idPer;
-
-    @Basic
-    @Column(name = "permission", nullable = true, length = 30)
-    private String permission;
-
-    @Basic
-    @Column(name = "action_code", nullable = false, length = 10)
-    private String actionCode;
-
-    @Basic
-    @Column(name = "describes", nullable = true)
-    private String describes;
 
     @Basic
     @Column(name = "CREATED_BY", nullable = true)
@@ -44,17 +36,32 @@ public class Permission implements Serializable {
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
-    public Permission() {
+    public AccountPer() {
     }
 
-    public Permission(String permission, String actionCode, String describes, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
-        this.permission = permission;
-        this.actionCode = actionCode;
-        this.describes = describes;
+    public AccountPer(Integer idAccount, Integer idPer, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
+        this.idAccount = idAccount;
+        this.idPer = idPer;
         this.createdBy = createdBy;
         this.modifyBy = modifyBy;
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
+    }
+
+    public Integer getIdAccountPer() {
+        return idAccountPer;
+    }
+
+    public void setIdAccountPer(Integer idAccountPer) {
+        this.idAccountPer = idAccountPer;
+    }
+
+    public Integer getIdAccount() {
+        return idAccount;
+    }
+
+    public void setIdAccount(Integer idAccount) {
+        this.idAccount = idAccount;
     }
 
     public Integer getIdPer() {
@@ -63,30 +70,6 @@ public class Permission implements Serializable {
 
     public void setIdPer(Integer idPer) {
         this.idPer = idPer;
-    }
-
-    public String getPermission() {
-        return permission;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
-    }
-
-    public String getActionCode() {
-        return actionCode;
-    }
-
-    public void setActionCode(String actionCode) {
-        this.actionCode = actionCode;
-    }
-
-    public String getDescribes() {
-        return describes;
-    }
-
-    public void setDescribes(String describes) {
-        this.describes = describes;
     }
 
     public Integer getCreatedBy() {
