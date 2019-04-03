@@ -10,6 +10,8 @@ import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private AccountRepositoty accountRepositoty;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Override
     public List<Student> getAll() {
         return studentRepositoty.findAll();
@@ -30,6 +35,12 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getStudentById(Integer idStu) throws Exception {
         return studentRepositoty.findStudentByIdStudent(idStu);
+    }
+
+    @Override
+    public Student gettudentByAccount(Integer idAccount) {
+        String query = "SELECT * FROM STUDENT WHERE id_account =:idAccount";
+        return (Student) entityManager.createNativeQuery(query, Student.class).setParameter("idAccount", idAccount).getSingleResult();
     }
 
     @Override
@@ -70,6 +81,13 @@ public class StudentServiceImpl implements StudentService {
         Student student = modelMapper.map(studentDTO, Student.class);
         student.setIdStudent(idStudent);
         student.setAccountStu(accountRepositoty.findAccountByIdAccount(studentDTO.getIdAccount()));
+        student.setModifyDate(new Date());
+        studentRepositoty.save(student);
+        return student;
+    }
+
+    @Override
+    public Student updateStudent(Student student) {
         student.setModifyDate(new Date());
         studentRepositoty.save(student);
         return student;

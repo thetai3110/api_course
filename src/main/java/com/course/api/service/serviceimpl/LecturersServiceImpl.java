@@ -44,6 +44,12 @@ public class LecturersServiceImpl implements LecturersService {
     }
 
     @Override
+    public Lecturers getLecturersAccount(Integer idAccount) throws Exception {
+        String query = "SELECT * FROM LECTURERS WHERE id_account =:idAccount";
+        return (Lecturers) entityManager.createNativeQuery(query, Lecturers.class).setParameter("idAccount", idAccount).getSingleResult();
+    }
+
+    @Override
     public List<Lecturers> getByMajors(Integer idMajors) {
         return entityManager.createNativeQuery("select * from LECTURERS where id_majors =:idMajors",Lecturers.class).setParameter("idMajors",idMajors).getResultList();
     }
@@ -79,6 +85,13 @@ public class LecturersServiceImpl implements LecturersService {
         lecturers.setIdLecturers(idLec);
         lecturers.setMajors(majorsRepositoty.findMajorsByIdMajors(lecturersDTO.getIdMajors()));
         lecturers.setAccountLec(accountRepositoty.findAccountByIdAccount(lecturersDTO.getIdAccount()));
+        lecturers.setModifyDate(new Date());
+        lecturersRepository.save(lecturers);
+        return lecturers;
+    }
+
+    @Override
+    public Lecturers updateLecturers(Lecturers lecturers) throws Exception {
         lecturers.setModifyDate(new Date());
         lecturersRepository.save(lecturers);
         return lecturers;

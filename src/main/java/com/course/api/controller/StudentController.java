@@ -41,6 +41,18 @@ public class StudentController {
         return null;
     }
 
+    @RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Student> getStudentByAcc(@PathVariable(name = "id") Integer id) {
+        try {
+            Student stu= studentService.gettudentByAccount(id);
+            if (stu==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Student>(stu, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Student> addStudent(@RequestBody StudentDTO studentDTO) {
         try {

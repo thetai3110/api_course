@@ -10,6 +10,8 @@ import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private AccountRepositoty accountRepositoty;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Override
     public List<Employee> getAll() {
         return employeeRepository.findAll();
@@ -30,6 +35,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployeeById(Integer idEmp) {
         return employeeRepository.findEmployeeByIdEmployee(idEmp);
+    }
+
+    @Override
+    public Employee getEmployeeAccount(Integer idAccount) {
+        String query = "SELECT * FROM EMPLOYEE WHERE id_account =:idAccount";
+        return (Employee) entityManager.createNativeQuery(query, Employee.class).setParameter("idAccount", idAccount).getSingleResult();
     }
 
     @Override
@@ -61,6 +72,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = modelMapper.map(employeeDTO, Employee.class);
         employee.setIdEmployee(idEmployee);
         employee.setAccountEmp(accountRepositoty.findAccountByIdAccount(employeeDTO.getIdAccount()));
+        employee.setModifyDate(new Date());
+        employeeRepository.save(employee);
+        return employee;
+    }
+
+    @Override
+    public Employee updateEmployee(Employee employee) throws Exception {
         employee.setModifyDate(new Date());
         employeeRepository.save(employee);
         return employee;
