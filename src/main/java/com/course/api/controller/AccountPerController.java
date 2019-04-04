@@ -28,6 +28,18 @@ public class AccountPerController {
         return null;
     }
 
+    @RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<AccountPer>> getAccPerByAccount(@PathVariable(name = "id") Integer id){
+        try {
+            List<AccountPer> accountPers = accountPerService.getAccountByAccount(id);
+            if(accountPers.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<AccountPer>>(accountPers,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<AccountPer> addAccountPer(@RequestBody AccountPer accountPer){
         try {
