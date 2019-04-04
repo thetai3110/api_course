@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
@@ -45,8 +46,13 @@ public class LecturersServiceImpl implements LecturersService {
 
     @Override
     public Lecturers getLecturersAccount(Integer idAccount) throws Exception {
-        String query = "SELECT * FROM LECTURERS WHERE id_account =:idAccount";
-        return (Lecturers) entityManager.createNativeQuery(query, Lecturers.class).setParameter("idAccount", idAccount).getSingleResult();
+        try {
+            String query = "SELECT * FROM LECTURERS WHERE id_account =:idAccount";
+            Lecturers lecturers = (Lecturers) entityManager.createNativeQuery(query, Lecturers.class).setParameter("idAccount", idAccount).getSingleResult();
+            return lecturers;
+        }catch (NoResultException e){
+            return null;
+        }
     }
 
     @Override

@@ -1,18 +1,13 @@
 package com.course.api.controller;
 
-import com.course.api.entity.Account;
-import com.course.api.entity.Employee;
-import com.course.api.entity.Lecturers;
-import com.course.api.entity.Student;
-import com.course.api.service.AccountService;
-import com.course.api.service.EmployeeService;
-import com.course.api.service.LecturersService;
-import com.course.api.service.StudentService;
+import com.course.api.entity.*;
+import com.course.api.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 @RestController
@@ -30,6 +25,9 @@ public class AccountController {
 
     @Autowired
     private LecturersService lecturersService;
+
+    @Autowired
+    private AccountPerService accountPerService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Account>> getAllAccount() {
@@ -83,24 +81,35 @@ public class AccountController {
     public boolean deleteAccount(@PathVariable(name = "id") Integer id) {
         try {
             Account account = accountService.getAccountById(id);
-            if (account == null) return false;
-            Student student = studentService.gettudentByAccount(id);
-            if(student != null){
-                student.setAccountStu(null);
-                studentService.updateStudent(student);
+            if (account == null)
+                return false;
+            else {
+                if (studentService.gettudentByAccount(id) != null) {
+                    Student student = studentService.gettudentByAccount(id);
+                    student.setAccountStu(null);
+                    studentService.updateStudent(student);
+                }
+                if (employeeService.getEmployeeAccount(id) != null) {
+                    Employee employee = employeeService.getEmployeeAccount(id);
+                    employee.setAccountEmp(null);
+                    employeeService.updateEmployee(employee);
+                }
+                if (lecturersService.getLecturersAccount(id) != null) {
+                    Lecturers lecturers = lecturersService.getLecturersAccount(id);
+                    lecturers.setAccountLec(null);
+                    lecturersService.updateLecturers(lecturers);
+                }
+                if(!accountPerService.getAccountByAccount(id).isEmpty()){
+                    for (AccountPer accPer: accountPerService.getAccountByAccount(id)
+                         ) {
+                        accountPerService.removeAccountPer(accPer);
+                    }
+                }
+                accountService.removeAccount(account);
+                return true;
             }
-            Employee employee = employeeService.getEmployeeById(id);
-            if(employee != null){
-                employee.setAccountEmp(null);
-                employeeService.updateEmployee(employee);
-            }
-            Lecturers lecturers = lecturersService.getLecturersById(id);
-            if(lecturers != null){
-                lecturers.setAccountLec(null);
-                lecturersService.updateLecturers(lecturers);
-            }
-            accountService.removeAccount(account);
-            return true;
+        } catch (NoResultException e){
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

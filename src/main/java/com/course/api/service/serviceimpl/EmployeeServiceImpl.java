@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
@@ -39,8 +40,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployeeAccount(Integer idAccount) {
-        String query = "SELECT * FROM EMPLOYEE WHERE id_account =:idAccount";
-        return (Employee) entityManager.createNativeQuery(query, Employee.class).setParameter("idAccount", idAccount).getSingleResult();
+        try {
+            String query = "SELECT * FROM EMPLOYEE WHERE id_account =:idAccount";
+            Employee employee = (Employee) entityManager.createNativeQuery(query, Employee.class).setParameter("idAccount", idAccount).getSingleResult();
+            return employee;
+        }catch (NoResultException e){
+            return null;
+        }
     }
 
     @Override

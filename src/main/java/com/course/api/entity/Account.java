@@ -33,21 +33,14 @@ public class Account implements Serializable {
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
-    @ManyToMany
-    @JoinTable(name = "ACCOUNT_PER",
-            joinColumns = @JoinColumn(name = "id_account"),
-            inverseJoinColumns = @JoinColumn(name = "id_per"))
-    private List<Permission> permissions;
-
     public Account() {
     }
 
-    public Account(String username, String pass, Date createdDate, Date modifyDate, List<Permission> permissions) {
+    public Account(String username, String pass, Date createdDate, Date modifyDate) {
         this.username = username;
         this.pass = pass;
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
-        this.permissions = permissions;
     }
 
     public Integer getIdAccount() {
@@ -90,11 +83,4 @@ public class Account implements Serializable {
         this.modifyDate = modifyDate;
     }
 
-    public List<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
-    }
 }
