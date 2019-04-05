@@ -1,7 +1,7 @@
 package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.ClassStudentDTO;
-import com.course.api.entity.Student;
+import com.course.api.dto.ClassCourseStudentDTO;
 import com.course.api.entity.StudentClass;
 import com.course.api.repository.StudentClassRepository;
 import com.course.api.service.StudentClassService;
@@ -36,6 +36,12 @@ public class StudentClassServiceImpl implements StudentClassService {
     public List<ClassStudentDTO> getStudentByClass(Integer idClass) {
         String query = "SELECT * FROM STUDENT join STUDENT_CLASS on STUDENT.id_student = STUDENT_CLASS.id_student WHERE STUDENT_CLASS.id_class =:idClass";
         return entityManager.createNativeQuery(query, ClassStudentDTO.class).setParameter("idClass", idClass).getResultList();
+    }
+
+    @Override
+    public List<ClassCourseStudentDTO> getClassByStudent(Integer idStudent) {
+        String query = "SELECT * FROM CLASS join STUDENT_CLASS on CLASS.id_class = STUDENT_CLASS.id_class join COURSE on CLASS.id_course = COURSE.id_course join LEVELCOURSE on COURSE.id_level = LEVELCOURSE.id_level WHERE STUDENT_CLASS.id_student =:idStudent";
+        return entityManager.createNativeQuery(query, ClassCourseStudentDTO.class).setParameter("idStudent", idStudent).getResultList();
     }
 
     @Override

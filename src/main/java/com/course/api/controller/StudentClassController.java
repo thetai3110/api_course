@@ -1,7 +1,7 @@
 package com.course.api.controller;
 
 import com.course.api.dto.ClassStudentDTO;
-import com.course.api.entity.Student;
+import com.course.api.dto.ClassCourseStudentDTO;
 import com.course.api.entity.StudentClass;
 import com.course.api.service.StudentClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,18 @@ public class StudentClassController {
             List<ClassStudentDTO> students = studentClassService.getStudentByClass(idClass);
             if(students.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
             return new ResponseEntity<List<ClassStudentDTO>>(students,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/student/{idStudent}", method = RequestMethod.GET)
+    public ResponseEntity<List<ClassCourseStudentDTO>> getClassByStudent(@PathVariable(name = "idStudent") Integer idStudent){
+        try {
+            List<ClassCourseStudentDTO> classes = studentClassService.getClassByStudent(idStudent);
+            if(classes.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<ClassCourseStudentDTO>>(classes,HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
