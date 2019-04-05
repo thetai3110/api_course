@@ -69,7 +69,15 @@ public class StudentController {
         try {
             Student curStudent = studentService.getStudentById(idStudent);
             if (curStudent == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            //student.setIdStudent(idStudent);
+            if(!studentDTO.getImage().equals("")){
+                String[] img = studentDTO.getImage().split("fakepath");
+                studentDTO.setImage(img[1]);
+            }else{
+                if(!curStudent.getImage().equals(""))
+                    studentDTO.setImage(curStudent.getImage());
+                else
+                    studentDTO.setImage("");
+            }
             return new ResponseEntity<Student>(studentService.updateStudent(studentDTO, idStudent), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
