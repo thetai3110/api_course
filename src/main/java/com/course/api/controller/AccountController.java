@@ -53,6 +53,18 @@ public class AccountController {
         return null;
     }
 
+    @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
+    public ResponseEntity<Account> getAccountByUsername(@PathVariable(name = "username") String username) {
+        try {
+            Account account = accountService.getAccountByUsername(username);
+            if (account==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Account>(account, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Account> addAccount(@RequestBody Account account) {
         try {
