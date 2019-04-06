@@ -69,10 +69,8 @@ public class CourseController {
                 String[] img = courseDTO.getImage().split("fakepath");
                 courseDTO.setImage(img[1]);
             }else{
-                if(!curCourse.getImage().equals(""))
-                    courseDTO.setImage(curCourse.getImage());
-                else
-                    courseDTO.setImage("");
+                String img = curCourse.getImage() == null || curCourse.getImage().equals("") ? "" : curCourse.getImage();
+                courseDTO.setImage(img);
             }
             return new ResponseEntity<Course>(courseService.updateCourse(courseDTO, idCourse),HttpStatus.OK);
         } catch (Exception e) {

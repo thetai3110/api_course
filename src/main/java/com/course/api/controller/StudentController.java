@@ -73,10 +73,8 @@ public class StudentController {
                 String[] img = studentDTO.getImage().split("fakepath");
                 studentDTO.setImage(img[1]);
             }else{
-                if(!curStudent.getImage().equals(""))
-                    studentDTO.setImage(curStudent.getImage());
-                else
-                    studentDTO.setImage("");
+                String img = curStudent.getImage() == null || curStudent.getImage().equals("") ? "" : curStudent.getImage();
+                studentDTO.setImage(img);
             }
             return new ResponseEntity<Student>(studentService.updateStudent(studentDTO, idStudent), HttpStatus.OK);
         } catch (Exception e) {

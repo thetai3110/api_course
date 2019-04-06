@@ -47,7 +47,7 @@ public class InvoiceController {
     public ResponseEntity<Invoice> addInvoice(@RequestBody InvoiceDTO invoiceDTO) {
         try {
             if (invoiceDTO == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            if(!invoiceDTO.getEmail().equals("")){
+            if(!invoiceDTO.getEmail().equals("") || invoiceDTO.getEmail() != null){
                 Email.send("Xác nhân thanh toán học phí", "Bạn đã đóng học phí thành công!!!", invoiceDTO.getEmail());
             }
             return new ResponseEntity<Invoice>(invoiceService.addInvoice(invoiceDTO), HttpStatus.OK);
@@ -57,8 +57,8 @@ public class InvoiceController {
         return null;
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Invoice> updateInvoice(@PathVariable(name = "idInvoice") Integer idInvoice, @RequestBody InvoiceDTO invoiceDTO) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Invoice> updateInvoice(@PathVariable(name = "id") Integer idInvoice, @RequestBody InvoiceDTO invoiceDTO) {
         try {
             Invoice curInvoice = invoiceService.getInvoiceById(idInvoice);
             if (curInvoice == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -67,5 +67,18 @@ public class InvoiceController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public boolean deleteInvocie(@PathVariable(name = "id") Integer id) {
+        try {
+            Invoice invoice = invoiceService.getInvoiceById(id);
+            if (invoice == null) return false;
+            invoiceService.removeInvoice(invoice);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
