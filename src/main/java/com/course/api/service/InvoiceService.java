@@ -1,5 +1,6 @@
 package com.course.api.service;
 
+import com.course.api.dto.InvoiceDTO;
 import com.course.api.entity.Invoice;
 import com.course.api.entity.Student;
 
@@ -10,6 +11,7 @@ public interface InvoiceService {
     Invoice getInvoiceById(Integer idInvoice) throws Exception;
     List<Invoice> getInvoiceByStudent(Student student) throws Exception;
     Invoice addInvoice(Invoice invoice) throws Exception;
-    Invoice updateInVoice(Invoice invoice) throws Exception;
+    Invoice updateInvoice(Invoice invoice) throws Exception;
+    Invoice updateInvoice(InvoiceDTO invoiceDTO, Integer idInvoice) throws Exception;
     void removeInvoice(Invoice invoice) throws Exception;
 }

@@ -20,7 +20,11 @@ public class Invoice implements Serializable {
 
     @Basic
     @Column(name = "cost", nullable = true)
-    private int cost;
+    private Integer cost;
+
+    @Basic
+    @Column(name = "payment", nullable = true)
+    private String payment;
 
     @Basic
     @Column(name = "CREATED_BY", nullable = true)
@@ -55,9 +59,10 @@ public class Invoice implements Serializable {
     public Invoice() {
     }
 
-    public Invoice(Date dateInvoice, int cost, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Student student, Course course, Employee employee) {
+    public Invoice(Date dateInvoice, Integer cost, String payment, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Student student, Course course, Employee employee) {
         this.dateInvoice = dateInvoice;
         this.cost = cost;
+        this.payment = payment;
         this.createdBy = createdBy;
         this.modifyBy = modifyBy;
         this.createdDate = createdDate;
@@ -83,12 +88,20 @@ public class Invoice implements Serializable {
         this.dateInvoice = dateInvoice;
     }
 
-    public int getCost() {
+    public Integer getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(Integer cost) {
         this.cost = cost;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 
     public Integer getCreatedBy() {

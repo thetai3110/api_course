@@ -1,5 +1,6 @@
 package com.course.api.controller;
 
+import com.course.api.dto.InvoiceDTO;
 import com.course.api.entity.Invoice;
 import com.course.api.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,18 @@ public class InvoiceController {
         return null;
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Invoice> getInvoiceById(@PathVariable(name = "id") Integer id) {
+        try {
+            Invoice invoice = invoiceService.getInvoiceById(id);
+            if (invoice == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Invoice>(invoice, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Invoice> addInvoice(@RequestBody Invoice invoice) {
         try {
@@ -40,12 +53,11 @@ public class InvoiceController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Invoice> updateInvoice(@PathVariable(name = "idInvoice") Integer idInvoice, @RequestBody Invoice invoice) {
+    public ResponseEntity<Invoice> updateInvoice(@PathVariable(name = "idInvoice") Integer idInvoice, @RequestBody InvoiceDTO invoiceDTO) {
         try {
             Invoice curInvoice = invoiceService.getInvoiceById(idInvoice);
             if (curInvoice == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            invoice.setIdInvoice(idInvoice);
-            return new ResponseEntity<Invoice>(invoiceService.updateInVoice(invoice), HttpStatus.OK);
+            return new ResponseEntity<Invoice>(invoiceService.updateInvoice(invoiceDTO, idInvoice), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
