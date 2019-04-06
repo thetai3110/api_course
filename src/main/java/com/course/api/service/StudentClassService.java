@@ -14,5 +14,6 @@ public interface StudentClassService {
     StudentClass getStudentClassByStudentAndClass(Integer idStudent, Integer idClass) throws Exception;
     StudentClass addStudentClass(StudentClass studentClass) throws Exception;
     StudentClass updateStudentClass(StudentClass studentClass) throws Exception;
+    StudentClass updateIsFee(Integer idStudentClass) throws Exception;
     void removeStudentClass(StudentClass studentClass) throws Exception;
 }

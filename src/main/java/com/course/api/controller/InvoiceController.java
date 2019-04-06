@@ -2,7 +2,9 @@ package com.course.api.controller;
 
 import com.course.api.dto.InvoiceDTO;
 import com.course.api.entity.Invoice;
+import com.course.api.sendemail.Email;
 import com.course.api.service.InvoiceService;
+import com.course.api.service.StudentClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,10 +44,13 @@ public class InvoiceController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Invoice> addInvoice(@RequestBody Invoice invoice) {
+    public ResponseEntity<Invoice> addInvoice(@RequestBody InvoiceDTO invoiceDTO) {
         try {
-            if (invoice == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<Invoice>(invoiceService.addInvoice(invoice), HttpStatus.OK);
+            if (invoiceDTO == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            if(!invoiceDTO.getEmail().equals("")){
+                Email.send("Xác nhân thanh toán học phí", "Bạn đã đóng học phí thành công!!!", invoiceDTO.getEmail());
+            }
+            return new ResponseEntity<Invoice>(invoiceService.addInvoice(invoiceDTO), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

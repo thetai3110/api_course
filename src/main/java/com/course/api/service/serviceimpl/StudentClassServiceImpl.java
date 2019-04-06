@@ -65,6 +65,13 @@ public class StudentClassServiceImpl implements StudentClassService {
     }
 
     @Override
+    public StudentClass updateIsFee(Integer idStudentClass) throws Exception {
+        String query = "UPDATE STUDENT_CLASS set isfee = 1 WHERE id_studentclass =:idStudentClass";
+        StudentClass studentClass = (StudentClass) entityManager.createNativeQuery(query, StudentClass.class).setParameter("idStudentClass", idStudentClass).getSingleResult();
+        return studentClass;
+    }
+
+    @Override
     public void removeStudentClass(StudentClass studentClass)  {
         studentClassRepository.delete(studentClass);
     }

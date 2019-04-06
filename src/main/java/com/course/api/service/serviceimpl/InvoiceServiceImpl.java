@@ -9,6 +9,7 @@ import com.course.api.repository.InvoiceRepository;
 import com.course.api.repository.StudentRepositoty;
 import com.course.api.service.InvoiceService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,18 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public Invoice addInvoice(Invoice invoice) {
+    public Invoice addInvoice(InvoiceDTO invoiceDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<InvoiceDTO, Invoice>() {
+            @Override
+            protected void configure() {
+                skip().setIdInvoice(null);
+            }
+        });
+        Invoice invoice = modelMapper.map(invoiceDTO, Invoice.class);
+        invoice.setStudent(studentRepositoty.findStudentByIdStudent(invoiceDTO.getIdStudent()));
+        invoice.setEmployee(employeeRepository.findEmployeeByIdEmployee(invoiceDTO.getIdEmployee()));
+        invoice.setCourse(courseRepository.findCourseByIdCourse(invoiceDTO.getIdCourse()));
         invoice.setCreatedDate(new Date());
         invoice.setModifyDate(new Date());
         invoiceRepository.save(invoice);
@@ -65,7 +77,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         ModelMapper modelMapper = new ModelMapper();
         Invoice invoice = modelMapper.map(invoiceDTO, Invoice.class);
         invoice.setIdInvoice(idInvoice);
-        invoice.setStudent(studentRepositoty.findStudentByIdStudent(invoiceDTO.getIdSudent()));
+        invoice.setStudent(studentRepositoty.findStudentByIdStudent(invoiceDTO.getIdStudent()));
         invoice.setEmployee(employeeRepository.findEmployeeByIdEmployee(invoiceDTO.getIdEmployee()));
         invoice.setCourse(courseRepository.findCourseByIdCourse(invoiceDTO.getIdCourse()));
         invoice.setModifyDate(new Date());
