@@ -16,6 +16,8 @@ import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service("registerToStudyService")
 public class RegisterToStudyServiceImpl implements RegisterToStudyService {
 
@@ -28,6 +30,7 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
     @Autowired
     private ClassService classService;
 
+    @Transactional(rollbackOn = Exception.class)
     @Override
     public ResponseModel register(StudentClassDTO studentClassDTO) {
         ResponseModel model = new ResponseModel();

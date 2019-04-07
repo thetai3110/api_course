@@ -47,9 +47,6 @@ public class InvoiceController {
     public ResponseEntity<Invoice> addInvoice(@RequestBody InvoiceDTO invoiceDTO) {
         try {
             if (invoiceDTO == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            if(!invoiceDTO.getEmail().equals("") || invoiceDTO.getEmail() != null){
-                Email.send("Xác nhân thanh toán học phí", "Bạn đã đóng học phí thành công!!!", invoiceDTO.getEmail());
-            }
             return new ResponseEntity<Invoice>(invoiceService.addInvoice(invoiceDTO), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
