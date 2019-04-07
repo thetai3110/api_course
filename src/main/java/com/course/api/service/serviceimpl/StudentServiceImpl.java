@@ -2,7 +2,9 @@ package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.StudentDTO;
 import com.course.api.entity.Student;
+import com.course.api.entity.StudentClass;
 import com.course.api.repository.AccountRepositoty;
+import com.course.api.repository.StudentClassRepository;
 import com.course.api.repository.StudentRepositoty;
 import com.course.api.service.StudentService;
 import org.modelmapper.ModelMapper;
@@ -24,6 +26,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private AccountRepositoty accountRepositoty;
+
+    @Autowired
+    private StudentClassRepository studentClassRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -107,6 +112,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void removeStudent(Student student) {
+        if(student.getAccountStu() != null)
+            accountRepositoty.delete(student.getAccountStu());
+        if(!studentClassRepository.findStudentClassByIdStudent(student.getIdStudent()).isEmpty()){
+            for (StudentClass stu:
+                    studentClassRepository.findStudentClassByIdStudent(student.getIdStudent())) {
+                studentClassRepository.delete(stu);
+            }
+        }
         studentRepositoty.delete(student);
     }
 }

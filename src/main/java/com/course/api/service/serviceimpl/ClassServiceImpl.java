@@ -1,12 +1,14 @@
 package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.ClassesDTO;
+import com.course.api.entity.ClassDay;
 import com.course.api.entity.Clazz;
-import com.course.api.repository.ClazzRepository;
-import com.course.api.repository.CourseRepository;
-import com.course.api.repository.LecturersRepository;
-import com.course.api.repository.RoomRepository;
+import com.course.api.entity.StudentClass;
+import com.course.api.repository.*;
+import com.course.api.service.ClassDayService;
 import com.course.api.service.ClassService;
+import com.course.api.service.StudentClassService;
+import com.course.api.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,18 @@ public class ClassServiceImpl implements ClassService {
 
     @Autowired
     private LecturersRepository lecturersRepository;
+
+    @Autowired
+    private StudentClassService studentClassService;
+
+    @Autowired
+    private StudentClassRepository studentClassRepository;
+
+    @Autowired
+    private ClassDayService classDayService;
+
+    @Autowired
+    private ClassDayRepository classDayRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -106,7 +120,19 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public void removeClass(Clazz clazz) {
+    public void removeClass(Clazz clazz) throws Exception {
+        if(!studentClassRepository.findStudentClassByIdClass(clazz.getIdClass()).isEmpty()){
+            for (StudentClass student:
+                    studentClassRepository.findStudentClassByIdClass(clazz.getIdClass())) {
+                studentClassService.removeStudentClass(student);
+            }
+        }
+        if(!classDayRepository.findClassDayByIdClass(clazz.getIdClass()).isEmpty()){
+            for (ClassDay classDay:
+                    classDayRepository.findClassDayByIdClass(clazz.getIdClass())) {
+                classDayService.removeClassDay(classDay);
+            }
+        }
         clazzRepository.delete(clazz);
     }
 }

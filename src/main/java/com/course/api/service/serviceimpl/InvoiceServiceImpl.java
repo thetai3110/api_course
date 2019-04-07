@@ -1,6 +1,7 @@
 package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.InvoiceDTO;
+import com.course.api.entity.Employee;
 import com.course.api.entity.Invoice;
 import com.course.api.entity.Student;
 import com.course.api.repository.CourseRepository;
@@ -44,6 +45,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public List<Invoice> getInvoiceByStudent(Student student) {
         return invoiceRepository.findInvoiceByStudent(student);
+    }
+
+    @Override
+    public List<Invoice> getInvoiceByEmployee(Employee employee) {
+        return invoiceRepository.findInvoiceByEmployee(employee);
     }
 
     @Override

@@ -1,11 +1,15 @@
 package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.CourseDTO;
+import com.course.api.entity.Clazz;
 import com.course.api.entity.Course;
+import com.course.api.entity.Lesson;
 import com.course.api.entity.Level;
 import com.course.api.repository.CourseRepository;
 import com.course.api.repository.LevelRepositoty;
+import com.course.api.service.ClassService;
 import com.course.api.service.CourseService;
+import com.course.api.service.LessonService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private LevelRepositoty levelRepositoty;
+
+    @Autowired
+    private ClassService classService;
+
+    @Autowired
+    private LessonService lessonService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -79,7 +89,19 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void removeCourse(Course course) {
+    public void removeCourse(Course course) throws Exception {
+        if(!classService.getClassByCourse(course.getIdCourse()).isEmpty()){
+            for (Clazz cl:
+                    classService.getClassByCourse(course.getIdCourse())) {
+                classService.removeClass(cl);
+            }
+        }
+        if(!lessonService.getByCourse(course.getIdCourse()).isEmpty()){
+            for (Lesson lesson:
+                    lessonService.getByCourse(course.getIdCourse())) {
+                lessonService.removeLesson(lesson);
+            }
+        }
         courseRepository.delete(course);
     }
 }

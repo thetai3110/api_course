@@ -1,11 +1,13 @@
 package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.LecturersDTO;
+import com.course.api.entity.Clazz;
 import com.course.api.entity.Lecturers;
 import com.course.api.entity.Majors;
 import com.course.api.repository.AccountRepositoty;
 import com.course.api.repository.LecturersRepository;
 import com.course.api.repository.MajorsRepositoty;
+import com.course.api.service.ClassService;
 import com.course.api.service.LecturersService;
 import com.course.api.service.MajorsService;
 import org.modelmapper.ModelMapper;
@@ -33,6 +35,9 @@ public class LecturersServiceImpl implements LecturersService {
 
     @Autowired
     private AccountRepositoty accountRepositoty;
+
+    @Autowired
+    private ClassService classService;
 
     @Override
     public List<Lecturers> getAll() {
@@ -104,7 +109,16 @@ public class LecturersServiceImpl implements LecturersService {
     }
 
     @Override
-    public void removeLecturers(Lecturers lecturers) {
+    public void removeLecturers(Lecturers lecturers) throws Exception {
+        if(lecturers.getAccountLec() != null)
+            accountRepositoty.delete(lecturers.getAccountLec());
+        if(!classService.getClassByLecturers(lecturers.getIdLecturers()).isEmpty()){
+            for (Clazz cl:
+                    classService.getClassByLecturers(lecturers.getIdLecturers())) {
+                cl.setLecturers(null);
+                classService.updateClass(cl);
+            }
+        }
         lecturersRepository.delete(lecturers);
     }
 }

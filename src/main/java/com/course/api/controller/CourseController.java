@@ -51,8 +51,12 @@ public class CourseController {
     public ResponseEntity<Course> addCourse(@RequestBody CourseDTO courseDTO){
         try {
             if(courseDTO==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            String[] img = courseDTO.getImage().split("fakepath");
-            courseDTO.setImage(img[1]);
+            if(!courseDTO.getImage().equals("")){
+                String[] img = courseDTO.getImage().split("fakepath");
+                courseDTO.setImage(img[1]);
+            }else{
+                courseDTO.setImage("");
+            }
             return new ResponseEntity<Course>(courseService.addCourse(courseDTO),HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

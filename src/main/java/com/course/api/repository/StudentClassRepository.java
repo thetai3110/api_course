@@ -9,4 +9,5 @@ public interface StudentClassRepository extends JpaRepository<StudentClass, Inte
     StudentClass findStudentClassByIdStudentClass(Integer idStudentClass);
     StudentClass findStudentClassByIdStudentAndIdClass(Integer idStudent, Integer idClass);
     List<StudentClass> findStudentClassByIdClass(Integer idClass);
+    List<StudentClass> findStudentClassByIdStudent(Integer idStudent);
 }

@@ -2,9 +2,11 @@ package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.EmployeeDTO;
 import com.course.api.entity.Employee;
+import com.course.api.entity.Invoice;
 import com.course.api.repository.AccountRepositoty;
 import com.course.api.repository.EmployeeRepository;
 import com.course.api.service.EmployeeService;
+import com.course.api.service.InvoiceService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private AccountRepositoty accountRepositoty;
+
+    @Autowired
+    private InvoiceService invoiceService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -91,7 +96,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void removeEmployee(Employee employee){
+    public void removeEmployee(Employee employee) throws Exception {
+        if(!invoiceService.getInvoiceByEmployee(employee).isEmpty()){
+            for (Invoice invoice:
+                    invoiceService.getInvoiceByEmployee(employee)) {
+                invoice.setEmployee(null);
+                invoiceService.updateInvoice(invoice);
+            }
+        }
         employeeRepository.delete(employee);
     }
 }
