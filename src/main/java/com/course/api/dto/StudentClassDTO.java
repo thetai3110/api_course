@@ -5,28 +5,32 @@ import java.util.Date;
 public class StudentClassDTO {
 
     private Integer idClass;
-    private String name;
+    private String studentName;
     private String cmnd;
-    private Date date;
+    private Date studentDate;
     private Integer sex;
     private String address;
     private String email;
     private String phone;
     private String job;
+    private Integer isLogin;
+    private Integer idStudent;
 
     public StudentClassDTO() {
     }
 
-    public StudentClassDTO(Integer idClass, String name, String cmnd, Date date, Integer sex, String address, String email, String phone, String job) {
+    public StudentClassDTO(Integer idClass, String studentName, String cmnd, Date studentDate, Integer sex, String address, String email, String phone, String job, Integer isLogin, Integer idStudent) {
         this.idClass = idClass;
-        this.name = name;
+        this.studentName = studentName;
         this.cmnd = cmnd;
-        this.date = date;
+        this.studentDate = studentDate;
         this.sex = sex;
         this.address = address;
         this.email = email;
         this.phone = phone;
         this.job = job;
+        this.isLogin = isLogin;
+        this.idStudent = idStudent;
     }
 
     public Integer getIdClass() {
@@ -37,12 +41,12 @@ public class StudentClassDTO {
         this.idClass = idClass;
     }
 
-    public String getName() {
-        return name;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public String getCmnd() {
@@ -53,12 +57,12 @@ public class StudentClassDTO {
         this.cmnd = cmnd;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getStudentDate() {
+        return studentDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStudentDate(Date studentDate) {
+        this.studentDate = studentDate;
     }
 
     public Integer getSex() {
@@ -99,5 +103,21 @@ public class StudentClassDTO {
 
     public void setJob(String job) {
         this.job = job;
+    }
+
+    public Integer getIsLogin() {
+        return isLogin;
+    }
+
+    public void setIsLogin(Integer isLogin) {
+        this.isLogin = isLogin;
+    }
+
+    public Integer getIdStudent() {
+        return idStudent;
+    }
+
+    public void setIdStudent(Integer idStudent) {
+        this.idStudent = idStudent;
     }
 }

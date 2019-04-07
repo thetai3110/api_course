@@ -36,15 +36,28 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
         ResponseModel model = new ResponseModel();
         ModelMapper modelMapper = new ModelMapper();
         try {
-            //Thêm học viên mới
-            Student student = new Student();
-            if(studentService.getStudentByCMND(studentClassDTO.getCmnd())!= null){
-                student = studentService.getStudentByCMND(studentClassDTO.getCmnd());
-                if(studentClassService.getStudentClassByStudentAndClass(student.getIdStudent(), studentClassDTO.getIdClass())!= null){
+            if(studentClassDTO.getIsLogin() == 1){
+                if(studentClassService.getStudentClassByStudentAndClass(studentClassDTO.getIdStudent(), studentClassDTO.getIdClass()) == null) {
+                    //Thêm vào lớp
+                    StudentClass studentClass = new StudentClass();
+                    studentClass.setIdClass(studentClassDTO.getIdClass());
+                    studentClass.setIdStudent(studentClassDTO.getIdStudent());
+                    studentClass.setIsFee(0);
+                    studentClassService.addStudentClass(studentClass);
+                    //Update sĩ số
+                    Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
+                    clazz.setSize((clazz.getSize() + 1));
+                    classService.updateClass(clazz);
+                    model.setMessage("success");
+                    model.setData(studentClassDTO);
+                    return model;
+                }else{
                     model.setMessage("duplicate");
                     return model;
                 }
             }else{
+                //Thêm học viên mới
+                Student student = new Student();
                 modelMapper.addMappings(new PropertyMap<StudentClassDTO, StudentDTO>() {
                     @Override
                     protected void configure() {
@@ -53,20 +66,20 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
                 });
                 StudentDTO studentDTO = modelMapper.map(studentClassDTO, StudentDTO.class);
                 student = studentService.addStudent(studentDTO);
+                //Thêm vào lớp
+                StudentClass studentClass = new StudentClass();
+                studentClass.setIdClass(studentClassDTO.getIdClass());
+                studentClass.setIdStudent(student.getIdStudent());
+                studentClass.setIsFee(0);
+                studentClassService.addStudentClass(studentClass);
+                //Update sĩ số
+                Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
+                clazz.setSize((clazz.getSize() + 1));
+                classService.updateClass(clazz);
+                model.setMessage("success");
+                model.setData(studentClassDTO);
+                return model;
             }
-            //Thêm vào lớp
-            StudentClass studentClass = new StudentClass();
-            studentClass.setIdClass(studentClassDTO.getIdClass());
-            studentClass.setIdStudent(student.getIdStudent());
-            studentClass.setIsFee(0);
-            studentClassService.addStudentClass(studentClass);
-            //Update sĩ số
-            Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
-            clazz.setSize((clazz.getSize() + 1));
-            classService.updateClass(clazz);
-            model.setMessage("success");
-            model.setData(studentClassDTO);
-            return model;
         } catch (Exception e) {
             e.printStackTrace();
             model.setMessage("fail");

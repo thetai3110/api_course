@@ -32,7 +32,8 @@ public class RegisterToStudyController {
             ResponseModel model = registerToStudyService.register(studentClassDTO);
             if(model.getMessage().equals("success"))
                 return 1;
-            return 2;
+            else
+                return 2;
         } catch (Exception e) {
             e.printStackTrace();
         }

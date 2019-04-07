@@ -50,6 +50,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Student getStudentByUsername(String username) {
+        String query = "SELECT * FROM STUDENT join ACCOUNTS on STUDENT.id_account = ACCOUNTS.id_account where ACCOUNTS.username =:username";
+        return (Student) entityManager.createNativeQuery(query,Student.class).setParameter("username", username).getSingleResult();
+    }
+
+    @Override
     public Student getStudentByName(String name) {
         return studentRepositoty.findStudentByStudentName(name);
     }

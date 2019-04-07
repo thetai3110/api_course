@@ -30,25 +30,25 @@ public class PaymentServiceImpl implements PaymentService {
     public ResponseModel payment(PaymentDTO paymentDTO) {
         ResponseModel model = new ResponseModel();
         try{
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addMappings(new PropertyMap<PaymentDTO, InvoiceDTO>() {
-            @Override
-            protected void configure() {
-                skip().setIdInvoice(null);
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.addMappings(new PropertyMap<PaymentDTO, InvoiceDTO>() {
+                @Override
+                protected void configure() {
+                    skip().setIdInvoice(null);
+                }
+            });
+            InvoiceDTO invoiceDTO = modelMapper.map(paymentDTO, InvoiceDTO.class);
+            invoiceService.addInvoice(invoiceDTO);
+            ModelMapper modelMapper1 = new ModelMapper();
+            StudentClass studentClass = modelMapper1.map(paymentDTO, StudentClass.class);
+            studentClass.setIdStudentClass(paymentDTO.getIdStudentclass());
+            studentClassService.updateStudentClass(studentClass);
+            if(!invoiceDTO.getEmail().equals("") || invoiceDTO.getEmail() != null){
+                Email.send("Xác nhân thanh toán học phí", "Bạn đã đóng học phí thành công!!!", invoiceDTO.getEmail());
             }
-        });
-        InvoiceDTO invoiceDTO = modelMapper.map(paymentDTO, InvoiceDTO.class);
-        invoiceService.addInvoice(invoiceDTO);
-        ModelMapper modelMapper1 = new ModelMapper();
-        StudentClass studentClass = modelMapper1.map(paymentDTO, StudentClass.class);
-        studentClass.setIdStudentClass(paymentDTO.getIdStudentclass());
-        studentClassService.updateStudentClass(studentClass);
-        if(!invoiceDTO.getEmail().equals("") || invoiceDTO.getEmail() != null){
-            Email.send("Xác nhân thanh toán học phí", "Bạn đã đóng học phí thành công!!!", invoiceDTO.getEmail());
-        }
-        model.setMessage("success");
-        model.setData(paymentDTO);
-        return model;
+            model.setMessage("success");
+            model.setData(paymentDTO);
+            return model;
         }catch (Exception e){
             e.printStackTrace();
             model.setMessage("fail");
