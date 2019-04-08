@@ -1,11 +1,13 @@
 package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.StudentDTO;
+import com.course.api.entity.Account;
 import com.course.api.entity.Student;
 import com.course.api.entity.StudentClass;
 import com.course.api.repository.AccountRepositoty;
 import com.course.api.repository.StudentClassRepository;
 import com.course.api.repository.StudentRepositoty;
+import com.course.api.service.AccountService;
 import com.course.api.service.StudentService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -26,6 +28,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private AccountRepositoty accountRepositoty;
+
+    @Autowired
+    private AccountService accountService;
 
     @Autowired
     private StudentClassRepository studentClassRepository;
@@ -111,15 +116,21 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void removeStudent(Student student) {
-        if(student.getAccountStu() != null)
-            accountRepositoty.delete(student.getAccountStu());
+    public void removeStudent(Student student) throws Exception {
         if(!studentClassRepository.findStudentClassByIdStudent(student.getIdStudent()).isEmpty()){
             for (StudentClass stu:
                     studentClassRepository.findStudentClassByIdStudent(student.getIdStudent())) {
                 studentClassRepository.delete(stu);
             }
         }
-        studentRepositoty.delete(student);
+        Account account = new Account();
+        if(student.getAccountStu() != null){
+            account = student.getAccountStu();
+            studentRepositoty.delete(student);
+            accountService.removeAccount(account);
+        }else{
+            studentRepositoty.delete(student);
+        }
+
     }
 }

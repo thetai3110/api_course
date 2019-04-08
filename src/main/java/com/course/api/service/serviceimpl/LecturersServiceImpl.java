@@ -1,12 +1,14 @@
 package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.LecturersDTO;
+import com.course.api.entity.Account;
 import com.course.api.entity.Clazz;
 import com.course.api.entity.Lecturers;
 import com.course.api.entity.Majors;
 import com.course.api.repository.AccountRepositoty;
 import com.course.api.repository.LecturersRepository;
 import com.course.api.repository.MajorsRepositoty;
+import com.course.api.service.AccountService;
 import com.course.api.service.ClassService;
 import com.course.api.service.LecturersService;
 import com.course.api.service.MajorsService;
@@ -35,6 +37,9 @@ public class LecturersServiceImpl implements LecturersService {
 
     @Autowired
     private AccountRepositoty accountRepositoty;
+
+    @Autowired
+    private AccountService accountService;
 
     @Autowired
     private ClassService classService;
@@ -110,8 +115,6 @@ public class LecturersServiceImpl implements LecturersService {
 
     @Override
     public void removeLecturers(Lecturers lecturers) throws Exception {
-        if(lecturers.getAccountLec() != null)
-            accountRepositoty.delete(lecturers.getAccountLec());
         if(!classService.getClassByLecturers(lecturers.getIdLecturers()).isEmpty()){
             for (Clazz cl:
                     classService.getClassByLecturers(lecturers.getIdLecturers())) {
@@ -119,6 +122,14 @@ public class LecturersServiceImpl implements LecturersService {
                 classService.updateClass(cl);
             }
         }
-        lecturersRepository.delete(lecturers);
+        Account account = new Account();
+        if(lecturers.getAccountLec() != null) {
+            account = lecturers.getAccountLec();
+            lecturersRepository.delete(lecturers);
+            accountService.removeAccount(account);
+
+        }else{
+            lecturersRepository.delete(lecturers);
+        }
     }
 }
