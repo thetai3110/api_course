@@ -46,7 +46,7 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
                     studentClassService.addStudentClass(studentClass);
                     //Update sĩ số
                     Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
-                    clazz.setSize((clazz.getSize() + 1));
+                    clazz.setSize(studentClassService.getStudentByClass(studentClassDTO.getIdClass()).size());
                     classService.updateClass(clazz);
                     model.setMessage("success");
                     model.setData(studentClassDTO);
@@ -74,7 +74,7 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
                 studentClassService.addStudentClass(studentClass);
                 //Update sĩ số
                 Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
-                clazz.setSize((clazz.getSize() + 1));
+                clazz.setSize(studentClassService.getStudentByClass(studentClassDTO.getIdClass()).size());
                 classService.updateClass(clazz);
                 model.setMessage("success");
                 model.setData(studentClassDTO);

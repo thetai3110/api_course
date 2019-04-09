@@ -9,6 +9,7 @@ import com.course.api.repository.EmployeeRepository;
 import com.course.api.repository.InvoiceRepository;
 import com.course.api.repository.StudentRepositoty;
 import com.course.api.service.InvoiceService;
+import com.course.api.service.StudentClassService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private StudentClassService studentClassService;
 
     @Override
     public List<Invoice> getAll() {

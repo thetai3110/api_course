@@ -2,8 +2,10 @@ package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.ClassStudentDTO;
 import com.course.api.dto.ClassCourseStudentDTO;
+import com.course.api.entity.Clazz;
 import com.course.api.entity.StudentClass;
 import com.course.api.repository.StudentClassRepository;
+import com.course.api.service.ClassService;
 import com.course.api.service.StudentClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class StudentClassServiceImpl implements StudentClassService {
 
     @Autowired
     private StudentClassRepository studentClassRepository;
+
+    @Autowired
+    private ClassService classService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -50,7 +55,9 @@ public class StudentClassServiceImpl implements StudentClassService {
     }
 
     @Override
-    public StudentClass addStudentClass(StudentClass studentClass) {
+    public StudentClass addStudentClass(StudentClass studentClass) throws Exception {
+        Clazz clazz = classService.getClassById(studentClass.getIdClass());
+        clazz.setSize(studentClassRepository.findStudentClassByIdClass(studentClass.getIdClass()).size() + 1);
         studentClass.setCreatedDate(new Date());
         studentClass.setModifyDate(new Date());
         studentClassRepository.save(studentClass);
@@ -64,15 +71,11 @@ public class StudentClassServiceImpl implements StudentClassService {
         return studentClass;
     }
 
-    @Override
-    public StudentClass updateIsFee(Integer idStudentClass) throws Exception {
-        String query = "UPDATE STUDENT_CLASS set isfee = 1 WHERE id_studentclass =:idStudentClass";
-        StudentClass studentClass = (StudentClass) entityManager.createNativeQuery(query, StudentClass.class).setParameter("idStudentClass", idStudentClass).getSingleResult();
-        return studentClass;
-    }
 
     @Override
-    public void removeStudentClass(StudentClass studentClass)  {
+    public void removeStudentClass(StudentClass studentClass) throws Exception {
+        Clazz clazz = classService.getClassById(studentClass.getIdClass());
+        clazz.setSize(studentClassRepository.findStudentClassByIdClass(studentClass.getIdClass()).size() - 1);
         studentClassRepository.delete(studentClass);
     }
 }

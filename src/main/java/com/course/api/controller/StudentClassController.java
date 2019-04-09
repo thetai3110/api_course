@@ -46,7 +46,10 @@ public class StudentClassController {
     public ResponseEntity<StudentClass> addStudentClass(@RequestBody StudentClass studentClass){
         try {
             if(studentClass==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<StudentClass>(studentClassService.addStudentClass(studentClass),HttpStatus.OK);
+            if(studentClassService.getStudentClassByStudentAndClass(studentClass.getIdStudent(), studentClass.getIdClass()) != null){
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            }else
+                return new ResponseEntity<StudentClass>(studentClassService.addStudentClass(studentClass),HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
