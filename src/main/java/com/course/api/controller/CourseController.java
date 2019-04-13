@@ -47,6 +47,30 @@ public class CourseController {
         return null;
     }
 
+    @RequestMapping(value = "/education/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Course>> getCourseByEducation(@PathVariable(name = "id") Integer id){
+        try {
+            List<Course> courses = courseService.getCourseByEducation(id);
+            if(courses.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/education/level/{idEdu}/{idLevel}", method = RequestMethod.GET)
+    public ResponseEntity<List<Course>> getCourseByLevelAndEducation(@PathVariable(name = "idEdu") Integer idEdu, @PathVariable(name = "idLevel") Integer idLevel){
+        try {
+            List<Course> courses = courseService.getCourseByLevelAndEducation(idLevel, idEdu);
+            if(courses.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Course> addCourse(@RequestBody CourseDTO courseDTO){
         try {

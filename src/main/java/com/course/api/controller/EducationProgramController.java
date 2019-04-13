@@ -28,6 +28,18 @@ public class EducationProgramController {
         return null;
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<EducationProgram> getEducationProgramById(@PathVariable(name = "id") Integer id){
+        try {
+            EducationProgram educationProgram = educationProgramService.getEducationProgramById(id);
+            if(educationProgram == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<EducationProgram>(educationProgram,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<EducationProgram> addEducationProgram(@RequestBody EducationProgram educationProgram) {
         try {
