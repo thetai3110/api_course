@@ -38,19 +38,24 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
         try {
             if(studentClassDTO.getIsLogin() == 1){
                 if(studentClassService.getStudentClassByStudentAndClass(studentClassDTO.getIdStudent(), studentClassDTO.getIdClass()) == null) {
-                    //Thêm vào lớp
-                    StudentClass studentClass = new StudentClass();
-                    studentClass.setIdClass(studentClassDTO.getIdClass());
-                    studentClass.setIdStudent(studentClassDTO.getIdStudent());
-                    studentClass.setIsFee(0);
-                    studentClassService.addStudentClass(studentClass);
-                    //Update sĩ số
                     Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
-                    clazz.setSize(studentClassService.getStudentByClass(studentClassDTO.getIdClass()).size());
-                    classService.updateClass(clazz);
-                    model.setMessage("success");
-                    model.setData(studentClassDTO);
-                    return model;
+                    if(clazz.getSize() == clazz.getMaxSize()){
+                        model.setMessage("full");
+                        return model;
+                    }else {
+                        //Thêm vào lớp
+                        StudentClass studentClass = new StudentClass();
+                        studentClass.setIdClass(studentClassDTO.getIdClass());
+                        studentClass.setIdStudent(studentClassDTO.getIdStudent());
+                        studentClass.setIsFee(0);
+                        studentClassService.addStudentClass(studentClass);
+                        //Update sĩ số
+                        clazz.setSize(studentClassService.getStudentByClass(studentClassDTO.getIdClass()).size());
+                        classService.updateClass(clazz);
+                        model.setMessage("success");
+                        model.setData(studentClassDTO);
+                        return model;
+                    }
                 }else{
                     model.setMessage("duplicate");
                     return model;

@@ -56,11 +56,12 @@ public class StudentClassServiceImpl implements StudentClassService {
 
     @Override
     public StudentClass addStudentClass(StudentClass studentClass) throws Exception {
-        Clazz clazz = classService.getClassById(studentClass.getIdClass());
-        clazz.setSize(studentClassRepository.findStudentClassByIdClass(studentClass.getIdClass()).size() + 1);
         studentClass.setCreatedDate(new Date());
         studentClass.setModifyDate(new Date());
         studentClassRepository.save(studentClass);
+        Clazz clazz = classService.getClassById(studentClass.getIdClass());
+        clazz.setSize(studentClassRepository.findStudentClassByIdClass(studentClass.getIdClass()).size());
+        classService.updateClass(clazz);
         return studentClass;
     }
 
@@ -74,8 +75,9 @@ public class StudentClassServiceImpl implements StudentClassService {
 
     @Override
     public void removeStudentClass(StudentClass studentClass) throws Exception {
-        Clazz clazz = classService.getClassById(studentClass.getIdClass());
-        clazz.setSize(studentClassRepository.findStudentClassByIdClass(studentClass.getIdClass()).size() - 1);
         studentClassRepository.delete(studentClass);
+        Clazz clazz = classService.getClassById(studentClass.getIdClass());
+        clazz.setSize(studentClassRepository.findStudentClassByIdClass(studentClass.getIdClass()).size());
+        classService.updateClass(clazz);
     }
 }

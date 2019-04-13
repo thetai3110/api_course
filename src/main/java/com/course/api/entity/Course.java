@@ -79,10 +79,14 @@ public class Course implements Serializable {
     @JoinColumn(name = "id_level")
     private Level level;
 
+    @ManyToOne
+    @JoinColumn(name = "id_edu")
+    private EducationProgram educationProgram;
+
     public Course() {
     }
 
-    public Course(String course, String duration, Date dayStart, int fee, String sale, String space, String conditions, String describes, int status, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Level level) {
+    public Course(String course, String duration, Date dayStart, int fee, String sale, String space, String conditions, String describes, int status, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Level level, EducationProgram educationProgram) {
         this.course = course;
         this.duration = duration;
         this.dayStart = dayStart;
@@ -98,6 +102,7 @@ public class Course implements Serializable {
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
         this.level = level;
+        this.educationProgram = educationProgram;
     }
 
     public Integer getIdCourse() {
@@ -228,4 +233,11 @@ public class Course implements Serializable {
         this.level = level;
     }
 
+    public EducationProgram getEducationProgram() {
+        return educationProgram;
+    }
+
+    public void setEducationProgram(EducationProgram educationProgram) {
+        this.educationProgram = educationProgram;
+    }
 }

@@ -6,6 +6,7 @@ import com.course.api.entity.Course;
 import com.course.api.entity.Lesson;
 import com.course.api.entity.Level;
 import com.course.api.repository.CourseRepository;
+import com.course.api.repository.EducationProgramRepository;
 import com.course.api.repository.LevelRepositoty;
 import com.course.api.service.ClassService;
 import com.course.api.service.CourseService;
@@ -28,6 +29,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private LevelRepositoty levelRepositoty;
+
+    @Autowired
+    private EducationProgramRepository educationProgramRepository;
 
     @Autowired
     private ClassService classService;
@@ -65,6 +69,7 @@ public class CourseServiceImpl implements CourseService {
         });
         Course course = modelMapper.map(courseDTO, Course.class);
         course.setLevel(levelRepositoty.findAllByIdLevel(courseDTO.getIdLevel()));
+        course.setEducationProgram(educationProgramRepository.findEducationProgramByIdEdu(courseDTO.getIdEdu()));
         course.setCreatedDate(new Date());
         course.setModifyDate(new Date());
         courseRepository.save(course);
@@ -83,6 +88,7 @@ public class CourseServiceImpl implements CourseService {
         Course course = modelMapper.map(courseDTO, Course.class);
         course.setIdCourse(idCourse);
         course.setLevel(levelRepositoty.findAllByIdLevel(courseDTO.getIdLevel()));
+        course.setEducationProgram(educationProgramRepository.findEducationProgramByIdEdu(courseDTO.getIdEdu()));
         course.setModifyDate(new Date());
         courseRepository.save(course);
         return course;

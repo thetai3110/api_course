@@ -23,6 +23,7 @@ public class ClassCourseStudentDTO {
     private int statusClass;
     //Course
     private Integer idLevel;
+    private Integer idEdu;
     private String course;
     private String duration;
     private Date dayStart;
@@ -38,7 +39,7 @@ public class ClassCourseStudentDTO {
     public ClassCourseStudentDTO() {
     }
 
-    public ClassCourseStudentDTO(Integer idClass, Integer idStudent, Integer idStudentclass, Integer isfee, Integer idRoom, Integer idLecturers, Integer idCourse, String className, int size, int minsize, int maxsize, int statusClass, Integer idLevel, String course, String duration, Date dayStart, int fee, String space, String conditions, String describes, int statusCourse, String image, String levelCourse) {
+    public ClassCourseStudentDTO(Integer idClass, Integer idStudent, Integer idStudentclass, Integer isfee, Integer idRoom, Integer idLecturers, Integer idCourse, String className, int size, int minsize, int maxsize, int statusClass, Integer idLevel, Integer idEdu, String course, String duration, Date dayStart, int fee, String space, String conditions, String describes, int statusCourse, String image, String levelCourse) {
         this.idClass = idClass;
         this.idStudent = idStudent;
         this.idStudentclass = idStudentclass;
@@ -52,6 +53,7 @@ public class ClassCourseStudentDTO {
         this.maxsize = maxsize;
         this.statusClass = statusClass;
         this.idLevel = idLevel;
+        this.idEdu = idEdu;
         this.course = course;
         this.duration = duration;
         this.dayStart = dayStart;
@@ -166,6 +168,14 @@ public class ClassCourseStudentDTO {
 
     public void setIdLevel(Integer idLevel) {
         this.idLevel = idLevel;
+    }
+
+    public Integer getIdEdu() {
+        return idEdu;
+    }
+
+    public void setIdEdu(Integer idEdu) {
+        this.idEdu = idEdu;
     }
 
     public String getCourse() {

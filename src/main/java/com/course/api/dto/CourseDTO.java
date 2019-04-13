@@ -6,6 +6,7 @@ public class CourseDTO {
 
     private Integer idCourse;
     private Integer idLevel;
+    private Integer idEdu;
     private String course;
     private String duration;
     private Date dayStart;
@@ -20,9 +21,10 @@ public class CourseDTO {
     public CourseDTO() {
     }
 
-    public CourseDTO(Integer idCourse, Integer idLevel, String course, String duration, Date dayStart, int fee, String sale, String space, String conditions, String describes, int status, String image) {
+    public CourseDTO(Integer idCourse, Integer idLevel, Integer idEdu, String course, String duration, Date dayStart, int fee, String sale, String space, String conditions, String describes, int status, String image) {
         this.idCourse = idCourse;
         this.idLevel = idLevel;
+        this.idEdu = idEdu;
         this.course = course;
         this.duration = duration;
         this.dayStart = dayStart;
@@ -49,6 +51,14 @@ public class CourseDTO {
 
     public void setIdLevel(Integer idLevel) {
         this.idLevel = idLevel;
+    }
+
+    public Integer getIdEdu() {
+        return idEdu;
+    }
+
+    public void setIdEdu(Integer idEdu) {
+        this.idEdu = idEdu;
     }
 
     public String getCourse() {
