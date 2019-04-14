@@ -34,6 +34,8 @@ public class RegisterToStudyController {
                 return 1;
             else if(model.getMessage().equals("full"))
                 return 2;
+            else if(model.getMessage().equals("close"))
+                return 4;
             else return 3;
         } catch (Exception e) {
             e.printStackTrace();

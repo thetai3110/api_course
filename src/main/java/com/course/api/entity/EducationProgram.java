@@ -16,6 +16,10 @@ public class EducationProgram {
     private String eduName;
 
     @Basic
+    @Column(name = "image", nullable = true, length = 30)
+    private String image;
+
+    @Basic
     @Column(name = "CREATED_BY", nullable = true)
     private Integer createdBy;
 
@@ -36,8 +40,9 @@ public class EducationProgram {
     public EducationProgram() {
     }
 
-    public EducationProgram(String eduName, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
+    public EducationProgram(String eduName, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
         this.eduName = eduName;
+        this.image = image;
         this.createdBy = createdBy;
         this.modifyBy = modifyBy;
         this.createdDate = createdDate;
@@ -58,6 +63,14 @@ public class EducationProgram {
 
     public void setEduName(String eduName) {
         this.eduName = eduName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Integer getCreatedBy() {

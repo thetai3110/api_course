@@ -36,53 +36,58 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
         ResponseModel model = new ResponseModel();
         ModelMapper modelMapper = new ModelMapper();
         try {
-            if(studentClassDTO.getIsLogin() == 1){
-                if(studentClassService.getStudentClassByStudentAndClass(studentClassDTO.getIdStudent(), studentClassDTO.getIdClass()) == null) {
-                    Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
-                    if(clazz.getSize() == clazz.getMaxSize()){
-                        model.setMessage("full");
-                        return model;
-                    }else {
-                        //Thêm vào lớp
-                        StudentClass studentClass = new StudentClass();
-                        studentClass.setIdClass(studentClassDTO.getIdClass());
-                        studentClass.setIdStudent(studentClassDTO.getIdStudent());
-                        studentClass.setIsFee(0);
-                        studentClassService.addStudentClass(studentClass);
-                        //Update sĩ số
-                        clazz.setSize(studentClassService.getStudentByClass(studentClassDTO.getIdClass()).size());
-                        classService.updateClass(clazz);
-                        model.setMessage("success");
-                        model.setData(studentClassDTO);
+            if(classService.getClassById(studentClassDTO.getIdClass()).getCourse().getStatus() == 1) {
+                if (studentClassDTO.getIsLogin() == 1) {
+                    if (studentClassService.getStudentClassByStudentAndClass(studentClassDTO.getIdStudent(), studentClassDTO.getIdClass()) == null) {
+                        Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
+                        if (clazz.getSize() == clazz.getMaxSize()) {
+                            model.setMessage("full");
+                            return model;
+                        } else {
+                            //Thêm vào lớp
+                            StudentClass studentClass = new StudentClass();
+                            studentClass.setIdClass(studentClassDTO.getIdClass());
+                            studentClass.setIdStudent(studentClassDTO.getIdStudent());
+                            studentClass.setIsFee(0);
+                            studentClassService.addStudentClass(studentClass);
+                            //Update sĩ số
+                            clazz.setSize(studentClassService.getStudentByClass(studentClassDTO.getIdClass()).size());
+                            classService.updateClass(clazz);
+                            model.setMessage("success");
+                            model.setData(studentClassDTO);
+                            return model;
+                        }
+                    } else {
+                        model.setMessage("duplicate");
                         return model;
                     }
-                }else{
-                    model.setMessage("duplicate");
+                } else {
+                    //Thêm học viên mới
+                    Student student = new Student();
+                    modelMapper.addMappings(new PropertyMap<StudentClassDTO, StudentDTO>() {
+                        @Override
+                        protected void configure() {
+                            skip().setIdAccount(null);
+                        }
+                    });
+                    StudentDTO studentDTO = modelMapper.map(studentClassDTO, StudentDTO.class);
+                    student = studentService.addStudent(studentDTO);
+                    //Thêm vào lớp
+                    StudentClass studentClass = new StudentClass();
+                    studentClass.setIdClass(studentClassDTO.getIdClass());
+                    studentClass.setIdStudent(student.getIdStudent());
+                    studentClass.setIsFee(0);
+                    studentClassService.addStudentClass(studentClass);
+                    //Update sĩ số
+                    Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
+                    clazz.setSize(studentClassService.getStudentByClass(studentClassDTO.getIdClass()).size());
+                    classService.updateClass(clazz);
+                    model.setMessage("success");
+                    model.setData(studentClassDTO);
                     return model;
                 }
             }else{
-                //Thêm học viên mới
-                Student student = new Student();
-                modelMapper.addMappings(new PropertyMap<StudentClassDTO, StudentDTO>() {
-                    @Override
-                    protected void configure() {
-                        skip().setIdAccount(null);
-                    }
-                });
-                StudentDTO studentDTO = modelMapper.map(studentClassDTO, StudentDTO.class);
-                student = studentService.addStudent(studentDTO);
-                //Thêm vào lớp
-                StudentClass studentClass = new StudentClass();
-                studentClass.setIdClass(studentClassDTO.getIdClass());
-                studentClass.setIdStudent(student.getIdStudent());
-                studentClass.setIsFee(0);
-                studentClassService.addStudentClass(studentClass);
-                //Update sĩ số
-                Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
-                clazz.setSize(studentClassService.getStudentByClass(studentClassDTO.getIdClass()).size());
-                classService.updateClass(clazz);
-                model.setMessage("success");
-                model.setData(studentClassDTO);
+                model.setMessage("close");
                 return model;
             }
         } catch (Exception e) {

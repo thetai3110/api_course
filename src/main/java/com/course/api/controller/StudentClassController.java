@@ -3,6 +3,7 @@ package com.course.api.controller;
 import com.course.api.dto.ClassStudentDTO;
 import com.course.api.dto.ClassCourseStudentDTO;
 import com.course.api.entity.StudentClass;
+import com.course.api.service.ClassService;
 import com.course.api.service.StudentClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,9 @@ public class StudentClassController {
 
     @Autowired
     private StudentClassService studentClassService;
+
+    @Autowired
+    private ClassService classService;
 
     @RequestMapping(value = "/{idClass}", method = RequestMethod.GET)
     public ResponseEntity<List<ClassStudentDTO>> getStudentByClass(@PathVariable(name = "idClass") Integer idClass){
@@ -46,10 +50,14 @@ public class StudentClassController {
     public ResponseEntity<StudentClass> addStudentClass(@RequestBody StudentClass studentClass){
         try {
             if(studentClass==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            if(studentClassService.getStudentClassByStudentAndClass(studentClass.getIdStudent(), studentClass.getIdClass()) != null){
+            if(classService.getClassById(studentClass.getIdClass()).getCourse().getStatus() == 1){
+                if(studentClassService.getStudentClassByStudentAndClass(studentClass.getIdStudent(), studentClass.getIdClass()) != null){
+                    return new ResponseEntity(HttpStatus.NO_CONTENT);
+                }else
+                    return new ResponseEntity<StudentClass>(studentClassService.addStudentClass(studentClass),HttpStatus.OK);
+            }else{
                 return new ResponseEntity(HttpStatus.NO_CONTENT);
-            }else
-                return new ResponseEntity<StudentClass>(studentClassService.addStudentClass(studentClass),HttpStatus.OK);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
