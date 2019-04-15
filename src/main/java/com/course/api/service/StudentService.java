@@ -12,6 +12,7 @@ public interface StudentService {
     Student getStudentByUsername(String username) throws Exception;
     Student getStudentByName(String name) throws Exception;
     Student getStudentByCMND(String CMND) throws Exception;
+    Student getStudentByCMNDAndName(String CMND, String name) throws Exception;
     Student getStudentByEmail(String email) throws Exception;
     Student addStudent(StudentDTO studentDTO) throws Exception;
     Student updateStudent(StudentDTO studentDTO, Integer idStudent) throws Exception;

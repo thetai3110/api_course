@@ -76,6 +76,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Student getStudentByCMNDAndName(String CMND, String name) throws Exception {
+        return studentRepositoty.findStudentByStudentNameAndCmnd(name, CMND);
+    }
+
+    @Override
     public Student getStudentByEmail(String email) throws Exception {
         return studentRepositoty.findStudentByEmail(email);
     }

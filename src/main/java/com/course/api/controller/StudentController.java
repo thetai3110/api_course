@@ -65,6 +65,18 @@ public class StudentController {
         return null;
     }
 
+    @RequestMapping(value = "/{name}/{cmnd}", method = RequestMethod.GET)
+    public ResponseEntity<Student> getStudentByNameAndCMND(@PathVariable(name = "name") String name, @PathVariable(name = "cmnd") String cmnd) {
+        try {
+            Student stu= studentService.getStudentByCMNDAndName(cmnd, name);
+            if (stu==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Student>(stu, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Student> addStudent(@RequestBody StudentDTO studentDTO) {
         try {

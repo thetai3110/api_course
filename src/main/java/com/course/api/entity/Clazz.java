@@ -19,6 +19,11 @@ public class Clazz implements Serializable {
     private String className;
 
     @Basic
+    @Temporal(TemporalType.DATE)
+    @Column(name = "day_start", nullable = true)
+    private Date dayStart;
+
+    @Basic
     @Column(name = "size", nullable = true)
     private int size;
 
@@ -72,8 +77,9 @@ public class Clazz implements Serializable {
     public Clazz() {
     }
 
-    public Clazz(String className, int size, int minSize, int maxSize, int status, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course, Room room, Lecturers lecturers, List<ClassDay> classDays) {
+    public Clazz(String className, Date dayStart, int size, int minSize, int maxSize, int status, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course, Room room, Lecturers lecturers, List<ClassDay> classDays) {
         this.className = className;
+        this.dayStart = dayStart;
         this.size = size;
         this.minSize = minSize;
         this.maxSize = maxSize;
@@ -102,6 +108,14 @@ public class Clazz implements Serializable {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public Date getDayStart() {
+        return dayStart;
+    }
+
+    public void setDayStart(Date dayStart) {
+        this.dayStart = dayStart;
     }
 
     public int getSize() {
@@ -199,5 +213,4 @@ public class Clazz implements Serializable {
     public void setClassDays(List<ClassDay> classDays) {
         this.classDays = classDays;
     }
-
 }

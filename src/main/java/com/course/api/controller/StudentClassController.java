@@ -50,7 +50,7 @@ public class StudentClassController {
     public ResponseEntity<StudentClass> addStudentClass(@RequestBody StudentClass studentClass){
         try {
             if(studentClass==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            if(classService.getClassById(studentClass.getIdClass()).getCourse().getStatus() == 1){
+            if(classService.getClassById(studentClass.getIdClass()).getCourse().getStatus() == 1 || classService.getClassById(studentClass.getIdClass()).getStatus() == 0){
                 if(studentClassService.getStudentClassByStudentAndClass(studentClass.getIdStudent(), studentClass.getIdClass()) != null){
                     return new ResponseEntity(HttpStatus.NO_CONTENT);
                 }else

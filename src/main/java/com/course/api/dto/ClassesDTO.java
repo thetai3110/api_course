@@ -2,6 +2,7 @@ package com.course.api.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 public class ClassesDTO {
 
@@ -9,6 +10,7 @@ public class ClassesDTO {
     private Integer idLecturers;
     private Integer idCourse;
     private String className;
+    private Date dayStart;
     private int size;
     private int minSize;
     private int maxSize;
@@ -17,11 +19,12 @@ public class ClassesDTO {
     public ClassesDTO() {
     }
 
-    public ClassesDTO(Integer idRoom, Integer idLecturers, Integer idCourse, String className, int size, int minSize, int maxSize, int status) {
+    public ClassesDTO(Integer idRoom, Integer idLecturers, Integer idCourse, String className, Date dayStart, int size, int minSize, int maxSize, int status) {
         this.idRoom = idRoom;
         this.idLecturers = idLecturers;
         this.idCourse = idCourse;
         this.className = className;
+        this.dayStart = dayStart;
         this.size = size;
         this.minSize = minSize;
         this.maxSize = maxSize;
@@ -58,6 +61,14 @@ public class ClassesDTO {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public Date getDayStart() {
+        return dayStart;
+    }
+
+    public void setDayStart(Date dayStart) {
+        this.dayStart = dayStart;
     }
 
     public int getSize() {

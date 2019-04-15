@@ -36,7 +36,7 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
         ResponseModel model = new ResponseModel();
         ModelMapper modelMapper = new ModelMapper();
         try {
-            if(classService.getClassById(studentClassDTO.getIdClass()).getCourse().getStatus() == 1) {
+            if(classService.getClassById(studentClassDTO.getIdClass()).getCourse().getStatus() == 1 || classService.getClassById(studentClassDTO.getIdClass()).getStatus() == 0) {
                 if (studentClassDTO.getIsLogin() == 1) {
                     if (studentClassService.getStudentClassByStudentAndClass(studentClassDTO.getIdStudent(), studentClassDTO.getIdClass()) == null) {
                         Clazz clazz = classService.getClassById(studentClassDTO.getIdClass());
