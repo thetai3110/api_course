@@ -1,10 +1,16 @@
 package com.course.api.service.serviceimpl;
 
+import com.course.api.dto.CertificateDTO;
 import com.course.api.entity.Certificate;
 import com.course.api.entity.Exam;
 import com.course.api.entity.Student;
 import com.course.api.repository.CertificateRepository;
+import com.course.api.repository.ExamRepository;
+import com.course.api.repository.MarksRepository;
+import com.course.api.repository.StudentRepositoty;
 import com.course.api.service.CertificateService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +27,15 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Autowired
     private CertificateRepository certificateRepository;
+
+    @Autowired
+    private StudentRepositoty studentRepositoty;
+
+    @Autowired
+    private MarksRepository marksRepository;
+
+    @Autowired
+    private ExamRepository examRepository;
 
     @Override
     public List<Certificate> getAll() {
@@ -46,7 +61,18 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public Certificate addCertificate(Certificate certificate) {
+    public Certificate addCertificate(CertificateDTO certificateDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<CertificateDTO, Certificate>() {
+            @Override
+            protected void configure() {
+                skip().setIdCertificate(null);
+            }
+        });
+        Certificate certificate = modelMapper.map(certificateDTO, Certificate.class);
+        certificate.setExam(examRepository.findExamByIdExam(certificateDTO.getIdExam()));
+        certificate.setStudent((studentRepositoty.findStudentByIdStudent(certificateDTO.getIdStudent())));
+        certificate.setMarks(marksRepository.findMarksByIdMarks(certificateDTO.getIdMarks()));
         certificate.setCreatedDate(new Date());
         certificate.setModifyDate(new Date());
         certificateRepository.save(certificate);
@@ -54,7 +80,19 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public Certificate updateCertificate(Certificate certificate) {
+    public Certificate updateCertificate(CertificateDTO certificateDTO, Integer idCer) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<CertificateDTO, Certificate>() {
+            @Override
+            protected void configure() {
+                skip().setIdCertificate(null);
+            }
+        });
+        Certificate certificate = modelMapper.map(certificateDTO, Certificate.class);
+        certificate.setIdCertificate(idCer);
+        certificate.setExam(examRepository.findExamByIdExam(certificateDTO.getIdExam()));
+        certificate.setStudent((studentRepositoty.findStudentByIdStudent(certificateDTO.getIdStudent())));
+        certificate.setMarks(marksRepository.findMarksByIdMarks(certificateDTO.getIdMarks()));
         certificate.setModifyDate(new Date());
         certificateRepository.save(certificate);
         return certificate;

@@ -19,10 +19,6 @@ public class Certificate implements Serializable {
     private Date dateCertificate;
 
     @Basic
-    @Column(name = "marks", nullable = true)
-    private Float marks;
-
-    @Basic
     @Column(name = "classification", nullable = true, length = 10)
     private String classification;
 
@@ -52,12 +48,15 @@ public class Certificate implements Serializable {
     @JoinColumn(name = "id_exam")
     private Exam exam;
 
+    @OneToOne
+    @JoinColumn(name = "id_marks")
+    private Marks marks;
+
     public Certificate() {
     }
 
-    public Certificate(Date dateCertificate, Float marks, String classification, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Student student, Exam exam) {
+    public Certificate(Date dateCertificate, String classification, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Student student, Exam exam, Marks marks) {
         this.dateCertificate = dateCertificate;
-        this.marks = marks;
         this.classification = classification;
         this.createdBy = createdBy;
         this.modifyBy = modifyBy;
@@ -65,6 +64,7 @@ public class Certificate implements Serializable {
         this.modifyDate = modifyDate;
         this.student = student;
         this.exam = exam;
+        this.marks = marks;
     }
 
     public Integer getIdCertificate() {
@@ -81,14 +81,6 @@ public class Certificate implements Serializable {
 
     public void setDateCertificate(Date dateCertificate) {
         this.dateCertificate = dateCertificate;
-    }
-
-    public Float getMarks() {
-        return marks;
-    }
-
-    public void setMarks(Float marks) {
-        this.marks = marks;
     }
 
     public String getClassification() {
@@ -145,5 +137,13 @@ public class Certificate implements Serializable {
 
     public void setExam(Exam exam) {
         this.exam = exam;
+    }
+
+    public Marks getMarks() {
+        return marks;
+    }
+
+    public void setMarks(Marks marks) {
+        this.marks = marks;
     }
 }
