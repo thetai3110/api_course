@@ -13,6 +13,7 @@ public interface StudentClassService {
     List<ClassCourseStudentDTO> getClassByStudent(Integer idStudent) throws Exception;
     StudentClass getStudentClassByStudentAndClass(Integer idStudent, Integer idClass) throws Exception;
     StudentClass addStudentClass(StudentClass studentClass) throws Exception;
+    List<StudentClass> addMultiStudentClass(List<StudentClass> studentClasses) throws Exception;
     StudentClass updateStudentClass(StudentClass studentClass) throws Exception;
     void removeStudentClass(StudentClass studentClass) throws Exception;
 }

@@ -4,6 +4,7 @@ import com.course.api.dto.StudentDTO;
 import com.course.api.entity.Account;
 import com.course.api.entity.Student;
 import com.course.api.entity.StudentClass;
+import com.course.api.model.ResponseModel;
 import com.course.api.repository.AccountRepositoty;
 import com.course.api.repository.StudentClassRepository;
 import com.course.api.repository.StudentRepositoty;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -100,6 +102,20 @@ public class StudentServiceImpl implements StudentService {
         student.setModifyDate(new Date());
         studentRepositoty.save(student);
         return student;
+    }
+
+    @Override
+    public List<Student> addMultiStudent(List<StudentDTO> studentDTOS) {
+        List<Student> students = new ArrayList<>();
+        for (StudentDTO studentDTO:
+             studentDTOS) {
+            students.add(addStudent(studentDTO));
+        }
+        if(students.size() == studentDTOS.size()){
+            return students;
+        }else{
+            return null;
+        }
     }
 
     @Override

@@ -41,6 +41,18 @@ public class Register {
     private Integer groupNum;
 
     @Basic
+    @Column(name = "is_fee", nullable = true)
+    private Integer isFee;
+
+    @Basic
+    @Column(name = "payment", nullable = true)
+    private Integer payment;
+
+    @Basic
+    @Column(name = "formula", nullable = true)
+    private String formula;
+
+    @Basic
     @Column(name = "status_register", nullable = true)
     private Integer status;
 
@@ -57,7 +69,7 @@ public class Register {
     public Register() {
     }
 
-    public Register(Integer idClass, String nameRegister, String email, String phone, String idSale, String job, Integer groupNum, Integer status, Date createdDate, Date modifyDate) {
+    public Register(Integer idClass, String nameRegister, String email, String phone, String idSale, String job, Integer groupNum, Integer isFee, Integer payment, String formula, Integer status, Date createdDate, Date modifyDate) {
         this.idClass = idClass;
         this.nameRegister = nameRegister;
         this.email = email;
@@ -65,6 +77,9 @@ public class Register {
         this.idSale = idSale;
         this.job = job;
         this.groupNum = groupNum;
+        this.isFee = isFee;
+        this.payment = payment;
+        this.formula = formula;
         this.status = status;
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
@@ -132,6 +147,30 @@ public class Register {
 
     public void setGroupNum(Integer groupNum) {
         this.groupNum = groupNum;
+    }
+
+    public Integer getIsFee() {
+        return isFee;
+    }
+
+    public void setIsFee(Integer isFee) {
+        this.isFee = isFee;
+    }
+
+    public Integer getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Integer payment) {
+        this.payment = payment;
+    }
+
+    public String getFormula() {
+        return formula;
+    }
+
+    public void setFormula(String formula) {
+        this.formula = formula;
     }
 
     public Integer getStatus() {

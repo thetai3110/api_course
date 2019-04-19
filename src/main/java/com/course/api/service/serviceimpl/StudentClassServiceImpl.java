@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +64,20 @@ public class StudentClassServiceImpl implements StudentClassService {
         clazz.setSize(studentClassRepository.findStudentClassByIdClass(studentClass.getIdClass()).size());
         classService.updateClass(clazz);
         return studentClass;
+    }
+
+    @Override
+    public List<StudentClass> addMultiStudentClass(List<StudentClass> studentClasses) throws Exception {
+        List<StudentClass> studentClassList = new ArrayList<>();
+        for (StudentClass studentClass:
+                studentClasses) {
+            studentClassList.add(addStudentClass(studentClass));
+        }
+        if(studentClassList.size() == studentClasses.size()){
+            return studentClassList;
+        }else{
+            return null;
+        }
     }
 
     @Override

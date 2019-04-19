@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class Email {
 
-    public static int send(String subject, String content, String email){
+    public static int send(String subject, String content, String email, Integer id){
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -27,7 +27,9 @@ public class Email {
             message.setFrom(new InternetAddress("trthetai3110@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
             message.setSubject(subject);
-            message.setText(content);
+           // message.setText(content);
+            String link = "<a href=\"http://localhost:4200/information/" + id + "\">Fill in the information</a>";
+            message.setContent(link,  "text/html");
             Transport.send(message);
             return 1;
         } catch (MessagingException e) {
@@ -37,7 +39,7 @@ public class Email {
     }
 
     public static void main(String args[]){
-        System.out.print(send("a","b","trthetai9@d"));
+        System.out.print(send("a","b","trthetai97@gmail.com",1));
     }
 
 

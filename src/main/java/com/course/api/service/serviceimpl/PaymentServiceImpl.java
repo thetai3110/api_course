@@ -44,7 +44,7 @@ public class PaymentServiceImpl implements PaymentService {
             studentClass.setIdStudentClass(paymentDTO.getIdStudentclass());
             studentClassService.updateStudentClass(studentClass);
             if(!invoiceDTO.getEmail().equals("") || invoiceDTO.getEmail() != null){
-                Email.send("Xác nhân thanh toán học phí", "Bạn đã đóng học phí thành công!!!", invoiceDTO.getEmail());
+               // Email.send("Xác nhân thanh toán học phí", "Bạn đã đóng học phí thành công!!!", invoiceDTO.getEmail());
             }
             model.setMessage("success");
             model.setData(paymentDTO);
