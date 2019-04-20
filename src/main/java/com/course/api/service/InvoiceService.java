@@ -10,7 +10,6 @@ import java.util.List;
 public interface InvoiceService {
     List<Invoice> getAll() throws Exception;
     Invoice getInvoiceById(Integer idInvoice) throws Exception;
-    List<Invoice> getInvoiceByStudent(Student student) throws Exception;
     List<Invoice> getInvoiceByEmployee(Employee employee) throws Exception;
     Invoice addInvoice(InvoiceDTO invoiceDTO) throws Exception;
     Invoice updateInvoice(Invoice invoice) throws Exception;

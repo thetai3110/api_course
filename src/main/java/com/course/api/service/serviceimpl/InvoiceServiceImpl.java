@@ -4,10 +4,7 @@ import com.course.api.dto.InvoiceDTO;
 import com.course.api.entity.Employee;
 import com.course.api.entity.Invoice;
 import com.course.api.entity.Student;
-import com.course.api.repository.CourseRepository;
-import com.course.api.repository.EmployeeRepository;
-import com.course.api.repository.InvoiceRepository;
-import com.course.api.repository.StudentRepositoty;
+import com.course.api.repository.*;
 import com.course.api.service.InvoiceService;
 import com.course.api.service.StudentClassService;
 import org.modelmapper.ModelMapper;
@@ -25,7 +22,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     private InvoiceRepository invoiceRepository;
 
     @Autowired
-    private StudentRepositoty studentRepositoty;
+    private RegisterRepository registerRepository;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -47,11 +44,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<Invoice> getInvoiceByStudent(Student student) {
-        return invoiceRepository.findInvoiceByStudent(student);
-    }
-
-    @Override
     public List<Invoice> getInvoiceByEmployee(Employee employee) {
         return invoiceRepository.findInvoiceByEmployee(employee);
     }
@@ -66,7 +58,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             }
         });
         Invoice invoice = modelMapper.map(invoiceDTO, Invoice.class);
-        invoice.setStudent(studentRepositoty.findStudentByIdStudent(invoiceDTO.getIdStudent()));
+        invoice.setRegister(registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister()));
         invoice.setEmployee(employeeRepository.findEmployeeByIdEmployee(invoiceDTO.getIdEmployee()));
         invoice.setCourse(courseRepository.findCourseByIdCourse(invoiceDTO.getIdCourse()));
         invoice.setCreatedDate(new Date());
@@ -87,7 +79,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         ModelMapper modelMapper = new ModelMapper();
         Invoice invoice = modelMapper.map(invoiceDTO, Invoice.class);
         invoice.setIdInvoice(idInvoice);
-        invoice.setStudent(studentRepositoty.findStudentByIdStudent(invoiceDTO.getIdStudent()));
+        invoice.setRegister(registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister()));
         invoice.setEmployee(employeeRepository.findEmployeeByIdEmployee(invoiceDTO.getIdEmployee()));
         invoice.setCourse(courseRepository.findCourseByIdCourse(invoiceDTO.getIdCourse()));
         invoice.setModifyDate(new Date());

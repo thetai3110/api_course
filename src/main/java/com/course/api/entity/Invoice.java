@@ -27,6 +27,10 @@ public class Invoice implements Serializable {
     private String payment;
 
     @Basic
+    @Column(name = "group_num", nullable = true)
+    private String groupNum;
+
+    @Basic
     @Column(name = "CREATED_BY", nullable = true)
     private Integer createdBy;
 
@@ -45,12 +49,12 @@ public class Invoice implements Serializable {
     private Date modifyDate;
 
     @ManyToOne
-    @JoinColumn(name = "id_student")
-    private Student student;
-
-    @ManyToOne
     @JoinColumn(name = "id_course")
     private Course course;
+
+    @OneToOne
+    @JoinColumn(name = "id_register")
+    private Register register;
 
     @ManyToOne
     @JoinColumn(name = "id_employee")
@@ -59,16 +63,17 @@ public class Invoice implements Serializable {
     public Invoice() {
     }
 
-    public Invoice(Date dateInvoice, Integer cost, String payment, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Student student, Course course, Employee employee) {
+    public Invoice(Date dateInvoice, Integer cost, String payment, String groupNum, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course, Register register, Employee employee) {
         this.dateInvoice = dateInvoice;
         this.cost = cost;
         this.payment = payment;
+        this.groupNum = groupNum;
         this.createdBy = createdBy;
         this.modifyBy = modifyBy;
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
-        this.student = student;
         this.course = course;
+        this.register = register;
         this.employee = employee;
     }
 
@@ -104,6 +109,14 @@ public class Invoice implements Serializable {
         this.payment = payment;
     }
 
+    public String getGroupNum() {
+        return groupNum;
+    }
+
+    public void setGroupNum(String groupNum) {
+        this.groupNum = groupNum;
+    }
+
     public Integer getCreatedBy() {
         return createdBy;
     }
@@ -136,20 +149,20 @@ public class Invoice implements Serializable {
         this.modifyDate = modifyDate;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
     public Course getCourse() {
         return course;
     }
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Register getRegister() {
+        return register;
+    }
+
+    public void setRegister(Register register) {
+        this.register = register;
     }
 
     public Employee getEmployee() {
