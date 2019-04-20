@@ -52,7 +52,7 @@ public class RoomController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public ResponseEntity<Room> updateRoom(@PathVariable(name = "idRoom") Integer idRoom, @RequestBody Room room) {
+    public ResponseEntity<Room> updateRoom(@PathVariable(name = "id") Integer idRoom, @RequestBody Room room) {
         try {
             Room curRoom = roomService.getRoomById(idRoom);
             if (curRoom == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -62,5 +62,18 @@ public class RoomController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public boolean deleteRoom(@PathVariable(name = "id") Integer id) {
+        try {
+            Room curRoom = roomService.getRoomById(id);
+            if (curRoom == null) return false;
+            roomService.removeRoom(curRoom);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
