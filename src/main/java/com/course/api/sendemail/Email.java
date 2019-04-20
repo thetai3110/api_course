@@ -27,7 +27,7 @@ public class Email {
             message.setFrom(new InternetAddress("trthetai3110@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
             message.setSubject(subject);
-           // message.setText(content);
+            message.setText(content);
             String link = "<a href=\"http://localhost:4200/information/" + id + "\">Fill in the information</a>";
             message.setContent(link,  "text/html");
             Transport.send(message);

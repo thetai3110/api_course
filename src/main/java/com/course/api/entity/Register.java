@@ -46,7 +46,7 @@ public class Register {
 
     @Basic
     @Column(name = "payment", nullable = true)
-    private Integer payment;
+    private String payment;
 
     @Basic
     @Column(name = "formula", nullable = true)
@@ -69,7 +69,7 @@ public class Register {
     public Register() {
     }
 
-    public Register(Integer idClass, String nameRegister, String email, String phone, String idSale, String job, Integer groupNum, Integer isFee, Integer payment, String formula, Integer status, Date createdDate, Date modifyDate) {
+    public Register(Integer idClass, String nameRegister, String email, String phone, String idSale, String job, Integer groupNum, Integer isFee, String payment, String formula, Integer status, Date createdDate, Date modifyDate) {
         this.idClass = idClass;
         this.nameRegister = nameRegister;
         this.email = email;
@@ -157,11 +157,11 @@ public class Register {
         this.isFee = isFee;
     }
 
-    public Integer getPayment() {
+    public String getPayment() {
         return payment;
     }
 
-    public void setPayment(Integer payment) {
+    public void setPayment(String payment) {
         this.payment = payment;
     }
 

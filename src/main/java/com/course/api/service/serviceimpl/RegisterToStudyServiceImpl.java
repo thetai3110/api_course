@@ -34,7 +34,6 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
     @Override
     public ResponseModel register(Integer idReg, List<StudentDTO> studentDTOs) {
         ResponseModel model = new ResponseModel();
-        ModelMapper modelMapper = new ModelMapper();
         try {
             //Thêm học viên mới
             List<Student> students= studentService.addMultiStudent(studentDTOs);
@@ -56,6 +55,9 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
             Clazz clazz = classService.getClassById(register.getIdClass());
             clazz.setSize(studentClassService.getStudentByClass(register.getIdClass()).size());
             classService.updateClass(clazz);
+            //Đã xác thực
+            register.setStatus(1);
+            registerService.updateRegister(register);
             model.setMessage("success");
             model.setData(studentDTOs);
             return model;

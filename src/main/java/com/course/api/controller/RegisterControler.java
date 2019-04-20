@@ -1,6 +1,7 @@
 package com.course.api.controller;
 
 import com.course.api.entity.Register;
+import com.course.api.sendemail.Email;
 import com.course.api.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,12 @@ public class RegisterControler {
     public ResponseEntity<Register> addRegister(@RequestBody Register register) {
         try {
             if (register == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<Register>(registerService.addRegister(register), HttpStatus.OK);
+            Register register1 = registerService.addRegister(register);
+            if(register1 != null)
+                Email.send("Đăng ký học tại trung tâm",
+                        "Đơn của bạn đã được chấp nhận, vui lòng hoàn tất thông tin trên đường link",
+                        register1.getEmail(),register1.getIdRegister());
+            return new ResponseEntity<Register>(register1, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
