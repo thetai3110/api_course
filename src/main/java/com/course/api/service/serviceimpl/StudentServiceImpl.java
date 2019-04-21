@@ -88,6 +88,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Student> getStudentByInvoice(Integer idInvoice) throws Exception {
+        return entityManager.createNativeQuery("select * from STUDENT st join INVOICE_DETAIL inv on st.id_student = inv.id_student where inv.id_invoice =:idInvoice",Student.class).setParameter("idInvoice",idInvoice).getResultList();
+    }
+
+    @Override
     public Student addStudent(StudentDTO studentDTO) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.addMappings(new PropertyMap<StudentDTO, Student>() {

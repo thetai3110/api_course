@@ -1,7 +1,9 @@
 package com.course.api.controller;
 
 import com.course.api.entity.InvoiceDetail;
+import com.course.api.entity.StudentClass;
 import com.course.api.service.InvoiceDetailService;
+import com.course.api.service.StudentClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,9 @@ public class InvoiceDetailController {
 
     @Autowired
     private InvoiceDetailService invoiceDetailService;
+
+    @Autowired
+    private StudentClassService studentClassService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<InvoiceDetail>> getAllInvoiceDetail() {
@@ -44,6 +49,9 @@ public class InvoiceDetailController {
     public ResponseEntity<InvoiceDetail> addInvoiceDetail(@RequestBody InvoiceDetail invoiceDetail) {
         try {
             if (invoiceDetail == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            StudentClass studentClass = studentClassService.getStudentClassByStudentAndClass(invoiceDetail.getIdStudent(), invoiceDetail.getIdClass());
+            studentClass.setIsFee(1);
+            studentClassService.updateStudentClass(studentClass);
             return new ResponseEntity<InvoiceDetail>(invoiceDetailService.addInvoice(invoiceDetail), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

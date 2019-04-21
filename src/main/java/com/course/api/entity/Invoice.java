@@ -53,8 +53,8 @@ public class Invoice implements Serializable {
     private Date modifyDate;
 
     @ManyToOne
-    @JoinColumn(name = "id_course")
-    private Course course;
+    @JoinColumn(name = "id_class")
+    private Clazz clazz;
 
     @OneToOne
     @JoinColumn(name = "id_register")
@@ -67,7 +67,7 @@ public class Invoice implements Serializable {
     public Invoice() {
     }
 
-    public Invoice(Date dateInvoice, Integer cost, String payment, String studentName, String groupNum, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course, Register register, Employee employee) {
+    public Invoice(Date dateInvoice, Integer cost, String payment, String studentName, String groupNum, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Clazz clazz, Register register, Employee employee) {
         this.dateInvoice = dateInvoice;
         this.cost = cost;
         this.payment = payment;
@@ -77,7 +77,7 @@ public class Invoice implements Serializable {
         this.modifyBy = modifyBy;
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
-        this.course = course;
+        this.clazz = clazz;
         this.register = register;
         this.employee = employee;
     }
@@ -162,12 +162,12 @@ public class Invoice implements Serializable {
         this.modifyDate = modifyDate;
     }
 
-    public Course getCourse() {
-        return course;
+    public Clazz getClazz() {
+        return clazz;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setClazz(Clazz clazz) {
+        this.clazz = clazz;
     }
 
     public Register getRegister() {

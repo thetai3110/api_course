@@ -28,7 +28,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private CourseRepository courseRepository;
+    private ClazzRepository clazzRepository;
 
     @Autowired
     private RegisterRepository registerRepository;
@@ -68,7 +68,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice invoice = modelMapper.map(invoiceDTO, Invoice.class);
         invoice.setRegister(registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister()));
         invoice.setEmployee(employeeRepository.findEmployeeByIdEmployee(invoiceDTO.getIdEmployee()));
-        invoice.setCourse(courseRepository.findCourseByIdCourse(invoiceDTO.getIdCourse()));
+        invoice.setClazz(clazzRepository.findClazzByIdClass(invoiceDTO.getIdClass()));
         invoice.setCreatedDate(new Date());
         invoice.setModifyDate(new Date());
         invoiceRepository.save(invoice);
@@ -89,7 +89,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice.setIdInvoice(idInvoice);
         invoice.setRegister(registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister()));
         invoice.setEmployee(employeeRepository.findEmployeeByIdEmployee(invoiceDTO.getIdEmployee()));
-        invoice.setCourse(courseRepository.findCourseByIdCourse(invoiceDTO.getIdCourse()));
+        invoice.setClazz(clazzRepository.findClazzByIdClass(invoiceDTO.getIdClass()));
         invoice.setModifyDate(new Date());
         invoiceRepository.save(invoice);
         return invoice;

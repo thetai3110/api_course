@@ -9,7 +9,7 @@ public class InvoiceDTO {
     private Integer cost;
     private String payment;
     private String studentName;
-    private Integer idCourse;
+    private Integer idClass;
     private Integer idEmployee;
     private Integer groupNum;
     private String email;
@@ -18,13 +18,13 @@ public class InvoiceDTO {
     public InvoiceDTO() {
     }
 
-    public InvoiceDTO(Integer idInvoice, Date dateInvoice, Integer cost, String payment, String studentName, Integer idCourse, Integer idEmployee, Integer groupNum, String email, Integer idRegister) {
+    public InvoiceDTO(Integer idInvoice, Date dateInvoice, Integer cost, String payment, String studentName, Integer idClass, Integer idEmployee, Integer groupNum, String email, Integer idRegister) {
         this.idInvoice = idInvoice;
         this.dateInvoice = dateInvoice;
         this.cost = cost;
         this.payment = payment;
         this.studentName = studentName;
-        this.idCourse = idCourse;
+        this.idClass = idClass;
         this.idEmployee = idEmployee;
         this.groupNum = groupNum;
         this.email = email;
@@ -71,12 +71,12 @@ public class InvoiceDTO {
         this.studentName = studentName;
     }
 
-    public Integer getIdCourse() {
-        return idCourse;
+    public Integer getIdClass() {
+        return idClass;
     }
 
-    public void setIdCourse(Integer idCourse) {
-        this.idCourse = idCourse;
+    public void setIdClass(Integer idClass) {
+        this.idClass = idClass;
     }
 
     public Integer getIdEmployee() {

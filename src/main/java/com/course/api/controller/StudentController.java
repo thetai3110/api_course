@@ -53,6 +53,18 @@ public class StudentController {
         return null;
     }
 
+    @RequestMapping(value = "/invoice/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Student>> getStudentByInvoice(@PathVariable(name = "id") Integer id) {
+        try {
+            List<Student> stu= studentService.getStudentByInvoice(id);
+            if (stu==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Student>>(stu, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
     public ResponseEntity<Student> getStudentByUsername(@PathVariable(name = "username") String username) {
         try {

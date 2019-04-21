@@ -15,6 +15,7 @@ public interface StudentService {
     Student getStudentByCMND(String CMND) throws Exception;
     Student getStudentByCMNDAndName(String CMND, String name) throws Exception;
     Student getStudentByEmail(String email) throws Exception;
+    List<Student> getStudentByInvoice(Integer idInvoice) throws Exception;
     Student addStudent(StudentDTO studentDTO) throws Exception;
     List<Student> addMultiStudent(List<StudentDTO> studentDTOS) throws Exception;
     Student updateStudent(StudentDTO studentDTO, Integer idStudent) throws Exception;

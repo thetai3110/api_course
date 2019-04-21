@@ -21,6 +21,10 @@ public class InvoiceDetail {
     private Integer idStudent;
 
     @Basic
+    @Column(name = "id_class", nullable = true)
+    private Integer idClass;
+
+    @Basic
     @Column(name = "CREATED_BY", nullable = true)
     private Integer createdBy;
 
@@ -41,9 +45,10 @@ public class InvoiceDetail {
     public InvoiceDetail() {
     }
 
-    public InvoiceDetail(Integer idInvoice, Integer idStudent, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
+    public InvoiceDetail(Integer idInvoice, Integer idStudent, Integer idClass, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
         this.idInvoice = idInvoice;
         this.idStudent = idStudent;
+        this.idClass = idClass;
         this.createdBy = createdBy;
         this.modifyBy = modifyBy;
         this.createdDate = createdDate;
@@ -72,6 +77,14 @@ public class InvoiceDetail {
 
     public void setIdStudent(Integer idStudent) {
         this.idStudent = idStudent;
+    }
+
+    public Integer getIdClass() {
+        return idClass;
+    }
+
+    public void setIdClass(Integer idClass) {
+        this.idClass = idClass;
     }
 
     public Integer getCreatedBy() {
