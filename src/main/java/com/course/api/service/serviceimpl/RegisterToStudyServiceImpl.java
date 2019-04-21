@@ -59,7 +59,7 @@ public class RegisterToStudyServiceImpl implements RegisterToStudyService {
             register.setStatus(1);
             registerService.updateRegister(register);
             model.setMessage("success");
-            model.setData(studentDTOs);
+            model.setData(students);
             return model;
         } catch (Exception e) {
             e.printStackTrace();

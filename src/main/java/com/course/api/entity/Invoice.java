@@ -27,6 +27,10 @@ public class Invoice implements Serializable {
     private String payment;
 
     @Basic
+    @Column(name = "student_name", nullable = true)
+    private String studentName;
+
+    @Basic
     @Column(name = "group_num", nullable = true)
     private String groupNum;
 
@@ -63,10 +67,11 @@ public class Invoice implements Serializable {
     public Invoice() {
     }
 
-    public Invoice(Date dateInvoice, Integer cost, String payment, String groupNum, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course, Register register, Employee employee) {
+    public Invoice(Date dateInvoice, Integer cost, String payment, String studentName, String groupNum, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course, Register register, Employee employee) {
         this.dateInvoice = dateInvoice;
         this.cost = cost;
         this.payment = payment;
+        this.studentName = studentName;
         this.groupNum = groupNum;
         this.createdBy = createdBy;
         this.modifyBy = modifyBy;
@@ -107,6 +112,14 @@ public class Invoice implements Serializable {
 
     public void setPayment(String payment) {
         this.payment = payment;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public String getGroupNum() {

@@ -11,6 +11,7 @@ public interface InvoiceService {
     List<Invoice> getAll() throws Exception;
     Invoice getInvoiceById(Integer idInvoice) throws Exception;
     List<Invoice> getInvoiceByEmployee(Employee employee) throws Exception;
+    Invoice getInvoiceByRegister(Integer idRegister) throws Exception;
     Invoice addInvoice(InvoiceDTO invoiceDTO) throws Exception;
     Invoice updateInvoice(Invoice invoice) throws Exception;
     Invoice updateInvoice(InvoiceDTO invoiceDTO, Integer idInvoice) throws Exception;

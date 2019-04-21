@@ -3,6 +3,7 @@ package com.course.api.service.serviceimpl;
 import com.course.api.dto.InvoiceDTO;
 import com.course.api.entity.Employee;
 import com.course.api.entity.Invoice;
+import com.course.api.entity.Register;
 import com.course.api.entity.Student;
 import com.course.api.repository.*;
 import com.course.api.service.InvoiceService;
@@ -12,6 +13,8 @@ import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
 
@@ -22,16 +25,16 @@ public class InvoiceServiceImpl implements InvoiceService {
     private InvoiceRepository invoiceRepository;
 
     @Autowired
-    private RegisterRepository registerRepository;
-
-    @Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
     private CourseRepository courseRepository;
 
     @Autowired
-    private StudentClassService studentClassService;
+    private RegisterRepository registerRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public List<Invoice> getAll() {
@@ -46,6 +49,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public List<Invoice> getInvoiceByEmployee(Employee employee) {
         return invoiceRepository.findInvoiceByEmployee(employee);
+    }
+
+    @Override
+    public Invoice getInvoiceByRegister(Integer idRegister) {
+        return (Invoice) entityManager.createNativeQuery("select * from INVOICE where id_register =:idRegister", Invoice.class).setParameter("idRegister",idRegister).getSingleResult();
     }
 
     @Override

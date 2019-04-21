@@ -43,6 +43,18 @@ public class InvoiceController {
         return null;
     }
 
+    @RequestMapping(value = "/register/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Invoice> getInvoiceByRegister(@PathVariable(name = "id") Integer id) {
+        try {
+            Invoice invoice = invoiceService.getInvoiceByRegister(id);
+            if (invoice == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Invoice>(invoice, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Invoice> addInvoice(@RequestBody InvoiceDTO invoiceDTO) {
         try {

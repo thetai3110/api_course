@@ -8,23 +8,27 @@ public class InvoiceDTO {
     private Date dateInvoice;
     private Integer cost;
     private String payment;
-    private Integer idRegister;
+    private String studentName;
     private Integer idCourse;
     private Integer idEmployee;
+    private Integer groupNum;
     private String email;
+    private Integer idRegister;
 
     public InvoiceDTO() {
     }
 
-    public InvoiceDTO(Integer idInvoice, Date dateInvoice, Integer cost, String payment, Integer idRegister, Integer idCourse, Integer idEmployee, String email) {
+    public InvoiceDTO(Integer idInvoice, Date dateInvoice, Integer cost, String payment, String studentName, Integer idCourse, Integer idEmployee, Integer groupNum, String email, Integer idRegister) {
         this.idInvoice = idInvoice;
         this.dateInvoice = dateInvoice;
         this.cost = cost;
         this.payment = payment;
-        this.idRegister = idRegister;
+        this.studentName = studentName;
         this.idCourse = idCourse;
         this.idEmployee = idEmployee;
+        this.groupNum = groupNum;
         this.email = email;
+        this.idRegister = idRegister;
     }
 
     public Integer getIdInvoice() {
@@ -59,12 +63,12 @@ public class InvoiceDTO {
         this.payment = payment;
     }
 
-    public Integer getIdRegister() {
-        return idRegister;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setIdRegister(Integer idRegister) {
-        this.idRegister = idRegister;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public Integer getIdCourse() {
@@ -83,11 +87,27 @@ public class InvoiceDTO {
         this.idEmployee = idEmployee;
     }
 
+    public Integer getGroupNum() {
+        return groupNum;
+    }
+
+    public void setGroupNum(Integer groupNum) {
+        this.groupNum = groupNum;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getIdRegister() {
+        return idRegister;
+    }
+
+    public void setIdRegister(Integer idRegister) {
+        this.idRegister = idRegister;
     }
 }
