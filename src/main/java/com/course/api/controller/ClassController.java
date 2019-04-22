@@ -2,7 +2,10 @@ package com.course.api.controller;
 
 import com.course.api.dto.ClassesDTO;
 import com.course.api.entity.Clazz;
+import com.course.api.entity.Lecturers;
+import com.course.api.sendemail.Email;
 import com.course.api.service.ClassService;
+import com.course.api.service.LecturersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,9 @@ public class ClassController {
 
     @Autowired
     private ClassService classService;
+
+    @Autowired
+    private LecturersService lecturersService;
 
     @RequestMapping(value = "/follow-course/{idCourse}", method = RequestMethod.GET)
     public ResponseEntity<List<Clazz>> getClassesByCourse(@PathVariable(name = "idCourse") Integer idCourse){
@@ -79,12 +85,40 @@ public class ClassController {
         return null;
     }
 
+    @RequestMapping(value = "/update1/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Clazz> updateClass(@PathVariable(name = "id") Integer idClazz, @RequestBody Clazz clazz) {
+        try {
+            Clazz curClazz = classService.getClassById(idClazz);
+            if (curClazz == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
+            clazz.setIdClass(idClazz);
+            return new ResponseEntity<Clazz>(classService.updateClass(clazz), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public boolean deleteClass(@PathVariable(name = "id") Integer id) {
         try {
             Clazz clazz = classService.getClassById(id);
             if (clazz == null) return false;
             classService.removeClass(clazz);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @RequestMapping(value = "/teaching-assignment/{idClass}", method = RequestMethod.POST)
+    public boolean teachingAssignment(@PathVariable(name = "idClass") Integer idClass,@RequestBody List<Integer> listSend) {
+        try {
+            if (listSend.isEmpty()) return false;
+            for(int i=0;i<listSend.size();i++) {
+                Lecturers lecturers = lecturersService.getLecturersById(listSend.get(i));
+                Email.sendLecturers("Trung tâm tin học (Hiện đang có lớp phù hợp với bạn)","Đăng ký dạy học",lecturers.getEmail(), classService.getClassById(idClass),listSend.get(i));
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -113,7 +113,7 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public Clazz updateClass(Clazz clazz) throws Exception {
+    public Clazz updateClass(Clazz clazz) {
         clazz.setModifyDate(new Date());
         clazzRepository.save(clazz);
         return clazz;
