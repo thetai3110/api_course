@@ -4,6 +4,7 @@ import com.course.api.dto.ExamDTO;
 import com.course.api.entity.Clazz;
 import com.course.api.entity.Exam;
 import com.course.api.repository.ClazzRepository;
+import com.course.api.repository.CourseRepository;
 import com.course.api.repository.ExamRepository;
 import com.course.api.service.ExamService;
 import org.modelmapper.ModelMapper;
@@ -27,7 +28,7 @@ public class ExamServiceImpl implements ExamService {
     private ExamRepository examRepository;
 
     @Autowired
-    private ClazzRepository clazzRepository;
+    private CourseRepository courseRepository;
 
     @Override
     public List<Exam> getAll() {
@@ -35,8 +36,8 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Exam getExamByClass(Integer idClazz) throws Exception {
-        return (Exam) entityManager.createNativeQuery("select * from EXAM where id_class =:idClazz",Exam.class).setParameter("idClazz",idClazz).getSingleResult();
+    public Exam getExamByCourse(Integer idCourse) throws Exception {
+        return (Exam) entityManager.createNativeQuery("select * from EXAM where id_course =:idCourse",Exam.class).setParameter("idCourse",idCourse).getSingleResult();
     }
 
 
@@ -55,7 +56,7 @@ public class ExamServiceImpl implements ExamService {
             }
         });
         Exam exam = modelMapper.map(examDTO, Exam.class);
-        exam.setClazz(clazzRepository.findClazzByIdClass(examDTO.getIdClass()));
+        exam.setCourse(courseRepository.findCourseByIdCourse(examDTO.getIdCourse()));
         exam.setCreatedDate(new Date());
         exam.setModifyDate(new Date());
         examRepository.save(exam);
@@ -73,7 +74,7 @@ public class ExamServiceImpl implements ExamService {
         });
         Exam exam = modelMapper.map(examDTO, Exam.class);
         exam.setIdExam(idExam);
-        exam.setClazz(clazzRepository.findClazzByIdClass(examDTO.getIdClass()));
+        exam.setCourse(courseRepository.findCourseByIdCourse(examDTO.getIdCourse()));
         exam.setModifyDate(new Date());
         examRepository.save(exam);
         return exam;

@@ -8,17 +8,17 @@ public class ExamDTO {
     private String timeExam;
     private String duration;
     private int status;
-    private Integer idClass;
+    private Integer idCourse;
 
     public ExamDTO() {
     }
 
-    public ExamDTO(Date dayExam, String timeExam, String duration, int status, Integer idClass) {
+    public ExamDTO(Date dayExam, String timeExam, String duration, int status, Integer idCourse) {
         this.dayExam = dayExam;
         this.timeExam = timeExam;
         this.duration = duration;
         this.status = status;
-        this.idClass = idClass;
+        this.idCourse = idCourse;
     }
 
     public Date getDayExam() {
@@ -53,11 +53,11 @@ public class ExamDTO {
         this.status = status;
     }
 
-    public Integer getIdClass() {
-        return idClass;
+    public Integer getIdCourse() {
+        return idCourse;
     }
 
-    public void setIdClass(Integer idClass) {
-        this.idClass = idClass;
+    public void setIdCourse(Integer idCourse) {
+        this.idCourse = idCourse;
     }
 }

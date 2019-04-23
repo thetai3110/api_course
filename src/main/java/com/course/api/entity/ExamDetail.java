@@ -1,25 +1,33 @@
 package com.course.api.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "EXAM")
-public class Exam implements Serializable {
+@Table(name = "EXAM_DETAIL")
+public class ExamDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_exam", nullable = false)
+    @Column(name = "id_exam_detail", nullable = false)
+    private Integer idExamDetail;
+
+    @Basic
+    @Column(name = "id_exam", nullable = true)
     private Integer idExam;
 
     @Basic
-    @Column(name = "duration", nullable = true, length = 10)
-    private String duration;
+    @Column(name = "id_class", nullable = true)
+    private Integer idClass;
 
     @Basic
-    @Column(name = "status_exam", nullable = true, length = 1)
-    private int status;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "day_exam", nullable = true)
+    private Date dayExam;
+
+    @Basic
+    @Column(name = "time_exam", nullable = true, length = 15)
+    private String timeExam;
 
     @Basic
     @Column(name = "CREATED_BY", nullable = true)
@@ -39,21 +47,26 @@ public class Exam implements Serializable {
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
-    @OneToOne
-    @JoinColumn(name = "id_course")
-    private Course course;
-
-    public Exam() {
+    public ExamDetail() {
     }
 
-    public Exam(String duration, int status, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course) {
-        this.duration = duration;
-        this.status = status;
+    public ExamDetail(Integer idExam, Integer idClass, Date dayExam, String timeExam, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
+        this.idExam = idExam;
+        this.idClass = idClass;
+        this.dayExam = dayExam;
+        this.timeExam = timeExam;
         this.createdBy = createdBy;
         this.modifyBy = modifyBy;
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
-        this.course = course;
+    }
+
+    public Integer getIdExamDetail() {
+        return idExamDetail;
+    }
+
+    public void setIdExamDetail(Integer idExamDetail) {
+        this.idExamDetail = idExamDetail;
     }
 
     public Integer getIdExam() {
@@ -64,20 +77,28 @@ public class Exam implements Serializable {
         this.idExam = idExam;
     }
 
-    public String getDuration() {
-        return duration;
+    public Integer getIdClass() {
+        return idClass;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setIdClass(Integer idClass) {
+        this.idClass = idClass;
     }
 
-    public int getStatus() {
-        return status;
+    public Date getDayExam() {
+        return dayExam;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setDayExam(Date dayExam) {
+        this.dayExam = dayExam;
+    }
+
+    public String getTimeExam() {
+        return timeExam;
+    }
+
+    public void setTimeExam(String timeExam) {
+        this.timeExam = timeExam;
     }
 
     public Integer getCreatedBy() {
@@ -110,13 +131,5 @@ public class Exam implements Serializable {
 
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 }
