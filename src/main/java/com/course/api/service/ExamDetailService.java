@@ -9,6 +9,7 @@ public interface ExamDetailService {
     ExamDetail getExamDetailById(Integer idExamDetail) throws Exception;
     List<ExamDetail> getExamDetailByExam(Integer id) throws Exception;
     ExamDetail addExamDetail(ExamDetail examDetail) throws Exception;
+    List<ExamDetail> addMultiExamDetail(List<ExamDetail> examDetails) throws Exception;
     ExamDetail updateIExamDetail(ExamDetail examDetail) throws Exception;
     void removeExamDetail(ExamDetail examDetail) throws Exception;
 }

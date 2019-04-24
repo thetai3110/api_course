@@ -1,5 +1,6 @@
 package com.course.api.service;
 
+import com.course.api.dto.ClassCourseStudentDTO;
 import com.course.api.dto.ClassesDTO;
 import com.course.api.entity.Clazz;
 

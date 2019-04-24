@@ -39,6 +39,17 @@ public class ExamDetailServiceImpl implements ExamDetailService {
     }
 
     @Override
+    public List<ExamDetail> addMultiExamDetail(List<ExamDetail> examDetails) {
+        for (ExamDetail ex:
+             examDetails) {
+            ex.setCreatedDate(new Date());
+            ex.setModifyDate(new Date());
+            examDetailRepository.save(ex);
+        }
+        return examDetails;
+    }
+
+    @Override
     public ExamDetail updateIExamDetail(ExamDetail examDetail) {
         examDetail.setModifyDate(new Date());
         examDetailRepository.save(examDetail);
