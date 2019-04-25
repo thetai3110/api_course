@@ -5,7 +5,8 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class ClassCourseStudentDTO {
+public class InfoStudentDTO {
+
     //Student-Class
     @Id
     private Integer idClass;
@@ -35,12 +36,20 @@ public class ClassCourseStudentDTO {
     private String image;
     //Level
     private String levelCourse;
+    //Student
+    private String studentName;
+    private String cmnd;
+    private Date studentDate;
+    private Integer sex;
+    private String address;
+    private String email;
+    private String phone;
+    private String job;
 
-
-    public ClassCourseStudentDTO() {
+    public InfoStudentDTO() {
     }
 
-    public ClassCourseStudentDTO(Integer idClass, Integer idStudent, Integer idStudentclass, Integer isfee, Integer idRoom, Integer idLecturers, Integer idCourse, String className, int size, int minsize, int maxsize, int statusClass, Integer idLevel, Integer idEdu, String course, String duration, Date dayStart, int fee, String space, String conditions, String describes, int statusCourse, String image, String levelCourse) {
+    public InfoStudentDTO(Integer idClass, Integer idStudent, Integer idStudentclass, Integer isfee, Integer idRoom, Integer idLecturers, Integer idCourse, String className, int size, int minsize, int maxsize, int statusClass, Integer idLevel, Integer idEdu, String course, String duration, Date dayStart, int fee, String space, String conditions, String describes, int statusCourse, String image, String levelCourse, String studentName, String cmnd, Date studentDate, Integer sex, String address, String email, String phone, String job) {
         this.idClass = idClass;
         this.idStudent = idStudent;
         this.idStudentclass = idStudentclass;
@@ -65,6 +74,14 @@ public class ClassCourseStudentDTO {
         this.statusCourse = statusCourse;
         this.image = image;
         this.levelCourse = levelCourse;
+        this.studentName = studentName;
+        this.cmnd = cmnd;
+        this.studentDate = studentDate;
+        this.sex = sex;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.job = job;
     }
 
     public Integer getIdClass() {
@@ -257,5 +274,69 @@ public class ClassCourseStudentDTO {
 
     public void setLevelCourse(String levelCourse) {
         this.levelCourse = levelCourse;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getCmnd() {
+        return cmnd;
+    }
+
+    public void setCmnd(String cmnd) {
+        this.cmnd = cmnd;
+    }
+
+    public Date getStudentDate() {
+        return studentDate;
+    }
+
+    public void setStudentDate(Date studentDate) {
+        this.studentDate = studentDate;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
     }
 }

@@ -1,5 +1,6 @@
 package com.course.api.controller;
 
+import com.course.api.dto.InfoStudentDTO;
 import com.course.api.dto.StudentDTO;
 import com.course.api.entity.Student;
 import com.course.api.service.StudentService;
@@ -78,11 +79,11 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/{name}/{cmnd}", method = RequestMethod.GET)
-    public ResponseEntity<Student> getStudentByNameAndCMND(@PathVariable(name = "name") String name, @PathVariable(name = "cmnd") String cmnd) {
+    public ResponseEntity<List<InfoStudentDTO>> getStudentByNameAndCMND(@PathVariable(name = "name") String name, @PathVariable(name = "cmnd") String cmnd) {
         try {
-            Student stu= studentService.getStudentByCMNDAndName(cmnd, name);
-            if (stu==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<Student>(stu, HttpStatus.OK);
+            List<InfoStudentDTO> stu= studentService.getInfoStudent(name, cmnd);
+            if (stu.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<InfoStudentDTO>>(stu, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

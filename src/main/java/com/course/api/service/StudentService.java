@@ -1,5 +1,6 @@
 package com.course.api.service;
 
+import com.course.api.dto.InfoStudentDTO;
 import com.course.api.dto.StudentDTO;
 import com.course.api.entity.Student;
 import com.course.api.model.ResponseModel;
@@ -13,7 +14,8 @@ public interface StudentService {
     Student getStudentByUsername(String username) throws Exception;
     Student getStudentByName(String name) throws Exception;
     Student getStudentByCMND(String CMND) throws Exception;
-    Student getStudentByCMNDAndName(String CMND, String name) throws Exception;
+    List<Student> getStudentByCMNDAndName(String CMND, String name) throws Exception;
+    List<InfoStudentDTO> getInfoStudent(String name, String cmnd) throws Exception;
     Student getStudentByEmail(String email) throws Exception;
     List<Student> getStudentByInvoice(Integer idInvoice) throws Exception;
     Student addStudent(StudentDTO studentDTO) throws Exception;

@@ -1,5 +1,6 @@
 package com.course.api.service.serviceimpl;
 
+import com.course.api.dto.InfoStudentDTO;
 import com.course.api.dto.StudentDTO;
 import com.course.api.entity.Account;
 import com.course.api.entity.Student;
@@ -78,17 +79,24 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getStudentByCMNDAndName(String CMND, String name) throws Exception {
-        return studentRepositoty.findStudentByStudentNameAndCmnd(name, CMND);
+    public List<Student> getStudentByCMNDAndName(String CMND, String name) {
+        return entityManager.createNativeQuery("select * from STUDENT st where st.student_name =:studentName and st.cmnd =:cmnd", Student.class)
+                .setParameter("studentName", name).setParameter("cmnd", CMND).getResultList();
     }
 
     @Override
-    public Student getStudentByEmail(String email) throws Exception {
+    public List<InfoStudentDTO> getInfoStudent(String name, String cmnd) {
+        String query = "SELECT * FROM CLASS join STUDENT_CLASS on CLASS.id_class = STUDENT_CLASS.id_class join COURSE on CLASS.id_course = COURSE.id_course join LEVELCOURSE on COURSE.id_level = LEVELCOURSE.id_level join STUDENT on STUDENT_CLASS.id_student = STUDENT.id_student WHERE STUDENT.student_name =:studentName and STUDENT.cmnd =:cmnd";
+        return entityManager.createNativeQuery(query, InfoStudentDTO.class).setParameter("studentName", name).setParameter("cmnd", cmnd).getResultList();
+    }
+
+    @Override
+    public Student getStudentByEmail(String email) {
         return studentRepositoty.findStudentByEmail(email);
     }
 
     @Override
-    public List<Student> getStudentByInvoice(Integer idInvoice) throws Exception {
+    public List<Student> getStudentByInvoice(Integer idInvoice) {
         return entityManager.createNativeQuery("select * from STUDENT st join INVOICE_DETAIL inv on st.id_student = inv.id_student where inv.id_invoice =:idInvoice",Student.class).setParameter("idInvoice",idInvoice).getResultList();
     }
 
