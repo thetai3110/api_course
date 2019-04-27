@@ -1,9 +1,7 @@
 package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.ClassesDTO;
-import com.course.api.entity.ClassDay;
-import com.course.api.entity.Clazz;
-import com.course.api.entity.StudentClass;
+import com.course.api.entity.*;
 import com.course.api.repository.*;
 import com.course.api.service.ClassDayService;
 import com.course.api.service.ClassService;
@@ -45,6 +43,12 @@ public class ClassServiceImpl implements ClassService {
 
     @Autowired
     private ClassDayRepository classDayRepository;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private InvoiceDetailRepository invoiceDetailRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -132,6 +136,20 @@ public class ClassServiceImpl implements ClassService {
                     classDayRepository.findClassDayByIdClass(clazz.getIdClass())) {
                 classDayService.removeClassDay(classDay);
             }
+        }
+        if(!invoiceRepository.findInvoiceByClazz(clazz).isEmpty()){
+            for (Invoice invoice:
+                    invoiceRepository.findInvoiceByClazz(clazz)) {
+                invoice.setClazz(null);
+                invoiceRepository.save(invoice);
+            }
+        }
+        if(!invoiceDetailRepository.findInvoiceDetailByIdClass(clazz.getIdClass()).isEmpty()){
+            for (InvoiceDetail invoiceDetail:
+                    invoiceDetailRepository.findInvoiceDetailByIdClass(clazz.getIdClass())){
+                invoiceDetail.setIdClass(null);
+                invoiceDetailRepository.save(invoiceDetail);
+           }
         }
         clazzRepository.delete(clazz);
     }

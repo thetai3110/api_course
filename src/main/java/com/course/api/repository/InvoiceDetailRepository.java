@@ -9,4 +9,5 @@ public interface InvoiceDetailRepository extends JpaRepository<InvoiceDetail, In
     List<InvoiceDetail> findInvoiceDetailsByIdInvoice(Integer id);
     InvoiceDetail findInvoiceDetailByIdInvoiceDetail(Integer id);
     InvoiceDetail findInvoiceDetailByIdStudent(Integer id);
+    List<InvoiceDetail> findInvoiceDetailByIdClass(Integer id);
 }
