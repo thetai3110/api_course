@@ -54,9 +54,26 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<Course> getCourseByStatus(Integer status) {
+        return courseRepository.findCourseByStatus(status);
+    }
+
+    @Override
     public List<Course> getCourseByEducation(Integer idEdu) {
         String query = "SELECT * FROM COURSE WHERE id_edu =:idEdu";
         return entityManager.createNativeQuery(query,Course.class).setParameter("idEdu",idEdu).getResultList();
+    }
+
+    @Override
+    public List<Course> getCourseByEducationAndStastus(Integer idEdu, Integer status) {
+        String query = "SELECT * FROM COURSE WHERE id_edu =:idEdu and status_course =:status";
+        return entityManager.createNativeQuery(query,Course.class).setParameter("idEdu",idEdu).setParameter("status", status).getResultList();
+    }
+
+    @Override
+    public List<Course> getCourseByEducationAndStastusAndLevel(Integer idEdu, Integer status, Integer idLevel) {
+        String query = "SELECT * FROM COURSE WHERE id_edu =:idEdu and id_level =:idLevel and status_course =:status";
+        return entityManager.createNativeQuery(query,Course.class).setParameter("idEdu",idEdu).setParameter("idLevel",idLevel).setParameter("status", status).getResultList();
     }
 
     @Override
@@ -64,7 +81,6 @@ public class CourseServiceImpl implements CourseService {
         String query = "SELECT * FROM COURSE WHERE id_edu =:idEdu and id_level =:idLevel";
         return entityManager.createNativeQuery(query,Course.class).setParameter("idEdu",idEdu).setParameter("idLevel",idLevel).getResultList();
     }
-
 
     @Override
     public Course getCourseById(Integer idCouese) {

@@ -2,15 +2,12 @@ package com.course.api.service.serviceimpl;
 
 import com.course.api.dto.InfoStudentDTO;
 import com.course.api.dto.StudentDTO;
-import com.course.api.entity.Account;
-import com.course.api.entity.Student;
-import com.course.api.entity.StudentClass;
+import com.course.api.entity.*;
 import com.course.api.model.ResponseModel;
 import com.course.api.repository.AccountRepositoty;
 import com.course.api.repository.StudentClassRepository;
 import com.course.api.repository.StudentRepositoty;
-import com.course.api.service.AccountService;
-import com.course.api.service.StudentService;
+import com.course.api.service.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +30,13 @@ public class StudentServiceImpl implements StudentService {
     private AccountRepositoty accountRepositoty;
 
     @Autowired
-    private AccountService accountService;
+    private MarksService marksService;
+
+    @Autowired
+    private InvoiceDetailService invoiceDetailService;
+
+    @Autowired
+    private CertificateService certificateService;
 
     @Autowired
     private StudentClassRepository studentClassRepository;
@@ -157,14 +160,21 @@ public class StudentServiceImpl implements StudentService {
                 studentClassRepository.delete(stu);
             }
         }
-        Account account = new Account();
-        if(student.getAccountStu() != null){
-            account = student.getAccountStu();
-            studentRepositoty.delete(student);
-            accountService.removeAccount(account);
-        }else{
-            studentRepositoty.delete(student);
+        if(invoiceDetailService.getInvoiceDetailByStudent(student.getIdStudent()) != null){
+            invoiceDetailService.removeInvoice(invoiceDetailService.getInvoiceDetailByStudent(student.getIdStudent()));
         }
-
+        if(!certificateService.getCertificateByStudent(student.getIdStudent()).isEmpty()){
+            for (Certificate cer:
+                    certificateService.getCertificateByStudent(student.getIdStudent())) {
+                certificateService.removeCertificate(cer);
+            }
+        }
+        if(!marksService.getMarksByStudent(student.getIdStudent()).isEmpty()){
+            for (Marks marks:
+                    marksService.getMarksByStudent(student.getIdStudent())) {
+                marksService.removeMarks(marks);
+            }
+        }
+        studentRepositoty.delete(student);
     }
 }

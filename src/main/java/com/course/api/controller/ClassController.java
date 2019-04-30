@@ -36,6 +36,32 @@ public class ClassController {
         return null;
     }
 
+    @RequestMapping(value = "/follow-course/{idCourse}/{status}", method = RequestMethod.GET)
+    public ResponseEntity<List<Clazz>> getClassesByCourseAndStatus(@PathVariable(name = "idCourse") Integer idCourse, @PathVariable(name = "status") Integer status){
+        try {
+            List<Clazz> classes = classService.getClassByCourseAndStatus(idCourse, status);
+            if(classes.isEmpty())
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Clazz>>(classes, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/status/{status}", method = RequestMethod.GET)
+    public ResponseEntity<List<Clazz>> getClassesByStatus(@PathVariable(name = "status") Integer status){
+        try {
+            List<Clazz> classes = classService.getClassByStatus(status);
+            if(classes.isEmpty())
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Clazz>>(classes, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/follow-id/{id}", method = RequestMethod.GET)
     public ResponseEntity<Clazz> getClassesById(@PathVariable(name = "id") Integer idClass){
         try {

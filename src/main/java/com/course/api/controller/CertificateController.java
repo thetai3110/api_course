@@ -77,4 +77,16 @@ public class CertificateController {
         }
         return false;
     }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ResponseEntity<List<Certificate>> createCertificate(@RequestBody List<Integer> lstId) {
+        try {
+            if (lstId.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Certificate>>(certificateService.createCertificate(lstId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

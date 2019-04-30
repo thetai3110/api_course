@@ -10,8 +10,10 @@ public interface ClassService {
     List<Clazz> getAll() throws Exception;
     Clazz getClassById(Integer idClazz) throws Exception;
     List<Clazz> getClassByCourse(Integer idCourse) throws Exception;
+    List<Clazz> getClassByCourseAndStatus(Integer idCourse, Integer status) throws Exception;
     List<Clazz> getClassByLecturers(Integer idLec) throws Exception;
     List<Clazz> getClassByRoom(Integer idRoom) throws Exception;
+    List<Clazz> getClassByStatus(Integer status) throws Exception;
     Clazz addClass(ClassesDTO classesDTO) throws Exception;
     Clazz updateClass(ClassesDTO classesDTO, Integer idClass) throws Exception;
     Clazz updateClass(Clazz clazz) throws Exception;

@@ -9,4 +9,5 @@ import java.util.List;
 public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
     Clazz findClazzByIdClass(Integer idClazz);
     List<Clazz> findClazzByRoom(Room room);
+    List<Clazz> findClazzByStatus(Integer status);
 }

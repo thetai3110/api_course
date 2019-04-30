@@ -9,4 +9,5 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Course, Integer> {
     List<Course> findCourseByLevel(Level level);
     Course findCourseByIdCourse(Integer idCourse);
+    List<Course> findCourseByStatus(Integer status);
 }

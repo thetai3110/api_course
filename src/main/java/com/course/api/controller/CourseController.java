@@ -20,13 +20,22 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @Autowired
-    private LevelService levelService;
-
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Course>> getAllCourse(){
         try {
             List<Course> courses = courseService.getAll();
+            if(courses.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/status/{status}", method = RequestMethod.GET)
+    public ResponseEntity<List<Course>> getCourseByStatus(@PathVariable(name = "status") Integer status){
+        try {
+            List<Course> courses = courseService.getCourseByStatus(status);
             if(courses.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
             return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);
         } catch (Exception e) {
@@ -59,10 +68,34 @@ public class CourseController {
         return null;
     }
 
+    @RequestMapping(value = "/education/{id}/{status}", method = RequestMethod.GET)
+    public ResponseEntity<List<Course>> getCourseByEducationAndStatus(@PathVariable(name = "id") Integer id, @PathVariable(name = "status") Integer status){
+        try {
+            List<Course> courses = courseService.getCourseByEducationAndStastus(id, status);
+            if(courses.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/education/level/{idEdu}/{idLevel}", method = RequestMethod.GET)
     public ResponseEntity<List<Course>> getCourseByLevelAndEducation(@PathVariable(name = "idEdu") Integer idEdu, @PathVariable(name = "idLevel") Integer idLevel){
         try {
             List<Course> courses = courseService.getCourseByLevelAndEducation(idLevel, idEdu);
+            if(courses.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/education/level/{idEdu}/{idLevel}/{status}", method = RequestMethod.GET)
+    public ResponseEntity<List<Course>> getCourseByLevelAndEducationAndStatus(@PathVariable(name = "idEdu") Integer idEdu, @PathVariable(name = "idLevel") Integer idLevel, @PathVariable(name = "status") Integer status){
+        try {
+            List<Course> courses = courseService.getCourseByEducationAndStastusAndLevel(idEdu, status, idLevel);
             if(courses.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
             return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);
         } catch (Exception e) {

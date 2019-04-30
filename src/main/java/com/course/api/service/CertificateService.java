@@ -13,4 +13,5 @@ public interface CertificateService {
     Certificate addCertificate(CertificateDTO certificateDTO) throws Exception;
     Certificate updateCertificate(CertificateDTO certificateDTO, Integer idCer) throws Exception;
     void removeCertificate(Certificate certificate) throws Exception;
+    List<Certificate> createCertificate(List<Integer> lstId) throws Exception;
 }

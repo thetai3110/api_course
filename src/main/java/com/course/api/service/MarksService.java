@@ -8,6 +8,7 @@ public interface MarksService {
     List<Marks> getAll() throws Exception;
     Marks getMarksById(Integer idMarks) throws Exception;
     List<Marks> getMarksByClass(Integer idClass) throws Exception;
+    List<Marks> getMarksByClassAndMark(Integer idClass) throws Exception;
     List<Marks> getMarksByStudent(Integer idStudent) throws Exception;
     Marks getMarksByClassAndStudent(Integer idClass, Integer idStudent) throws Exception;
     Marks addMarks(Marks marks) throws Exception;

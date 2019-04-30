@@ -36,8 +36,8 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Exam getExamByCourse(Integer idCourse) throws Exception {
-        return (Exam) entityManager.createNativeQuery("select * from EXAM where id_course =:idCourse",Exam.class).setParameter("idCourse",idCourse).getSingleResult();
+    public Exam getExamByClass(Integer idClass) {
+        return (Exam) entityManager.createNativeQuery("select * from EXAM e join EXAM_DETAIL d on e.id_exam = d.id_exam where d.id_class =:idClass",Exam.class).setParameter("idClass",idClass).getSingleResult();
     }
 
 

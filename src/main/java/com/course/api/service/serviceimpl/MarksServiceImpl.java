@@ -2,6 +2,8 @@ package com.course.api.service.serviceimpl;
 
 import com.course.api.entity.Marks;
 import com.course.api.repository.MarksRepository;
+import com.course.api.service.CertificateService;
+import com.course.api.service.ExamService;
 import com.course.api.service.MarksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,12 @@ public class MarksServiceImpl implements MarksService {
     @Autowired
     private MarksRepository marksRepository;
 
+    @Autowired
+    private CertificateService certificateService;
+
+    @Autowired
+    private ExamService examService;
+
     @Override
     public List<Marks> getAll() {
         return marksRepository.findAll();
@@ -34,6 +42,11 @@ public class MarksServiceImpl implements MarksService {
     @Override
     public List<Marks> getMarksByClass(Integer idClass) {
         return entityManager.createNativeQuery("select * from MARKS where id_class =:idClass",Marks.class).setParameter("idClass", idClass).getResultList();
+    }
+
+    @Override
+    public List<Marks> getMarksByClassAndMark(Integer idClass) {
+        return entityManager.createNativeQuery("select * from MARKS where id_class =:idClass and marks >=5",Marks.class).setParameter("idClass", idClass).getResultList();
     }
 
     @Override

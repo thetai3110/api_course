@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ExamService {
     List<Exam> getAll() throws Exception;
-    Exam getExamByCourse(Integer idCourse) throws Exception;
+    Exam getExamByClass(Integer idClass) throws Exception;
     Exam getExamById(Integer idExam) throws Exception;
     Exam addExam(ExamDTO examDTO) throws Exception;
     Exam updateExam(ExamDTO examDTO, Integer idExam) throws Exception;

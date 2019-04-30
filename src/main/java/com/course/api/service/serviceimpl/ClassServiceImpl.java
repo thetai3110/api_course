@@ -76,6 +76,11 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
+    public List<Clazz> getClassByCourseAndStatus(Integer idCourse, Integer status) {
+        return entityManager.createNativeQuery("select * from CLASS where id_course =:idCourse and status_class =:status",Clazz.class).setParameter("idCourse",idCourse).setParameter("status", status).getResultList();
+    }
+
+    @Override
     public List<Clazz> getClassByLecturers(Integer idLec) {
         return entityManager.createNativeQuery("select * from CLASS where id_lecturers =:idLec",Clazz.class).setParameter("idLec",idLec).getResultList();
     }
@@ -83,6 +88,11 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public List<Clazz> getClassByRoom(Integer idRoom) {
         return entityManager.createNativeQuery("select * from CLASS where id_room =:idRoom",Clazz.class).setParameter("idRoom",idRoom).getResultList();
+    }
+
+    @Override
+    public List<Clazz> getClassByStatus(Integer status) {
+        return clazzRepository.findClazzByStatus(status);
     }
 
     @Override
@@ -135,7 +145,7 @@ public class ClassServiceImpl implements ClassService {
         if(!studentClassRepository.findStudentClassByIdClass(clazz.getIdClass()).isEmpty()){
             for (StudentClass student:
                     studentClassRepository.findStudentClassByIdClass(clazz.getIdClass())) {
-                studentClassService.removeStudentClass(student);
+                studentRepositoty.delete(studentRepositoty.findStudentByIdStudent(student.getIdStudent()));
             }
         }
         if(!classDayRepository.findClassDayByIdClass(clazz.getIdClass()).isEmpty()){
