@@ -1,8 +1,6 @@
 package com.course.api.service.serviceimpl;
 
-import com.course.api.entity.Course;
 import com.course.api.entity.Marks;
-import com.course.api.entity.Student;
 import com.course.api.repository.MarksRepository;
 import com.course.api.service.MarksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,13 +32,21 @@ public class MarksServiceImpl implements MarksService {
     }
 
     @Override
-    public List<Marks> getMarksByCourse(Integer idCourse) {
-        return entityManager.createNativeQuery("select * from MARKS where id_course =:idCourse",Marks.class).setParameter("idCourse", idCourse).getResultList();
+    public List<Marks> getMarksByClass(Integer idClass) {
+        return entityManager.createNativeQuery("select * from MARKS where id_class =:idClass",Marks.class).setParameter("idClass", idClass).getResultList();
     }
 
     @Override
     public List<Marks> getMarksByStudent(Integer idStudent) {
         return entityManager.createNativeQuery("select * from MARKS where id_student =:idStudent",Marks.class).setParameter("idStudent", idStudent).getResultList();
+    }
+
+    @Override
+    public Marks getMarksByClassAndStudent(Integer idClass, Integer idStudent) {
+        Marks marks = (Marks) entityManager.createNativeQuery("select * from MARKS where id_class =:idClass AND id_student =:idStudent",Marks.class).setParameter("idClass", idClass).setParameter("idStudent", idStudent).getSingleResult();
+        if(marks != null){
+            return marks;
+        }else return null;
     }
 
     @Override
@@ -60,5 +67,29 @@ public class MarksServiceImpl implements MarksService {
     @Override
     public void removeMarks(Marks marks) {
         marksRepository.delete(marks);
+    }
+
+    @Override
+    public Marks save(Float marks, Integer id) {
+        Marks marks1 = marksRepository.findMarksByIdMarks(id);
+        marks1.setMarks(marks);
+        marks1.setModifyDate(new Date());
+        marksRepository.save(marks1);
+        return marks1;
+    }
+
+    @Override
+    public List<Marks> saveALl(List<String> data) {
+        List<Marks> lstmarks = new ArrayList<>();
+        for (String d:
+             data) {
+            String[] str = d.split("-");
+            Marks marks = marksRepository.findMarksByIdMarks(Integer.parseInt(str[1]));
+            marks.setMarks(Float.parseFloat(str[0]));
+            marks.setModifyDate(new Date());
+            lstmarks.add(marks);
+            marksRepository.save(marks);
+        }
+        return lstmarks;
     }
 }

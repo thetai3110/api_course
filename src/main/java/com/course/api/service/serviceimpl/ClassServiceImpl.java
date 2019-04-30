@@ -3,10 +3,8 @@ package com.course.api.service.serviceimpl;
 import com.course.api.dto.ClassesDTO;
 import com.course.api.entity.*;
 import com.course.api.repository.*;
-import com.course.api.service.ClassDayService;
-import com.course.api.service.ClassService;
-import com.course.api.service.StudentClassService;
-import com.course.api.service.StudentService;
+import com.course.api.sendemail.Email;
+import com.course.api.service.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +47,15 @@ public class ClassServiceImpl implements ClassService {
 
     @Autowired
     private InvoiceDetailRepository invoiceDetailRepository;
+
+    @Autowired
+    private MarksRepository marksRepository;
+
+    @Autowired
+    private StudentRepositoty studentRepositoty;
+
+    @Autowired
+    private MarksService marksService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -137,20 +144,111 @@ public class ClassServiceImpl implements ClassService {
                 classDayService.removeClassDay(classDay);
             }
         }
+        if(!invoiceDetailRepository.findInvoiceDetailByIdClass(clazz.getIdClass()).isEmpty()){
+            for (InvoiceDetail invoiceDetail:
+                    invoiceDetailRepository.findInvoiceDetailByIdClass(clazz.getIdClass())){
+                invoiceDetailRepository.delete(invoiceDetail);
+           }
+        }
         if(!invoiceRepository.findInvoiceByClazz(clazz).isEmpty()){
             for (Invoice invoice:
                     invoiceRepository.findInvoiceByClazz(clazz)) {
-                invoice.setClazz(null);
-                invoiceRepository.save(invoice);
+                invoiceRepository.delete(invoice);
+            }
+        }
+        if(!marksService.getMarksByClass(clazz.getIdClass()).isEmpty()){
+            for (Marks marks:
+                    marksService.getMarksByClass(clazz.getIdClass())){
+                marksService.removeMarks(marks);
+            }
+        }
+        clazzRepository.delete(clazz);
+    }
+
+    @Override
+    public boolean openClass(Integer id) {
+        Clazz clazz = clazzRepository.findClazzByIdClass(id);
+        clazz.setStatus(1);
+        clazzRepository.save(clazz);
+        List<StudentClass> studentClasses = studentClassRepository.findStudentClassByIdClass(id);
+        for (StudentClass stu_class:
+             studentClasses) {
+            Marks marks = new Marks();
+            Marks marks1 = null;
+            try {
+                 marks1 = marksService.getMarksByClassAndStudent(id, stu_class.getIdStudent());
+            }catch (Exception e) {
+                marks.setClazz(clazz);
+                marks.setStudent(studentRepositoty.findStudentByIdStudent(stu_class.getIdStudent()));
+                marks.setIdMarks(null);
+                marksRepository.save(marks);
+            }
+        }
+        if(clazz != null) return true;
+        return false;
+    }
+
+    @Override
+    public boolean closeClass(Integer id) {
+        Clazz clazz = clazzRepository.findClazzByIdClass(id);
+        clazz.setStatus(0);
+        clazzRepository.save(clazz);
+        if(clazz != null) return true;
+        return false;
+    }
+
+    @Override
+    public void destroyClass(Integer id) throws Exception {
+        Clazz clazz = clazzRepository.findClazzByIdClass(id);
+        if(!studentClassRepository.findStudentClassByIdClass(clazz.getIdClass()).isEmpty()){
+            for (StudentClass student:
+                    studentClassRepository.findStudentClassByIdClass(clazz.getIdClass())) {
+                String email = studentRepositoty.findStudentByIdStudent(student.getIdStudent()).getEmail();
+                String title = "Hủy lớp " + clazz.getClassName();
+                String content = "Vì lý do không đủ số lượng học viên cho lớp nên lớp học đã bị hủy";
+                Email.destroyClass(title,content, email);
+                studentClassService.removeStudentClass(student);
+            }
+        }
+        if(!classDayRepository.findClassDayByIdClass(clazz.getIdClass()).isEmpty()){
+            for (ClassDay classDay:
+                    classDayRepository.findClassDayByIdClass(clazz.getIdClass())) {
+                classDayService.removeClassDay(classDay);
             }
         }
         if(!invoiceDetailRepository.findInvoiceDetailByIdClass(clazz.getIdClass()).isEmpty()){
             for (InvoiceDetail invoiceDetail:
                     invoiceDetailRepository.findInvoiceDetailByIdClass(clazz.getIdClass())){
-                invoiceDetail.setIdClass(null);
-                invoiceDetailRepository.save(invoiceDetail);
-           }
+                invoiceDetailRepository.delete(invoiceDetail);
+            }
+        }
+        if(!invoiceRepository.findInvoiceByClazz(clazz).isEmpty()){
+            for (Invoice invoice:
+                    invoiceRepository.findInvoiceByClazz(clazz)) {
+                invoiceRepository.delete(invoice);
+            }
+        }
+        if(!marksService.getMarksByClass(clazz.getIdClass()).isEmpty()){
+            for (Marks marks:
+                    marksService.getMarksByClass(clazz.getIdClass())){
+                marksService.removeMarks(marks);
+            }
         }
         clazzRepository.delete(clazz);
+    }
+
+    @Override
+    public boolean finish(Integer id) throws Exception {
+        Clazz clazz = clazzRepository.findClazzByIdClass(id);
+        clazz.setStatus(3);
+        clazzRepository.save(clazz);
+        if(!classDayRepository.findClassDayByIdClass(id).isEmpty()){
+            for (ClassDay classDay:
+                    classDayRepository.findClassDayByIdClass(clazz.getIdClass())) {
+                classDayService.removeClassDay(classDay);
+            }
+        }
+        if(clazz != null) return true;
+        return false;
     }
 }

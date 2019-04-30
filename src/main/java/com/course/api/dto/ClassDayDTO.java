@@ -2,6 +2,7 @@ package com.course.api.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class ClassDayDTO {
@@ -15,6 +16,7 @@ public class ClassDayDTO {
     private Integer idLecturers;
     private Integer idCourse;
     private String className;
+    private Date dayStart;
     private int size;
     private int minsize;
     private int maxsize;
@@ -24,27 +26,28 @@ public class ClassDayDTO {
     public ClassDayDTO() {
     }
 
-    public ClassDayDTO(Integer idClassDay, Integer idClass, Integer idSchoolDay, Integer idCa, Integer idRoom, Integer idLecturers, Integer idCourse, String className, int size, int minSize, int maxSize, int status) {
-        this.idClassday = idClassDay;
+    public ClassDayDTO(Integer idClassday, Integer idClass, Integer idSchoolday, Integer idCa, Integer idRoom, Integer idLecturers, Integer idCourse, String className, Date dayStart, int size, int minsize, int maxsize, int statusClass) {
+        this.idClassday = idClassday;
         this.idClass = idClass;
-        this.idSchoolday = idSchoolDay;
+        this.idSchoolday = idSchoolday;
         this.idCa = idCa;
         this.idRoom = idRoom;
         this.idLecturers = idLecturers;
         this.idCourse = idCourse;
         this.className = className;
+        this.dayStart = dayStart;
         this.size = size;
-        this.minsize = minSize;
-        this.maxsize = maxSize;
-        this.statusClass = status;
+        this.minsize = minsize;
+        this.maxsize = maxsize;
+        this.statusClass = statusClass;
     }
 
-    public Integer getIdClassDay() {
+    public Integer getIdClassday() {
         return idClassday;
     }
 
-    public void setIdClassDay(Integer idClassDay) {
-        this.idClassday = idClassDay;
+    public void setIdClassday(Integer idClassday) {
+        this.idClassday = idClassday;
     }
 
     public Integer getIdClass() {
@@ -59,8 +62,8 @@ public class ClassDayDTO {
         return idSchoolday;
     }
 
-    public void setIdSchoolday(Integer idSchoolDay) {
-        this.idSchoolday = idSchoolDay;
+    public void setIdSchoolday(Integer idSchoolday) {
+        this.idSchoolday = idSchoolday;
     }
 
     public Integer getIdCa() {
@@ -103,6 +106,14 @@ public class ClassDayDTO {
         this.className = className;
     }
 
+    public Date getDayStart() {
+        return dayStart;
+    }
+
+    public void setDayStart(Date dayStart) {
+        this.dayStart = dayStart;
+    }
+
     public int getSize() {
         return size;
     }
@@ -111,27 +122,27 @@ public class ClassDayDTO {
         this.size = size;
     }
 
-    public int getMinSize() {
+    public int getMinsize() {
         return minsize;
     }
 
-    public void setMinSize(int minSize) {
-        this.minsize = minSize;
+    public void setMinsize(int minsize) {
+        this.minsize = minsize;
     }
 
-    public int getMaxSize() {
+    public int getMaxsize() {
         return maxsize;
     }
 
-    public void setMaxSize(int maxSize) {
-        this.maxsize = maxSize;
+    public void setMaxsize(int maxsize) {
+        this.maxsize = maxsize;
     }
 
-    public int getStatus() {
+    public int getStatusClass() {
         return statusClass;
     }
 
-    public void setStatus(int status) {
-        this.statusClass = status;
+    public void setStatusClass(int statusClass) {
+        this.statusClass = statusClass;
     }
 }

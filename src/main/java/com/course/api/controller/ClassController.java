@@ -125,4 +125,43 @@ public class ClassController {
         }
         return false;
     }
+
+    @RequestMapping(value = "/open/{idClass}", method = RequestMethod.GET)
+    public boolean openClass(@PathVariable(name = "idClass") Integer idClass) {
+        try {
+            Clazz clazz = classService.getClassById(idClass);
+            if(clazz == null) return false;
+            if(classService.openClass(idClass) == true) return true;
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @RequestMapping(value = "/close/{idClass}", method = RequestMethod.GET)
+    public boolean closeClass(@PathVariable(name = "idClass") Integer idClass) {
+        try {
+            Clazz clazz = classService.getClassById(idClass);
+            if(clazz == null) return false;
+            if(classService.closeClass(idClass) == true) return true;
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @RequestMapping(value = "/finish/{idClass}", method = RequestMethod.GET)
+    public boolean finish(@PathVariable(name = "idClass") Integer idClass) {
+        try {
+            Clazz clazz = classService.getClassById(idClass);
+            if(clazz == null) return false;
+            if(classService.finish(idClass) == true) return true;
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

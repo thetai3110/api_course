@@ -35,25 +35,25 @@ public class Marks implements Serializable {
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "id_class")
+    private Clazz clazz;
+
+    @ManyToOne
     @JoinColumn(name = "id_student")
     private Student student;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_course")
-    private Course course;
 
     public Marks() {
     }
 
-    public Marks(Float marks, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Student student, Course course) {
+    public Marks(Float marks, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Clazz clazz, Student student) {
         this.marks = marks;
         this.createdBy = createdBy;
         this.modifyBy = modifyBy;
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
+        this.clazz = clazz;
         this.student = student;
-        this.course = course;
     }
 
     public Integer getIdMarks() {
@@ -104,19 +104,19 @@ public class Marks implements Serializable {
         this.modifyDate = modifyDate;
     }
 
+    public Clazz getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Clazz clazz) {
+        this.clazz = clazz;
+    }
+
     public Student getStudent() {
         return student;
     }
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 }

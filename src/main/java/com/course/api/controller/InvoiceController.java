@@ -47,7 +47,6 @@ public class InvoiceController {
     public ResponseEntity<Invoice> getInvoiceByRegister(@PathVariable(name = "id") Integer id) {
         try {
             Invoice invoice = invoiceService.getInvoiceByRegister(id);
-            if (invoice == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
             return new ResponseEntity<Invoice>(invoice, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
