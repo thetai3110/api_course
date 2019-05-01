@@ -20,6 +20,6 @@ public interface ClassService {
     void removeClass(Clazz clazz) throws Exception;
     boolean openClass(Integer id) throws Exception;
     boolean closeClass(Integer id) throws Exception;
-    void destroyClass(Integer id) throws Exception;
+    boolean cancelClass(Integer id) throws Exception;
     boolean finish(Integer id) throws Exception;
 }

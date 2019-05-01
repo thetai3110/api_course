@@ -18,6 +18,11 @@ public class Exam implements Serializable {
     private String duration;
 
     @Basic
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_exam", nullable = true)
+    private Date dateExam;
+
+    @Basic
     @Column(name = "status_exam", nullable = true, length = 1)
     private int status;
 
@@ -46,8 +51,9 @@ public class Exam implements Serializable {
     public Exam() {
     }
 
-    public Exam(String duration, int status, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course) {
+    public Exam(String duration, Date dateExam, int status, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Course course) {
         this.duration = duration;
+        this.dateExam = dateExam;
         this.status = status;
         this.createdBy = createdBy;
         this.modifyBy = modifyBy;
@@ -70,6 +76,14 @@ public class Exam implements Serializable {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public Date getDateExam() {
+        return dateExam;
+    }
+
+    public void setDateExam(Date dateExam) {
+        this.dateExam = dateExam;
     }
 
     public int getStatus() {

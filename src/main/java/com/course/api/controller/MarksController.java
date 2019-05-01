@@ -76,6 +76,18 @@ public class MarksController {
         return null;
     }
 
+    @RequestMapping(value = "/class-student/{id}/{idStu}", method = RequestMethod.GET)
+    public ResponseEntity<Marks> getMarksByClassAndMarks(@PathVariable(name = "id") Integer id, @PathVariable(name = "idStu") Integer idStu) {
+        try {
+            Marks marks = marksService.getMarksByClassAndStudent(id, idStu);
+            if (marks == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Marks>(marks, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Marks> addMarks(@RequestBody Marks marks) {
         try {

@@ -4,8 +4,7 @@ import java.util.Date;
 
 public class ExamDTO {
 
-    private Date dayExam;
-    private String timeExam;
+    private Date dateExam;
     private String duration;
     private int status;
     private Integer idCourse;
@@ -13,28 +12,19 @@ public class ExamDTO {
     public ExamDTO() {
     }
 
-    public ExamDTO(Date dayExam, String timeExam, String duration, int status, Integer idCourse) {
-        this.dayExam = dayExam;
-        this.timeExam = timeExam;
+    public ExamDTO(Date dateExam, String duration, int status, Integer idCourse) {
+        this.dateExam = dateExam;
         this.duration = duration;
         this.status = status;
         this.idCourse = idCourse;
     }
 
-    public Date getDayExam() {
-        return dayExam;
+    public Date getDateExam() {
+        return dateExam;
     }
 
-    public void setDayExam(Date dayExam) {
-        this.dayExam = dayExam;
-    }
-
-    public String getTimeExam() {
-        return timeExam;
-    }
-
-    public void setTimeExam(String timeExam) {
-        this.timeExam = timeExam;
+    public void setDateExam(Date dateExam) {
+        this.dateExam = dateExam;
     }
 
     public String getDuration() {

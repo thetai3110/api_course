@@ -208,43 +208,12 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public void destroyClass(Integer id) throws Exception {
+    public boolean cancelClass(Integer id) {
         Clazz clazz = clazzRepository.findClazzByIdClass(id);
-        if(!studentClassRepository.findStudentClassByIdClass(clazz.getIdClass()).isEmpty()){
-            for (StudentClass student:
-                    studentClassRepository.findStudentClassByIdClass(clazz.getIdClass())) {
-                String email = studentRepositoty.findStudentByIdStudent(student.getIdStudent()).getEmail();
-                String title = "Hủy lớp " + clazz.getClassName();
-                String content = "Vì lý do không đủ số lượng học viên cho lớp nên lớp học đã bị hủy";
-                Email.destroyClass(title,content, email);
-                studentClassService.removeStudentClass(student);
-            }
-        }
-        if(!classDayRepository.findClassDayByIdClass(clazz.getIdClass()).isEmpty()){
-            for (ClassDay classDay:
-                    classDayRepository.findClassDayByIdClass(clazz.getIdClass())) {
-                classDayService.removeClassDay(classDay);
-            }
-        }
-        if(!invoiceDetailRepository.findInvoiceDetailByIdClass(clazz.getIdClass()).isEmpty()){
-            for (InvoiceDetail invoiceDetail:
-                    invoiceDetailRepository.findInvoiceDetailByIdClass(clazz.getIdClass())){
-                invoiceDetailRepository.delete(invoiceDetail);
-            }
-        }
-        if(!invoiceRepository.findInvoiceByClazz(clazz).isEmpty()){
-            for (Invoice invoice:
-                    invoiceRepository.findInvoiceByClazz(clazz)) {
-                invoiceRepository.delete(invoice);
-            }
-        }
-        if(!marksService.getMarksByClass(clazz.getIdClass()).isEmpty()){
-            for (Marks marks:
-                    marksService.getMarksByClass(clazz.getIdClass())){
-                marksService.removeMarks(marks);
-            }
-        }
-        clazzRepository.delete(clazz);
+        clazz.setStatus(2);
+        clazzRepository.save(clazz);
+        if(clazz != null) return true;
+        return false;
     }
 
     @Override

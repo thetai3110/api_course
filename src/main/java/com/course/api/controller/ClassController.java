@@ -178,6 +178,19 @@ public class ClassController {
         return false;
     }
 
+    @RequestMapping(value = "/cancel/{idClass}", method = RequestMethod.GET)
+    public boolean cancelClass(@PathVariable(name = "idClass") Integer idClass) {
+        try {
+            Clazz clazz = classService.getClassById(idClass);
+            if(clazz == null) return false;
+            if(classService.cancelClass(idClass) == true) return true;
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     @RequestMapping(value = "/finish/{idClass}", method = RequestMethod.GET)
     public boolean finish(@PathVariable(name = "idClass") Integer idClass) {
         try {

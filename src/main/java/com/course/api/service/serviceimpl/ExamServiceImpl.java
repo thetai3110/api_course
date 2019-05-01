@@ -47,6 +47,11 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    public List<Exam> getExamByStatus(Integer status) {
+        return examRepository.findExamByStatus(status);
+    }
+
+    @Override
     public Exam addExam(ExamDTO examDTO) {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.addMappings(new PropertyMap<ExamDTO, Exam>() {
@@ -83,5 +88,32 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public void removeExam(Exam exam) {
         examRepository.delete(exam);
+    }
+
+    @Override
+    public boolean openExam(Integer idExam) {
+        Exam exam = examRepository.findExamByIdExam(idExam);
+        exam.setStatus(1);
+        examRepository.save(exam);
+        if(exam != null) return true;
+        return false;
+    }
+
+    @Override
+    public boolean closeExam(Integer idExam) {
+        Exam exam = examRepository.findExamByIdExam(idExam);
+        exam.setStatus(2);
+        examRepository.save(exam);
+        if(exam != null) return true;
+        return false;
+    }
+
+    @Override
+    public boolean finish(Integer idExam) {
+        Exam exam = examRepository.findExamByIdExam(idExam);
+        exam.setStatus(0);
+        examRepository.save(exam);
+        if(exam != null) return true;
+        return false;
     }
 }
