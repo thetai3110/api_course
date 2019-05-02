@@ -15,7 +15,7 @@ public class Email {
     @Autowired
     private static ClassService classService;
 
-    public static int destroyClass(String subject, String content, String email){
+    public static int notification(String subject, String content, String email){
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");

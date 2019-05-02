@@ -211,6 +211,14 @@ public class ClassServiceImpl implements ClassService {
     public boolean cancelClass(Integer id) {
         Clazz clazz = clazzRepository.findClazzByIdClass(id);
         clazz.setStatus(2);
+        for (StudentClass stu_class:
+                studentClassRepository.findStudentClassByIdClass(clazz.getIdClass())) {
+            String email = studentRepositoty.findStudentByIdStudent(stu_class.getIdStudent()).getEmail();
+            String subject = "Trung tâm tin học thông báo";
+            String content = "Lớp học "+ clazz.getClassName() + " khóa học " + clazz.getCourse().getCourse() + "-" +clazz.getCourse().getLevel().getLevel() + " đã bị hủy" +
+                    " vì lý do không đủ học viên để mở lớp. Chúng tôi rất xin lỗi về điểu này!";
+            Email.notification(subject,content, email);
+        }
         clazzRepository.save(clazz);
         if(clazz != null) return true;
         return false;
@@ -228,6 +236,21 @@ public class ClassServiceImpl implements ClassService {
             }
         }
         if(clazz != null) return true;
+        return false;
+    }
+
+    @Override
+    public boolean sendNotif(Integer idClass) {
+        Clazz clazz = clazzRepository.findClazzByIdClass(idClass);
+        clazz.setStatus(2);
+        for (StudentClass stu_class:
+                studentClassRepository.findStudentClassByIdClass(idClass)) {
+            String email = studentRepositoty.findStudentByIdStudent(stu_class.getIdStudent()).getEmail();
+            String subject = "Trung tâm tin học thông báo";
+            String content = "Lớp học "+ clazz.getClassName() + " khóa học " + clazz.getCourse().getCourse() + "-" +clazz.getCourse().getLevel().getLevel() + "" +
+                    " đã gần hết thời hạn đóng học phí, bạn vui lòng đóng học phí trước ngày " + clazz.getDayStart();
+            Email.notification(subject,content, email);
+        }
         return false;
     }
 }

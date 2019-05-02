@@ -6,6 +6,7 @@ import com.course.api.entity.Invoice;
 import com.course.api.entity.Register;
 import com.course.api.entity.Student;
 import com.course.api.repository.*;
+import com.course.api.sendemail.Email;
 import com.course.api.service.InvoiceService;
 import com.course.api.service.StudentClassService;
 import org.modelmapper.ModelMapper;
@@ -66,7 +67,10 @@ public class InvoiceServiceImpl implements InvoiceService {
             }
         });
         Invoice invoice = modelMapper.map(invoiceDTO, Invoice.class);
-        invoice.setRegister(registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister()));
+        if(invoiceDTO.getIdRegister() != null){
+            invoice.setRegister(registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister()));
+            Email.notification("Trung tâm tin học thông báo", "Bạn đã đóng học phí thành công!!!", registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister()).getEmail());
+        }
         invoice.setEmployee(employeeRepository.findEmployeeByIdEmployee(invoiceDTO.getIdEmployee()));
         invoice.setClazz(clazzRepository.findClazzByIdClass(invoiceDTO.getIdClass()));
         invoice.setCreatedDate(new Date());

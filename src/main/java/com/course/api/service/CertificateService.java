@@ -9,6 +9,7 @@ public interface CertificateService {
     List<Certificate> getAll() throws Exception;
     List<Certificate> getCertificateByExam(Integer idExam) throws Exception;
     List<Certificate> getCertificateByStudent(Integer idStudent) throws Exception;
+    Certificate getCertificateByMarks(Integer idMark) throws Exception;
     Certificate getCertificateById(Integer idCer) throws Exception;
     Certificate addCertificate(CertificateDTO certificateDTO) throws Exception;
     Certificate updateCertificate(CertificateDTO certificateDTO, Integer idCer) throws Exception;

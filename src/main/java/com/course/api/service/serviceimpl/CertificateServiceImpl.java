@@ -60,6 +60,14 @@ public class CertificateServiceImpl implements CertificateService {
         return entityManager.createNativeQuery(query,Certificate.class).setParameter("idStudent",idStudent).getResultList();
     }
 
+    @Override
+    public Certificate getCertificateByMarks(Integer idMark) {
+        Certificate certificate = (Certificate) entityManager.createNativeQuery("select * from CERTIFICATE where id_marks =:idMarks",Certificate.class).setParameter("idMarks", idMark).getSingleResult();
+        if(certificate != null){
+            return certificate;
+        }else return null;
+    }
+
 
     @Override
     public Certificate getCertificateById(Integer idCer) {
@@ -114,26 +122,30 @@ public class CertificateServiceImpl implements CertificateService {
         List<Certificate> list = new ArrayList<>();
         for (Integer id:
              lstId) {
-            Marks marks = marksRepository.findMarksByIdMarks(id);
-            Certificate certificate = new Certificate();
-            certificate.setStudent(marks.getStudent());
-            certificate.setMarks(marks);
-            certificate.setDateCertificate(new Date());
-            certificate.setCreatedDate(new Date());
-            certificate.setModifyDate(new Date());
-            String classification = "";
-            if(marks.getMarks() >= 5 && marks.getMarks() <= 6.5)
-                 classification = "TRUNG BÌNH";
-            else if(marks.getMarks() > 6.5 && marks.getMarks() <= 8)
+            try{
+                Certificate certificate1 = getCertificateByMarks(id);
+            }catch (Exception e) {
+                Marks marks = marksRepository.findMarksByIdMarks(id);
+                Certificate certificate = new Certificate();
+                certificate.setStudent(marks.getStudent());
+                certificate.setMarks(marks);
+                certificate.setDateCertificate(new Date());
+                certificate.setCreatedDate(new Date());
+                certificate.setModifyDate(new Date());
+                String classification = "";
+                if (marks.getMarks() >= 5 && marks.getMarks() <= 6.5)
+                    classification = "TRUNG BÌNH";
+                else if (marks.getMarks() > 6.5 && marks.getMarks() <= 8)
                     classification = "KHÁ";
-            else if(marks.getMarks() > 8 && marks.getMarks() <= 9.5)
-                classification = "GIỎI";
-            else if(marks.getMarks() > 9.5)
-                classification = "XUẤT SẮC";
-            certificate.setClassification(classification);
-            certificate.setExam(examService.getExamByClass(marks.getClazz().getIdClass()));
-            list.add(certificate);
-            certificateRepository.save(certificate);
+                else if (marks.getMarks() > 8 && marks.getMarks() <= 9.5)
+                    classification = "GIỎI";
+                else if (marks.getMarks() > 9.5)
+                    classification = "XUẤT SẮC";
+                certificate.setClassification(classification);
+                certificate.setExam(examService.getExamByClass(marks.getClazz().getIdClass()));
+                list.add(certificate);
+                certificateRepository.save(certificate);
+            }
         }
         return list;
     }

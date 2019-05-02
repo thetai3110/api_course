@@ -40,6 +40,18 @@ public class ExamDetailController {
         return null;
     }
 
+    @RequestMapping(value = "/exam/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<ExamDetail>> getExamDetailByExam(@PathVariable(name = "id") Integer id) {
+        try {
+            List<ExamDetail> examDetail = examDetailService.getExamDetailByExam(id);
+            if (examDetail == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<ExamDetail>>(examDetail, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<ExamDetail> addExamDetail(@RequestBody ExamDetail examDetail) {
         try {

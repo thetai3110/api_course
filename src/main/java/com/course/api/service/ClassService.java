@@ -22,4 +22,5 @@ public interface ClassService {
     boolean closeClass(Integer id) throws Exception;
     boolean cancelClass(Integer id) throws Exception;
     boolean finish(Integer id) throws Exception;
+    boolean sendNotif(Integer idClass) throws Exception;
 }
