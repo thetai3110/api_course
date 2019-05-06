@@ -1,12 +1,11 @@
 package com.course.api.service.serviceimpl;
 
+import com.course.api.ExportExcel.ExportListClass;
 import com.course.api.dto.InvoiceDTO;
-import com.course.api.entity.Employee;
-import com.course.api.entity.Invoice;
-import com.course.api.entity.Register;
-import com.course.api.entity.Student;
+import com.course.api.entity.*;
 import com.course.api.repository.*;
 import com.course.api.sendemail.Email;
+import com.course.api.service.InvoiceDetailService;
 import com.course.api.service.InvoiceService;
 import com.course.api.service.StudentClassService;
 import org.modelmapper.ModelMapper;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +33,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
     private RegisterRepository registerRepository;
+
+    @Autowired
+    private InvoiceDetailService invoiceDetailService;
+
+    @Autowired
+    private StudentRepositoty studentRepositoty;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -102,5 +108,18 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public void removeInvoice(Invoice invoice) {
         invoiceRepository.delete(invoice);
+    }
+
+    @Override
+    public void exportInvoice(Integer idInvoice, String fileName) throws Exception {
+        Invoice invoice = invoiceRepository.findInvoiceByIdInvoice(idInvoice);
+        List<Student> lstStudent = new ArrayList<>();
+        for (InvoiceDetail invoiceDetail:
+                invoiceDetailService.getInvoiceDetailByInvoice(idInvoice)) {
+            Student stu = studentRepositoty.findStudentByIdStudent(invoiceDetail.getIdStudent());
+            if (stu != null)
+                lstStudent.add(stu);
+        }
+        ExportListClass.exportInvoice(lstStudent, invoice, fileName);
     }
 }

@@ -16,4 +16,5 @@ public interface InvoiceService {
     Invoice updateInvoice(Invoice invoice) throws Exception;
     Invoice updateInvoice(InvoiceDTO invoiceDTO, Integer idInvoice) throws Exception;
     void removeInvoice(Invoice invoice) throws Exception;
+    void exportInvoice(Integer idInvoice, String fileName) throws Exception;
 }

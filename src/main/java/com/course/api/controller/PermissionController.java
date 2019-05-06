@@ -1,8 +1,6 @@
 package com.course.api.controller;
 
-import com.course.api.entity.AccountPer;
 import com.course.api.entity.Permission;
-import com.course.api.service.AccountPerService;
 import com.course.api.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

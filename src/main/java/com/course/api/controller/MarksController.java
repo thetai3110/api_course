@@ -76,6 +76,18 @@ public class MarksController {
         return null;
     }
 
+    @RequestMapping(value = "/name-cmnd/{name}/{cmnd}", method = RequestMethod.GET)
+    public ResponseEntity<List<Marks>> getMarksByNameAndCMND(@PathVariable(name = "name") String name, @PathVariable(name = "cmnd") String cmnd) {
+        try {
+            List<Marks> marks = marksService.getMarksByNameAndCMND(name, cmnd);
+            if (marks == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Marks>>(marks, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/class-student/{id}/{idStu}", method = RequestMethod.GET)
     public ResponseEntity<Marks> getMarksByClassAndMarks(@PathVariable(name = "id") Integer id, @PathVariable(name = "idStu") Integer idStu) {
         try {

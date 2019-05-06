@@ -55,6 +55,11 @@ public class MarksServiceImpl implements MarksService {
     }
 
     @Override
+    public List<Marks> getMarksByNameAndCMND(String name, String cmnd) {
+        return entityManager.createNativeQuery("select * from MARKS m join STUDENT s on m.id_student = s.id_student where s.student_name =:studentName and s.cmnd =:cmnd  ",Marks.class).setParameter("studentName", name).setParameter("cmnd", cmnd).getResultList();
+    }
+
+    @Override
     public Marks getMarksByClassAndStudent(Integer idClass, Integer idStudent) {
         Marks marks = (Marks) entityManager.createNativeQuery("select * from MARKS where id_class =:idClass AND id_student =:idStudent",Marks.class).setParameter("idClass", idClass).setParameter("idStudent", idStudent).getSingleResult();
         if(marks != null){

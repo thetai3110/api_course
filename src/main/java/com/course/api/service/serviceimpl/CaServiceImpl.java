@@ -27,15 +27,12 @@ public class CaServiceImpl implements CaService {
 
     @Override
     public Ca addCa(Ca ca) {
-        ca.setCreatedDate(new Date());
-        ca.setModifyDate(new Date());
         caRepositoty.save(ca);
         return ca;
     }
 
     @Override
     public Ca updateCa(Ca ca) {
-        ca.setModifyDate(new Date());
         caRepositoty.save(ca);
         return ca;
     }

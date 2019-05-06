@@ -91,10 +91,10 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Student> addStudent(@RequestBody StudentDTO studentDTO) {
+    public ResponseEntity<Student> addStudent(@RequestBody Student student) {
         try {
-            if (studentDTO == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<Student>(studentService.addStudent(studentDTO), HttpStatus.OK);
+            if (student == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Student>(studentService.addStudent(student), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,18 +102,19 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public ResponseEntity<Student> updateStudent(@PathVariable(name = "id") Integer idStudent, @RequestBody StudentDTO studentDTO) {
+    public ResponseEntity<Student> updateStudent(@PathVariable(name = "id") Integer idStudent, @RequestBody Student student) {
         try {
             Student curStudent = studentService.getStudentById(idStudent);
             if (curStudent == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            if(!studentDTO.getImage().equals("")){
-                String[] img = studentDTO.getImage().split("fakepath");
-                studentDTO.setImage(img[1]);
-            }else{
-                String img = curStudent.getImage() == null || curStudent.getImage().equals("") ? "" : curStudent.getImage();
-                studentDTO.setImage(img);
-            }
-            return new ResponseEntity<Student>(studentService.updateStudent(studentDTO, idStudent), HttpStatus.OK);
+//            if(!student.getImage().equals("")){
+//                String[] img = student.getImage().split("fakepath");
+//                student.setImage(img[1]);
+//            }else{
+//                String img = curStudent.getImage() == null || curStudent.getImage().equals("") ? "" : curStudent.getImage();
+//                student.setImage(img);
+//            }
+            student.setIdStudent(idStudent);
+            return new ResponseEntity<Student>(studentService.updateStudent(student), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

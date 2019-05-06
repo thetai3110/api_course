@@ -68,14 +68,10 @@ public class Lecturers implements Serializable {
     @JoinColumn(name = "id_majors")
     private Majors majors;
 
-    @OneToOne
-    @JoinColumn(name = "id_account")
-    private Account accountLec;
-
     public Lecturers() {
     }
 
-    public Lecturers(String lecturersName, Date lecturersDate, int sex, String address, String email, String phone, int salary, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Majors majors, Account accountLec) {
+    public Lecturers(String lecturersName, Date lecturersDate, int sex, String address, String email, String phone, int salary, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Majors majors) {
         this.lecturersName = lecturersName;
         this.lecturersDate = lecturersDate;
         this.sex = sex;
@@ -89,7 +85,6 @@ public class Lecturers implements Serializable {
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
         this.majors = majors;
-        this.accountLec = accountLec;
     }
 
     public Integer getIdLecturers() {
@@ -202,13 +197,5 @@ public class Lecturers implements Serializable {
 
     public void setMajors(Majors majors) {
         this.majors = majors;
-    }
-
-    public Account getAccountLec() {
-        return accountLec;
-    }
-
-    public void setAccountLec(Account accountLec) {
-        this.accountLec = accountLec;
     }
 }

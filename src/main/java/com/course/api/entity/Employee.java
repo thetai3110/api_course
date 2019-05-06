@@ -72,14 +72,10 @@ public class Employee implements Serializable {
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
-    @OneToOne
-    @JoinColumn(name = "id_account")
-    private Account accountEmp;
-
     public Employee() {
     }
 
-    public Employee(String roles, String cmnd, String employeeName, Date employeeDate, int sex, String address, String email, String phone, int salary, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Account accountEmp) {
+    public Employee(String roles, String cmnd, String employeeName, Date employeeDate, int sex, String address, String email, String phone, int salary, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
         this.roles = roles;
         this.cmnd = cmnd;
         this.employeeName = employeeName;
@@ -94,7 +90,6 @@ public class Employee implements Serializable {
         this.modifyBy = modifyBy;
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
-        this.accountEmp = accountEmp;
     }
 
     public Integer getIdEmployee() {
@@ -113,11 +108,11 @@ public class Employee implements Serializable {
         this.roles = roles;
     }
 
-    public String getCMND() {
+    public String getCmnd() {
         return cmnd;
     }
 
-    public void setCMND(String cmnd) {
+    public void setCmnd(String cmnd) {
         this.cmnd = cmnd;
     }
 
@@ -215,13 +210,5 @@ public class Employee implements Serializable {
 
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
-    }
-
-    public Account getAccountEmp() {
-        return accountEmp;
-    }
-
-    public void setAccountEmp(Account accountEmp) {
-        this.accountEmp = accountEmp;
     }
 }

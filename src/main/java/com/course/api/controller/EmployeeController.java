@@ -1,6 +1,5 @@
 package com.course.api.controller;
 
-import com.course.api.dto.EmployeeDTO;
 import com.course.api.entity.Employee;
 import com.course.api.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +41,10 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Employee> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
         try {
-            if (employeeDTO == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<Employee>(employeeService.addEmployee(employeeDTO), HttpStatus.OK);
+            if (employee == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Employee>(employeeService.addEmployee(employee), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,12 +52,12 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public ResponseEntity<Employee> updateEmployee(@PathVariable(name = "id") Integer idEmp, @RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable(name = "id") Integer idEmp, @RequestBody Employee employee) {
         try {
             Employee curEmp = employeeService.getEmployeeById(idEmp);
             if (curEmp == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            //employee.setIdEmployee(idEmp);
-            return new ResponseEntity<Employee>(employeeService.updateEmployee(employeeDTO, idEmp), HttpStatus.OK);
+            employee.setIdEmployee(idEmp);
+            return new ResponseEntity<Employee>(employeeService.updateEmployee(employee), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

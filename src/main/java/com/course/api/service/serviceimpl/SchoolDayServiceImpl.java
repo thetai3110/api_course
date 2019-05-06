@@ -27,15 +27,12 @@ public class SchoolDayServiceImpl implements SchoolDayService {
 
     @Override
     public SchoolDay addSchoolDay(SchoolDay schoolDay) {
-        schoolDay.setCreatedDate(new Date());
-        schoolDay.setModifyDate(new Date());
         schoolDayRepository.save(schoolDay);
         return schoolDay;
     }
 
     @Override
     public SchoolDay updateSchoolDay(SchoolDay schoolDay) {
-        schoolDay.setModifyDate(new Date());
         schoolDayRepository.save(schoolDay);
         return schoolDay;
     }

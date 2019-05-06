@@ -1,19 +1,11 @@
 package com.course.api.service.serviceimpl;
 
-import com.course.api.dto.LecturersDTO;
-import com.course.api.entity.Account;
 import com.course.api.entity.Clazz;
 import com.course.api.entity.Lecturers;
-import com.course.api.entity.Majors;
-import com.course.api.repository.AccountRepositoty;
 import com.course.api.repository.LecturersRepository;
 import com.course.api.repository.MajorsRepositoty;
-import com.course.api.service.AccountService;
 import com.course.api.service.ClassService;
 import com.course.api.service.LecturersService;
-import com.course.api.service.MajorsService;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,12 +26,6 @@ public class LecturersServiceImpl implements LecturersService {
 
     @Autowired
     private LecturersRepository lecturersRepository;
-
-    @Autowired
-    private AccountRepositoty accountRepositoty;
-
-    @Autowired
-    private AccountService accountService;
 
     @Autowired
     private ClassService classService;
@@ -71,36 +57,8 @@ public class LecturersServiceImpl implements LecturersService {
     }
 
     @Override
-    public Lecturers addLecturers(LecturersDTO lecturersDTO) {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addMappings(new PropertyMap<LecturersDTO, Lecturers>() {
-            @Override
-            protected void configure() {
-                skip().setIdLecturers(null);
-            }
-        });
-        Lecturers lecturers = modelMapper.map(lecturersDTO, Lecturers.class);
-        lecturers.setMajors(majorsRepositoty.findMajorsByIdMajors(lecturersDTO.getIdMajors()));
-        lecturers.setAccountLec(accountRepositoty.findAccountByIdAccount(lecturersDTO.getIdAccount()));
+    public Lecturers addLecturers(Lecturers lecturers) {
         lecturers.setCreatedDate(new Date());
-        lecturers.setModifyDate(new Date());
-        lecturersRepository.save(lecturers);
-        return lecturers;
-    }
-
-    @Override
-    public Lecturers updateLecturers(LecturersDTO lecturersDTO, Integer idLec)  {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addMappings(new PropertyMap<LecturersDTO, Lecturers>() {
-            @Override
-            protected void configure() {
-                skip().setIdLecturers(null);
-            }
-        });
-        Lecturers lecturers = modelMapper.map(lecturersDTO, Lecturers.class);
-        lecturers.setIdLecturers(idLec);
-        lecturers.setMajors(majorsRepositoty.findMajorsByIdMajors(lecturersDTO.getIdMajors()));
-        lecturers.setAccountLec(accountRepositoty.findAccountByIdAccount(lecturersDTO.getIdAccount()));
         lecturers.setModifyDate(new Date());
         lecturersRepository.save(lecturers);
         return lecturers;
@@ -122,14 +80,6 @@ public class LecturersServiceImpl implements LecturersService {
                 classService.updateClass(cl);
             }
         }
-        Account account = new Account();
-        if(lecturers.getAccountLec() != null) {
-            account = lecturers.getAccountLec();
-            lecturersRepository.delete(lecturers);
-            accountService.removeAccount(account);
-
-        }else{
-            lecturersRepository.delete(lecturers);
-        }
+        lecturersRepository.delete(lecturers);
     }
 }

@@ -3,8 +3,6 @@ package com.course.api.service.serviceimpl;
 import com.course.api.dto.InfoStudentDTO;
 import com.course.api.dto.StudentDTO;
 import com.course.api.entity.*;
-import com.course.api.model.ResponseModel;
-import com.course.api.repository.AccountRepositoty;
 import com.course.api.repository.StudentClassRepository;
 import com.course.api.repository.StudentRepositoty;
 import com.course.api.service.*;
@@ -25,9 +23,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentRepositoty studentRepositoty;
-
-    @Autowired
-    private AccountRepositoty accountRepositoty;
 
     @Autowired
     private MarksService marksService;
@@ -104,16 +99,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student addStudent(StudentDTO studentDTO) {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addMappings(new PropertyMap<StudentDTO, Student>() {
-            @Override
-            protected void configure() {
-                skip().setIdStudent(null);
-            }
-        });
-        Student student = modelMapper.map(studentDTO, Student.class);
-        student.setAccountStu(accountRepositoty.findAccountByIdAccount(studentDTO.getIdAccount()));
+    public Student addStudent(Student student) {
         student.setCreatedDate(new Date());
         student.setModifyDate(new Date());
         studentRepositoty.save(student);
@@ -125,24 +111,21 @@ public class StudentServiceImpl implements StudentService {
         List<Student> students = new ArrayList<>();
         for (StudentDTO studentDTO:
              studentDTOS) {
-            students.add(addStudent(studentDTO));
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.addMappings(new PropertyMap<StudentDTO, Student>() {
+                @Override
+                protected void configure() {
+                    skip().setIdStudent(null);
+                }
+            });
+            Student student = modelMapper.map(studentDTO, Student.class);
+            students.add(addStudent(student));
         }
         if(students.size() == studentDTOS.size()){
             return students;
         }else{
             return null;
         }
-    }
-
-    @Override
-    public Student updateStudent(StudentDTO studentDTO, Integer idStudent) {
-        ModelMapper modelMapper = new ModelMapper();
-        Student student = modelMapper.map(studentDTO, Student.class);
-        student.setIdStudent(idStudent);
-        student.setAccountStu(accountRepositoty.findAccountByIdAccount(studentDTO.getIdAccount()));
-        student.setModifyDate(new Date());
-        studentRepositoty.save(student);
-        return student;
     }
 
     @Override

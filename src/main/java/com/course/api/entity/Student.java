@@ -75,14 +75,10 @@ public class Student implements Serializable {
     @Column(name = "MODIFY_DATE", nullable = true)
     private Date modifyDate;
 
-    @OneToOne
-    @JoinColumn(name = "id_account")
-    private Account accountStu;
-
     public Student() {
     }
 
-    public Student(String studentName, String job, String cmnd, Date studentDate, int sex, String address, String email, String phone, String image, int numOfRegister, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate, Account accountStu) {
+    public Student(String studentName, String job, String cmnd, Date studentDate, int sex, String address, String email, String phone, String image, int numOfRegister, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
         this.studentName = studentName;
         this.job = job;
         this.cmnd = cmnd;
@@ -97,7 +93,6 @@ public class Student implements Serializable {
         this.modifyBy = modifyBy;
         this.createdDate = createdDate;
         this.modifyDate = modifyDate;
-        this.accountStu = accountStu;
     }
 
     public Integer getIdStudent() {
@@ -219,13 +214,4 @@ public class Student implements Serializable {
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
     }
-
-    public Account getAccountStu() {
-        return accountStu;
-    }
-
-    public void setAccountStu(Account accountStu) {
-        this.accountStu = accountStu;
-    }
-
 }

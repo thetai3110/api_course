@@ -1,5 +1,6 @@
 package com.course.api.service.serviceimpl;
 
+import com.course.api.ExportExcel.ExportListClass;
 import com.course.api.dto.ClassesDTO;
 import com.course.api.entity.*;
 import com.course.api.repository.*;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -208,7 +211,7 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public boolean cancelClass(Integer id) {
+    public boolean cancelClass(Integer id) throws Exception {
         Clazz clazz = clazzRepository.findClazzByIdClass(id);
         clazz.setStatus(2);
         for (StudentClass stu_class:
@@ -220,6 +223,12 @@ public class ClassServiceImpl implements ClassService {
             Email.notification(subject,content, email);
         }
         clazzRepository.save(clazz);
+        if(!classDayRepository.findClassDayByIdClass(id).isEmpty()){
+            for (ClassDay classDay:
+                    classDayRepository.findClassDayByIdClass(clazz.getIdClass())) {
+                classDayService.removeClassDay(classDay);
+            }
+        }
         if(clazz != null) return true;
         return false;
     }
@@ -252,5 +261,17 @@ public class ClassServiceImpl implements ClassService {
             Email.notification(subject,content, email);
         }
         return false;
+    }
+
+    @Override
+    public void exportClass(Integer idClass, String fileName) throws IOException {
+        List<Student> lstStudent = new ArrayList<Student>();
+        for (StudentClass stu_class:
+                studentClassRepository.findStudentClassByIdClass(idClass)) {
+            Student stu = studentRepositoty.findStudentByIdStudent(stu_class.getIdStudent());
+            if(stu != null)
+                lstStudent.add(stu);
+        }
+        ExportListClass.exportClass(lstStudent, fileName, clazzRepository.findClazzByIdClass(idClass).getClassName());
     }
 }

@@ -11,8 +11,7 @@ public interface LecturersService {
     Lecturers getLecturersById(Integer idLec) throws Exception;
     Lecturers getLecturersAccount(Integer idAccount) throws Exception;
     List<Lecturers> getByMajors(Integer idMajors) throws Exception;
-    Lecturers addLecturers(LecturersDTO lecturersDTO) throws Exception;
-    Lecturers updateLecturers(LecturersDTO lecturersDTO, Integer idLec) throws Exception;
+    Lecturers addLecturers(Lecturers lecturers) throws Exception;
     Lecturers updateLecturers(Lecturers lecturers) throws Exception;
     void removeLecturers(Lecturers lecturers) throws Exception;
 }

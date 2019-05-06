@@ -18,9 +18,8 @@ public interface StudentService {
     List<InfoStudentDTO> getInfoStudent(String name, String cmnd) throws Exception;
     Student getStudentByEmail(String email) throws Exception;
     List<Student> getStudentByInvoice(Integer idInvoice) throws Exception;
-    Student addStudent(StudentDTO studentDTO) throws Exception;
+    Student addStudent(Student student) throws Exception;
     List<Student> addMultiStudent(List<StudentDTO> studentDTOS) throws Exception;
-    Student updateStudent(StudentDTO studentDTO, Integer idStudent) throws Exception;
     Student updateStudent(Student student) throws Exception;
     void removeStudent(Student student) throws Exception;
 }

@@ -10,6 +10,7 @@ public interface MarksService {
     List<Marks> getMarksByClass(Integer idClass) throws Exception;
     List<Marks> getMarksByClassAndMark(Integer idClass) throws Exception;
     List<Marks> getMarksByStudent(Integer idStudent) throws Exception;
+    List<Marks> getMarksByNameAndCMND(String name, String cmnd) throws Exception;
     Marks getMarksByClassAndStudent(Integer idClass, Integer idStudent) throws Exception;
     Marks addMarks(Marks marks) throws Exception;
     Marks updateMarks(Marks marks) throws Exception;

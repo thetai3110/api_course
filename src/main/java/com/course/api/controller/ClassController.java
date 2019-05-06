@@ -203,4 +203,17 @@ public class ClassController {
         }
         return false;
     }
+
+    @RequestMapping(value = "/export/{idClass}/{fileName}", method = RequestMethod.GET)
+    public boolean finish(@PathVariable(name = "idClass") Integer idClass, @PathVariable(name = "fileName") String fileName) {
+        try {
+            Clazz clazz = classService.getClassById(idClass);
+            if(clazz == null) return false;
+            classService.exportClass(idClass, fileName);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

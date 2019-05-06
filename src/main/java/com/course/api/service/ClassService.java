@@ -23,4 +23,5 @@ public interface ClassService {
     boolean cancelClass(Integer id) throws Exception;
     boolean finish(Integer id) throws Exception;
     boolean sendNotif(Integer idClass) throws Exception;
+    void exportClass(Integer idClass, String fileName) throws Exception;
 }

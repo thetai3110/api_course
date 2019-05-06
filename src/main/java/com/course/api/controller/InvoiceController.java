@@ -89,4 +89,17 @@ public class InvoiceController {
         }
         return false;
     }
+
+    @RequestMapping(value = "/export/{idInvoice}/{fileName}", method = RequestMethod.GET)
+    public boolean export(@PathVariable(name = "idInvoice") Integer idInvoice, @PathVariable(name = "fileName") String fileName) {
+        try {
+            Invoice invoice = invoiceService.getInvoiceById(idInvoice);
+            if(invoice == null) return false;
+            invoiceService.exportInvoice(idInvoice, fileName);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

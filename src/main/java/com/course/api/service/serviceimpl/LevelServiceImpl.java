@@ -29,15 +29,12 @@ public class LevelServiceImpl implements LevelService {
 
     @Override
     public Level addLevel(Level level) {
-        level.setCreatedDate(new Date());
-        level.setModifyDate(new Date());
         levelRepositoty.save(level);
         return level;
     }
 
     @Override
     public Level updateLevel(Level level) {
-        level.setModifyDate(new Date());
         levelRepositoty.save(level);
         return level;
     }
