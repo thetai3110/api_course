@@ -14,6 +14,14 @@ public class Employee implements Serializable {
     private Integer idEmployee;
 
     @Basic
+    @Column(name = "username", nullable = true)
+    private String username;
+
+    @Basic
+    @Column(name = "pass", nullable = true)
+    private String pass;
+
+    @Basic
     @Column(name = "roles", nullable = true, length = 30)
     private String roles;
 
@@ -75,7 +83,9 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(String roles, String cmnd, String employeeName, Date employeeDate, int sex, String address, String email, String phone, int salary, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
+    public Employee(String username, String pass, String roles, String cmnd, String employeeName, Date employeeDate, int sex, String address, String email, String phone, int salary, String image, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
+        this.username = username;
+        this.pass = pass;
         this.roles = roles;
         this.cmnd = cmnd;
         this.employeeName = employeeName;
@@ -98,6 +108,22 @@ public class Employee implements Serializable {
 
     public void setIdEmployee(Integer idEmployee) {
         this.idEmployee = idEmployee;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getRoles() {

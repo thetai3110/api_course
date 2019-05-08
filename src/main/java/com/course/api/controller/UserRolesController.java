@@ -1,6 +1,7 @@
 package com.course.api.controller;
 
 import com.course.api.entity.UserRoles;
+import com.course.api.service.EmployeeService;
 import com.course.api.service.UserRolesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,9 @@ public class UserRolesController {
 
     @Autowired
     private UserRolesService userRolesService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<UserRoles>> getAllUserRoles() {
@@ -52,10 +56,10 @@ public class UserRolesController {
         return null;
     }
 
-    @RequestMapping(value = "/employee/{idEmp}", method = RequestMethod.GET)
-    public ResponseEntity<List<UserRoles>> getUserRolesByEmployee(@PathVariable(name = "idEmp") Integer idEmp) {
+    @RequestMapping(value = "/employee/{username}/{pass}", method = RequestMethod.GET)
+    public ResponseEntity<List<UserRoles>> getUserRolesByEmployee(@PathVariable(name = "username") String username, @PathVariable(name = "pass") String pass) {
         try {
-            List<UserRoles> userRoles = userRolesService.getUserRolesByEmployee(idEmp);
+            List<UserRoles> userRoles = userRolesService.getUserRolesByEmployee(employeeService.getEmployeeByUsernameAndPass(username, pass).getIdEmployee());
             if (userRoles.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
             return new ResponseEntity<List<UserRoles>>(userRoles, HttpStatus.OK);
         } catch (Exception e) {

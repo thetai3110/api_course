@@ -39,6 +39,18 @@ public class EmployeeController {
         }
         return null;
     }
+    @RequestMapping(value = "/username/{username}/{pass}", method = RequestMethod.GET)
+    public ResponseEntity<Employee> getEmployeeByUserNameAndPass(@PathVariable(name = "username") String username,  @PathVariable(name = "pass") String pass) {
+        try {
+            Employee employee = employeeService.getEmployeeByUsernameAndPass(username, pass);
+            if (employee==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {

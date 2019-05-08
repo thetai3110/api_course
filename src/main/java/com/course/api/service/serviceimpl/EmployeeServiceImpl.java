@@ -2,15 +2,15 @@ package com.course.api.service.serviceimpl;
 
 import com.course.api.entity.Employee;
 import com.course.api.entity.Invoice;
+import com.course.api.entity.UserRoles;
 import com.course.api.repository.EmployeeRepository;
+import com.course.api.repository.RolesRepository;
+import com.course.api.repository.UserRolesRepository;
 import com.course.api.service.EmployeeService;
 import com.course.api.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private InvoiceService invoiceService;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private UserRolesRepository userRolesRepository;
 
     @Override
     public List<Employee> getAll() {
@@ -37,14 +37,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployeeAccount(Integer idAccount) {
-        try {
-            String query = "SELECT * FROM EMPLOYEE WHERE id_account =:idAccount";
-            Employee employee = (Employee) entityManager.createNativeQuery(query, Employee.class).setParameter("idAccount", idAccount).getSingleResult();
-            return employee;
-        }catch (NoResultException e){
-            return null;
-        }
+    public Employee getEmployeeByUsernameAndPass(String username, String pass) {
+        return employeeRepository.findEmployeeByUsernameAndPass(username, pass);
     }
 
     @Override
