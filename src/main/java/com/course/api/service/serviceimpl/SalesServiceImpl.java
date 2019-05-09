@@ -26,7 +26,7 @@ public class SalesServiceImpl implements SalesService {
 
     @Override
     public Sales getSalesByCode(String code) {
-        return salesRepository.findSalesByCode(code);
+        return salesRepository.findSalesByCodeAndStatus(code,1);
     }
 
     @Override

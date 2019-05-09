@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface SalesRepository extends JpaRepository<Sales, Integer> {
     Sales findSalesByIdSales(Integer idSales);
     Sales findSalesByCode(String code);
+    Sales findSalesByCodeAndStatus(String code, Integer status);
 }

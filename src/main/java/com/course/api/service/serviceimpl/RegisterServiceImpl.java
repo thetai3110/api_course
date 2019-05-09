@@ -1,7 +1,9 @@
 package com.course.api.service.serviceimpl;
 
 import com.course.api.entity.Register;
+import com.course.api.entity.Sales;
 import com.course.api.repository.RegisterRepository;
+import com.course.api.repository.SalesRepository;
 import com.course.api.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Autowired
     private RegisterRepository registerRepository;
+
+    @Autowired
+    private SalesRepository salesRepository;
 
     @Override
     public List<Register> getAll() {
@@ -29,6 +34,11 @@ public class RegisterServiceImpl implements RegisterService {
     public Register addRegister(Register register) {
         register.setCreatedDate(new Date());
         register.setModifyDate(new Date());
+        if(register.getIdSale() != null){
+            Sales sales = salesRepository.findSalesByCode(register.getIdSale());
+            sales.setStatus(0);
+            salesRepository.save(sales);
+        }
         registerRepository.save(register);
         return register;
     }
