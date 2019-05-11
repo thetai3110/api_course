@@ -29,6 +29,11 @@ public class FeedBack {
     @Column(name = "status_feedback", nullable = true)
     private Integer status;
 
+    @Basic
+    @Column(name = "rate", nullable = true)
+    private Integer rate;
+
+
     @ManyToOne
     @JoinColumn(name = "id_course")
     private Course course;
@@ -36,11 +41,12 @@ public class FeedBack {
     public FeedBack() {
     }
 
-    public FeedBack(String studentName, String content, Date time, Integer status, Course course) {
+    public FeedBack(String studentName, String content, Date time, Integer status, Integer rate, Course course) {
         this.studentName = studentName;
         this.content = content;
         this.time = time;
         this.status = status;
+        this.rate = rate;
         this.course = course;
     }
 
@@ -84,6 +90,14 @@ public class FeedBack {
         this.status = status;
     }
 
+    public Integer getRate() {
+        return rate;
+    }
+
+    public void setRate(Integer rate) {
+        this.rate = rate;
+    }
+
     public Course getCourse() {
         return course;
     }
@@ -91,4 +105,5 @@ public class FeedBack {
     public void setCourse(Course course) {
         this.course = course;
     }
+
 }
