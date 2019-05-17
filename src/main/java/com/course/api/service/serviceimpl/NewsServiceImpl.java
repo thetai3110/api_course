@@ -72,8 +72,10 @@ public class NewsServiceImpl implements NewsService {
         });
         News news = modelMapper.map(newsDTO, News.class);
         news.setIdNews(id);
+        news.setViews(0);
         news.setCourse(courseRepository.findCourseByIdCourse(newsDTO.getIdCourse()));
         news.setModifyBy(newsDTO.getIdEmp());
+        news.setCreatedDate(newsRepository.findNewsByIdNews(id).getCreatedDate());
         news.setModifyDate(new Date());
         newsRepository.save(news);
         return news;

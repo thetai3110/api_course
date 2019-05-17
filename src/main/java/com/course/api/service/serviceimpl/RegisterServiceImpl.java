@@ -34,7 +34,7 @@ public class RegisterServiceImpl implements RegisterService {
     public Register addRegister(Register register) {
         register.setCreatedDate(new Date());
         register.setModifyDate(new Date());
-        if(register.getIdSale() != null){
+        if(register.getIdSale() != null && !register.getIdSale().equals("")){
             Sales sales = salesRepository.findSalesByCode(register.getIdSale());
             sales.setStatus(0);
             salesRepository.save(sales);

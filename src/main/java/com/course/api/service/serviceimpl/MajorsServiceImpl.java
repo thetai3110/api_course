@@ -27,15 +27,12 @@ public class MajorsServiceImpl implements MajorsService {
 
     @Override
     public Majors addMajors(Majors majors) {
-        majors.setCreatedDate(new Date());
-        majors.setModifyDate(new Date());
         majorsRepositoty.save(majors);
         return majors;
     }
 
     @Override
     public Majors updateMajors(Majors majors) {
-        majors.setModifyDate(new Date());
         majorsRepositoty.save(majors);
         return majors;
     }

@@ -217,11 +217,16 @@ public class ClassServiceImpl implements ClassService {
         for (StudentClass stu_class:
                 studentClassRepository.findStudentClassByIdClass(clazz.getIdClass())) {
             String email = studentRepositoty.findStudentByIdStudent(stu_class.getIdStudent()).getEmail();
-            String subject = "Trung tâm tin học thông báo";
+            String subject = "Trung tâm tin học (Thông báo hủy lớp)";
             String content = "Lớp học "+ clazz.getClassName() + " khóa học " + clazz.getCourse().getCourse() + "-" +clazz.getCourse().getLevel().getLevel() + " đã bị hủy" +
                     " vì lý do không đủ học viên để mở lớp. Chúng tôi rất xin lỗi về điểu này!";
             Email.notification(subject,content, email);
         }
+        String email = clazz.getLecturers().getEmail();
+        String subject = "Trung tâm tin học (Thông báo hủy lớp)";
+        String content = "Lớp học "+ clazz.getClassName() + " khóa học " + clazz.getCourse().getCourse() + "-" +clazz.getCourse().getLevel().getLevel() + " đã bị hủy" +
+                " vì lý do không đủ học viên để mở lớp. Chúng tôi rất xin lỗi về điểu này!";
+        Email.notification(subject,content, email);
         clazzRepository.save(clazz);
         if(!classDayRepository.findClassDayByIdClass(id).isEmpty()){
             for (ClassDay classDay:
@@ -251,14 +256,15 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public boolean sendNotif(Integer idClass) {
         Clazz clazz = clazzRepository.findClazzByIdClass(idClass);
-        clazz.setStatus(2);
         for (StudentClass stu_class:
                 studentClassRepository.findStudentClassByIdClass(idClass)) {
-            String email = studentRepositoty.findStudentByIdStudent(stu_class.getIdStudent()).getEmail();
-            String subject = "Trung tâm tin học thông báo";
-            String content = "Lớp học "+ clazz.getClassName() + " khóa học " + clazz.getCourse().getCourse() + "-" +clazz.getCourse().getLevel().getLevel() + "" +
-                    " đã gần hết thời hạn đóng học phí, bạn vui lòng đóng học phí trước ngày " + clazz.getDayStart();
-            Email.notification(subject,content, email);
+            if(studentRepositoty.findStudentByIdStudent(stu_class.getIdStudent()) != null) {
+                String email = studentRepositoty.findStudentByIdStudent(stu_class.getIdStudent()).getEmail();
+                String subject = "Trung tâm tin học (Thông báo đóng học phí)";
+                String content = "Lớp học " + clazz.getClassName() + " khóa học " + clazz.getCourse().getCourse() + "-" + clazz.getCourse().getLevel().getLevel() + "" +
+                        " đã gần hết thời hạn đóng học phí, bạn vui lòng đóng học phí trước ngày " + clazz.getDayStart();
+                Email.notification(subject, content, email);
+            }
         }
         return false;
     }

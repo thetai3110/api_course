@@ -21,34 +21,12 @@ public class Majors implements Serializable {
     @Column(name = "describes", nullable = true)
     private String describes;
 
-    @Basic
-    @Column(name = "CREATED_BY", nullable = true)
-    private Integer createdBy;
-
-    @Basic
-    @Column(name = "MODIFY_BY", nullable = true)
-    private Integer modifyBy;
-
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "CREATED_DATE", nullable = true)
-    private Date createdDate;
-
-    @Basic
-    @Temporal(TemporalType.DATE)
-    @Column(name = "MODIFY_DATE", nullable = true)
-    private Date modifyDate;
-
     public Majors() {
     }
 
-    public Majors(String majors, String describes, Integer createdBy, Integer modifyBy, Date createdDate, Date modifyDate) {
+    public Majors(String majors, String describes) {
         this.majors = majors;
         this.describes = describes;
-        this.createdBy = createdBy;
-        this.modifyBy = modifyBy;
-        this.createdDate = createdDate;
-        this.modifyDate = modifyDate;
     }
 
     public Integer getIdMajors() {
@@ -75,35 +53,4 @@ public class Majors implements Serializable {
         this.describes = describes;
     }
 
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Integer getModifyBy() {
-        return modifyBy;
-    }
-
-    public void setModifyBy(Integer modifyBy) {
-        this.modifyBy = modifyBy;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
 }

@@ -74,8 +74,12 @@ public class InvoiceServiceImpl implements InvoiceService {
         });
         Invoice invoice = modelMapper.map(invoiceDTO, Invoice.class);
         if(invoiceDTO.getIdRegister() != null){
-            invoice.setRegister(registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister()));
-            Email.notification("Trung tâm tin học thông báo", "Bạn đã đóng học phí thành công!!!", registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister()).getEmail());
+            Register register = registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister());
+            Clazz clazz = clazzRepository.findClazzByIdClass(register.getIdClass());
+            invoice.setRegister(register);
+            String content = "Bạn đã đóng học phí thành công khóa học" + clazz.getCourse().getCourse() + "-" + clazz.getCourse().getLevel().getLevel() +
+                    " với mức tiền là " + invoiceDTO.getCost() + "vnđ";
+            Email.notification("Trung tâm tin học thông báo", content, register.getEmail());
         }
         invoice.setEmployee(employeeRepository.findEmployeeByIdEmployee(invoiceDTO.getIdEmployee()));
         invoice.setClazz(clazzRepository.findClazzByIdClass(invoiceDTO.getIdClass()));

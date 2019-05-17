@@ -216,4 +216,17 @@ public class ClassController {
         }
         return false;
     }
+
+    @RequestMapping(value = "/send/{idClass}", method = RequestMethod.GET)
+    public boolean send(@PathVariable(name = "idClass") Integer idClass) {
+        try {
+            Clazz clazz = classService.getClassById(idClass);
+            if(clazz == null) return false;
+            classService.sendNotif(idClass);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

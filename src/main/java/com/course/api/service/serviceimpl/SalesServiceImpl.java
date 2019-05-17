@@ -31,6 +31,7 @@ public class SalesServiceImpl implements SalesService {
 
     @Override
     public Sales addSales(Sales sales) {
+        sales.setStatus(1);
         salesRepository.save(sales);
         return sales;
     }

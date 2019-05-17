@@ -27,15 +27,12 @@ public class EducationProgramServiceImpl implements EducationProgramService {
 
     @Override
     public EducationProgram addEducationProgram(EducationProgram educationProgram) {
-        educationProgram.setCreatedDate(new Date());
-        educationProgram.setModifyDate(new Date());
         educationProgramRepository.save(educationProgram);
         return educationProgram;
     }
 
     @Override
     public EducationProgram updateEducationProgram(EducationProgram educationProgram) {
-        educationProgram.setModifyDate(new Date());
         educationProgramRepository.save(educationProgram);
         return educationProgram;
     }
