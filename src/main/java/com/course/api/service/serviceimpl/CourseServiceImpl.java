@@ -116,6 +116,7 @@ public class CourseServiceImpl implements CourseService {
         });
         Course course = modelMapper.map(courseDTO, Course.class);
         course.setIdCourse(idCourse);
+        course.setCreatedDate(courseRepository.findCourseByIdCourse(idCourse).getCreatedDate());
         course.setLevel(levelRepositoty.findAllByIdLevel(courseDTO.getIdLevel()));
         course.setEducationProgram(educationProgramRepository.findEducationProgramByIdEdu(courseDTO.getIdEdu()));
         course.setModifyDate(new Date());

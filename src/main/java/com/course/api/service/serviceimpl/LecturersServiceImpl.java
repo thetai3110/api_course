@@ -1,11 +1,14 @@
 package com.course.api.service.serviceimpl;
 
+import com.course.api.dto.LecturersDTO;
 import com.course.api.entity.Clazz;
 import com.course.api.entity.Lecturers;
 import com.course.api.repository.LecturersRepository;
 import com.course.api.repository.MajorsRepositoty;
 import com.course.api.service.ClassService;
 import com.course.api.service.LecturersService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +60,16 @@ public class LecturersServiceImpl implements LecturersService {
     }
 
     @Override
-    public Lecturers addLecturers(Lecturers lecturers) {
+    public Lecturers addLecturers(LecturersDTO lecturersDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<LecturersDTO, Lecturers>() {
+            @Override
+            protected void configure() {
+                skip().setIdLecturers(null);
+            }
+        });
+        Lecturers lecturers = modelMapper.map(lecturersDTO, Lecturers.class);
+        lecturers.setMajors(majorsRepositoty.findMajorsByIdMajors(lecturersDTO.getIdMajors()));
         lecturers.setCreatedDate(new Date());
         lecturers.setModifyDate(new Date());
         lecturersRepository.save(lecturers);
@@ -65,7 +77,18 @@ public class LecturersServiceImpl implements LecturersService {
     }
 
     @Override
-    public Lecturers updateLecturers(Lecturers lecturers) throws Exception {
+    public Lecturers updateLecturers(LecturersDTO lecturersDTO, Integer id) {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<LecturersDTO, Lecturers>() {
+            @Override
+            protected void configure() {
+                skip().setIdLecturers(null);
+            }
+        });
+        Lecturers lecturers = modelMapper.map(lecturersDTO, Lecturers.class);
+        lecturers.setCreatedDate(lecturersRepository.findLecturersByIdLecturers(id).getCreatedDate());
+        lecturers.setMajors(majorsRepositoty.findMajorsByIdMajors(lecturersDTO.getIdMajors()));
+        lecturers.setIdLecturers(id);
         lecturers.setModifyDate(new Date());
         lecturersRepository.save(lecturers);
         return lecturers;

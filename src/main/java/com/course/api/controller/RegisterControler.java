@@ -63,6 +63,7 @@ public class RegisterControler {
             Register curRegister = registerService.getRegisterById(id);
             if (curRegister == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
             register.setIdRegister(id);
+            register.setCreatedDate(curRegister.getCreatedDate());
             return new ResponseEntity<Register>(registerService.updateRegister(register), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

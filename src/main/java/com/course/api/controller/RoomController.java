@@ -57,6 +57,7 @@ public class RoomController {
             Room curRoom = roomService.getRoomById(idRoom);
             if (curRoom == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
             room.setIdRoom(idRoom);
+            room.setCreatedDate(curRoom.getCreatedDate());
             return new ResponseEntity<Room>(roomService.updateRoom(room), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

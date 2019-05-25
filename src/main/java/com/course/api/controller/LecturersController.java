@@ -48,10 +48,10 @@ public class LecturersController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Lecturers> addLecturers(@RequestBody Lecturers lecturers) {
+    public ResponseEntity<Lecturers> addLecturers(@RequestBody LecturersDTO lecturersDTO) {
         try {
-            if (lecturers == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-            return new ResponseEntity<Lecturers>(lecturersService.addLecturers(lecturers), HttpStatus.OK);
+            if (lecturersDTO == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<Lecturers>(lecturersService.addLecturers(lecturersDTO), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,12 +59,11 @@ public class LecturersController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public ResponseEntity<Lecturers> updateLecturers(@PathVariable(name = "id") Integer idLec, @RequestBody Lecturers lecturers) {
+    public ResponseEntity<Lecturers> updateLecturers(@PathVariable(name = "id") Integer idLec, @RequestBody LecturersDTO lecturersDTO) {
         try {
             Lecturers curLec = lecturersService.getLecturersById(idLec);
             if (curLec == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-            lecturers.setIdLecturers(idLec);
-            return new ResponseEntity<Lecturers>(lecturersService.updateLecturers(lecturers), HttpStatus.OK);
+            return new ResponseEntity<Lecturers>(lecturersService.updateLecturers(lecturersDTO, idLec), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

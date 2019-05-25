@@ -117,6 +117,7 @@ public class MarksController {
             Marks curMarks = marksService.getMarksById(id);
             if (curMarks == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
             marks.setIdMarks(id);
+            marks.setCreatedDate(curMarks.getCreatedDate());
             return new ResponseEntity<Marks>(marksService.updateMarks(marks), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

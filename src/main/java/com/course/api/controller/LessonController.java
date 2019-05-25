@@ -70,6 +70,7 @@ public class LessonController {
             Lesson curLesson = lessonService.getLessonById(id);
             if(curLesson==null) return new ResponseEntity(HttpStatus.NOT_FOUND);
             lesson.setIdLesson(id);
+            lesson.setCreatedDate(curLesson.getCreatedDate());
             return new ResponseEntity<Lesson>(lessonService.updateLesson(lesson),HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

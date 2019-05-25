@@ -70,6 +70,7 @@ public class EmployeeController {
             Employee curEmp = employeeService.getEmployeeById(idEmp);
             if (curEmp == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
             employee.setIdEmployee(idEmp);
+            employee.setCreatedDate(curEmp.getCreatedDate());
             return new ResponseEntity<Employee>(employeeService.updateEmployee(employee), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

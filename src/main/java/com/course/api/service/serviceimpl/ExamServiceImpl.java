@@ -78,6 +78,7 @@ public class ExamServiceImpl implements ExamService {
             }
         });
         Exam exam = modelMapper.map(examDTO, Exam.class);
+        exam.setCreatedDate(examRepository.findExamByIdExam(idExam).getCreatedDate());
         exam.setIdExam(idExam);
         exam.setCourse(courseRepository.findCourseByIdCourse(examDTO.getIdCourse()));
         exam.setModifyDate(new Date());

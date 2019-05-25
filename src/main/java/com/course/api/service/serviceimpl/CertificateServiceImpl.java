@@ -107,6 +107,7 @@ public class CertificateServiceImpl implements CertificateService {
         certificate.setExam(examRepository.findExamByIdExam(certificateDTO.getIdExam()));
         certificate.setStudent((studentRepositoty.findStudentByIdStudent(certificateDTO.getIdStudent())));
         certificate.setMarks(marksRepository.findMarksByIdMarks(certificateDTO.getIdMarks()));
+        certificate.setCreatedDate(certificateRepository.findCertificateByIdCertificate(idCer).getCreatedDate());
         certificate.setModifyDate(new Date());
         certificateRepository.save(certificate);
         return certificate;

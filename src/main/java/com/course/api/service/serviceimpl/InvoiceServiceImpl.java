@@ -101,6 +101,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         ModelMapper modelMapper = new ModelMapper();
         Invoice invoice = modelMapper.map(invoiceDTO, Invoice.class);
         invoice.setIdInvoice(idInvoice);
+        invoice.setCreatedDate(invoiceRepository.findInvoiceByIdInvoice(idInvoice).getCreatedDate());
         invoice.setRegister(registerRepository.findRegisterByIdRegister(invoiceDTO.getIdRegister()));
         invoice.setEmployee(employeeRepository.findEmployeeByIdEmployee(invoiceDTO.getIdEmployee()));
         invoice.setClazz(clazzRepository.findClazzByIdClass(invoiceDTO.getIdClass()));

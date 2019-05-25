@@ -128,6 +128,7 @@ public class ClassServiceImpl implements ClassService {
         });
         Clazz clazz = modelMapper.map(classesDTO, Clazz.class);
         clazz.setIdClass(idClass);
+        clazz.setCreatedDate(clazzRepository.findClazzByIdClass(idClass).getCreatedDate());
         clazz.setCourse(courseRepository.findCourseByIdCourse(classesDTO.getIdCourse()));
         clazz.setRoom(roomRepository.findRoomByIdRoom(classesDTO.getIdRoom()));
         clazz.setLecturers(lecturersRepository.findLecturersByIdLecturers(classesDTO.getIdLecturers()));

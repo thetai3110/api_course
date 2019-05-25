@@ -65,6 +65,7 @@ public class InvoiceDetailController {
             InvoiceDetail curInvoice = invoiceDetailService.getInvoiceDetailById(idInvoice);
             if (curInvoice == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
             invoiceDetail.setIdInvoiceDetail(idInvoice);
+            invoiceDetail.setCreatedDate(curInvoice.getCreatedDate());
             return new ResponseEntity<InvoiceDetail>(invoiceDetailService.updateInvoice(invoiceDetail), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

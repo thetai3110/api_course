@@ -106,14 +106,8 @@ public class StudentController {
         try {
             Student curStudent = studentService.getStudentById(idStudent);
             if (curStudent == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
-//            if(!student.getImage().equals("")){
-//                String[] img = student.getImage().split("fakepath");
-//                student.setImage(img[1]);
-//            }else{
-//                String img = curStudent.getImage() == null || curStudent.getImage().equals("") ? "" : curStudent.getImage();
-//                student.setImage(img);
-//            }
             student.setIdStudent(idStudent);
+            student.setCreatedDate(studentService.getStudentById(idStudent).getCreatedDate());
             return new ResponseEntity<Student>(studentService.updateStudent(student), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
